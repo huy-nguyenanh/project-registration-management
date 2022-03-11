@@ -142,9 +142,8 @@ header {
   font-size: 20px;
 }
 
-.right-content span,
-.right-content .profile {
-  margin-left: 1.2rem;
+.right-content span {
+  margin-right: 1.5rem;
 }
 .right-content .profile {
   position: relative;
@@ -221,6 +220,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.list-action-left label {
+  display: inline-block;
+  padding: 10px 12px;
+  cursor: pointer;
+  background-color: var(--background-nav);
+  color: var(--text-white);
+  border-radius: 1rem;
+}
+.list-action-left #import-file {
+  display: none;
 }
 .list-action-right {
   display: flex;

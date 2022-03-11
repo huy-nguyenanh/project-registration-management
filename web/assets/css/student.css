@@ -81,7 +81,7 @@ img {
 .bottom-sideBar li a:hover {
   background: #faae2d;
 }
-.li-active a{
+.li-active a {
   background: #faae2d;
 }
 /* .bottom-sideBar a i {
@@ -142,9 +142,8 @@ header {
   font-size: 20px;
 }
 
-.right-content span,
-.right-content .profile {
-  margin-left: 1.2rem;
+.right-content span {
+  margin-right: 1.5rem;
 }
 .right-content .profile {
   position: relative;
@@ -210,7 +209,6 @@ header {
   margin-top: 0;
 }
 
-
 .list {
   margin: 1rem 0;
 }
@@ -221,6 +219,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.list-action-left label {
+  display: inline-block;
+  padding: 10px 12px;
+  cursor: pointer;
+  background-color: var(--background-nav);
+  color: var(--text-white);
+  border-radius: 1rem;
+}
+.list-action-left #import-file {
+  display: none;
 }
 .list-action-right {
   display: flex;

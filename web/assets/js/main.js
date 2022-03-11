@@ -25,3 +25,9 @@ window.addEventListener("click", function (e) {
   }
 });
 
+// submit file on change
+const formImportFile = document.getElementById("import-form");
+const importFile = document.getElementById("import-file");
+importFile.addEventListener("change", () => {
+  formImportFile.submit();
+});
