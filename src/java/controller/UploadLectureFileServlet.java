@@ -5,8 +5,8 @@
  */
 package controller;
 
-import enitiy.LecturerDTO;
-import erros_entity.UploadFileError;
+import entity.core.LecturerDTO;
+import entity.errors.UploadFileError;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;

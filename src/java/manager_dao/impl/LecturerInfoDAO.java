@@ -5,7 +5,7 @@
  */
 package manager_dao.impl;
 
-import enitiy.LecturerDTO;
+import entity.core.LecturerDTO;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;

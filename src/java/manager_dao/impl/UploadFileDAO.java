@@ -1,9 +1,9 @@
 package manager_dao.impl;
 
 import manager_dao.inter.IUploadFileDAO;
-import enitiy.LecturerDTO;
-import enitiy.StudentDTO;
-import enitiy.TopicDTO;
+import entity.core.LecturerDTO;
+import entity.core.StudentDTO;
+import entity.core.TopicDTO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

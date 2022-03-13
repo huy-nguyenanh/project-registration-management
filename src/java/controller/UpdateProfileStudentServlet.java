@@ -5,8 +5,8 @@
  */
 package controller;
 
-import enitiy.AccountDTO;
-import enitiy.StudentDTO;
+import entity.core.AccountDTO;
+import entity.core.StudentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;

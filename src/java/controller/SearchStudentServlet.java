@@ -5,30 +5,34 @@
  */
 package controller;
 
+import entity.core.StudentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
-import java.util.Random;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import manager_dao.impl.GroupDAO;
+import javax.servlet.http.HttpSession;
 import manager_dao.impl.StudentInfoDAO;
-import enitiy.StudentDTO;
+
 import utillsHelper.ApplicationConstant;
 
 /**
  *
  * @author Minh Phuc
  */
-@WebServlet(name = "AdminCreateGroupServlet", urlPatterns = {"/AdminCreateGroupServlet"})
-public class AdminCreateGroupServlet extends HttpServlet {
+@WebServlet(name = "SearchStudentServlet", urlPatterns = {"/SearchStudentServlet"})
+public class SearchStudentServlet extends HttpServlet {
+
     private final String STUDENT_INFO = "studentInfoPage";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,60 +45,47 @@ public class AdminCreateGroupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
-        PrintWriter out = response.getWriter();
-        String url = site_Map.getProperty(ApplicationConstant.AdminCreateGroupServlet.CREATE_GROUP_RETURN);
-        boolean result = true;
-        Random rand = new Random();
 
-// Obtain a number between [0 - 999].
-        int n = rand.nextInt(1000);
-
+        String searchStudentById = request.getParameter("txtSearchStudent");
+        // String url = STUDENT_INFO;
+        HttpSession session = request.getSession(false);
+        String role = (String) session.getAttribute("ROLE");
+        String url = null;
+        if (role.equals("Admin")) {
+            url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
+        } else if (role.equals("Student")) {
+            url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
+        }
         try {
-            GroupDAO grdao = new GroupDAO();
-            StudentInfoDAO dao = new StudentInfoDAO();
-            String[] studentList = request.getParameterValues("chkCreate");
-            String searchValue = request.getParameter("lastSearchValue");
-            boolean isOk = true;
-            if (studentList.length < 3) {
-                isOk = false;
-                request.setAttribute("ERROR_CREATE_GROUP", "Min student in one group is 3");
-                request.getRequestDispatcher(url).forward(request, response);
-            } 
-            if (studentList.length > 5) {
-                isOk = false;
-                request.setAttribute("ERROR_CREATE_GROUP", "Max student in one group is 5");
-            } else {
-                for (int i = 0; i < studentList.length; i++) {
-                    String studentID = studentList[i];
-                    StudentDTO std = dao.getStudentbyID(studentID);
-//                    System.out.println("-" + std.getGroupId() + "-");
 
-                    if (null == std.getGroupID() || !std.getGroupID().equals("")) {
-                        isOk = false;
-                        request.setAttribute("ERROR_CREATE_GROUP", "Students already in group");
-                        System.out.println(isOk);
-                    }
-                }
+            if (role.equals("Admin")) {
+                if (!searchStudentById.trim().isEmpty()) {
+                    StudentInfoDAO dao = new StudentInfoDAO();
+                    dao.searchStudent(searchStudentById);
+                    List<StudentDTO> result = dao.getListStudents();
+                    request.setAttribute("SEARCH_STUDENT", result);
+                } // end search Values has values
+            } else if (role.equals("Student")) {
+                if (!searchStudentById.trim().isEmpty()) {
+                    StudentInfoDAO dao = new StudentInfoDAO();
+                    dao.searchStudent(searchStudentById);
+                    List<StudentDTO> result = dao.getListStudents();
+                    request.setAttribute("SEARCH_STUDENT", result);
+                } // end search Values has values
             }
 
-            if (isOk) {
-
-                for (int i = 0; i < studentList.length; i++) {
-                    String studentID = studentList[i];
-                    StudentDTO std = dao.getStudentbyID(studentID);
-
-                    result = grdao.insertStudentIntoGroup(n + "", studentID, std.getFullName(), "Student");
-                    dao.updateStudentInfo(studentID, true, n + "");
-                }
-            }
         } catch (SQLException ex) {
-            log("StudentCreateGroupServlet _ SQL " + ex.getMessage());
+            log("AdminSearchStudentByIdServlet _ SQL" + ex.getMessage());
         } catch (NamingException ex) {
-            log("StudentCreateGroupServlet _ Naming " + ex.getMessage());
+            log("AdminSearchStudentByIdServlet _ Naming" + ex.getMessage());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            out.close();
         }
     }
 

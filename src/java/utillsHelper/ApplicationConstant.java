@@ -50,7 +50,7 @@ public class ApplicationConstant {
 
     public class ExportStudentFileServlet {
 
-        public static final String RETURN_ADMIN_HOME = "adminHomePage";
+        public static final String RETURN_STUDENT_HOME = "studentPage";
     }
 
     public class AdminSearchStudentServlet {
@@ -95,8 +95,8 @@ public class ApplicationConstant {
 
     public class AdminSearchLecturerServlet {
 
-        public static final String ADMIN_SEARCH_RETURN = "lecturePage";
-        public static final String STUDENT_SEARCH_RETURN = "studentPage";
+        public static final String SEARCH_RETURN = "lecturePage";
+        
     }
 
     public class AdminSearchTopicServlet {

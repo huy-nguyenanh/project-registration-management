@@ -5,7 +5,7 @@
  */
 package controller;
 
-import enitiy.GroupDTO;
+import entity.core.GroupDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -56,7 +56,8 @@ public class AdminUpdateStudentInfoServlet extends HttpServlet {
             String studentId = request.getParameter("txtID");
             String status = request.getParameter("grStatus");
             String fullname = request.getParameter("txtFullname");
-            String groupId = request.getParameter("txtGroupID");
+            String groupId_new = request.getParameter("txtGroupID_new");
+            String groupId_old = request.getParameter("txtGroupID_old");
             String searchValue = request.getParameter("lastSearchValue");
             String role = request.getParameter("txtRole");
             boolean result2 = false;
@@ -72,20 +73,30 @@ public class AdminUpdateStudentInfoServlet extends HttpServlet {
 //            }
             StudentInfoDAO dao = new StudentInfoDAO();
             GroupDAO groupDao = new GroupDAO();
-            ArrayList<GroupDTO> grDtos = groupDao.getStudentsInGroup(groupId);
-            System.out.println("group: " + grDtos.size());
-            if (grDtos.size() == 0) {
+            ArrayList<GroupDTO> grDtos_old = groupDao.getStudentsInGroup(groupId_old);
+            ArrayList<GroupDTO> grDtos_new = groupDao.getStudentsInGroup(groupId_new);
+            System.out.println("group: " + grDtos_old.size());
+            if (grDtos_new.size() == 0) {
                 isOK = false;
                 request.setAttribute("ERROR_UPDATE_GROUP", "Group is not exist");
                 request.getRequestDispatcher(url).forward(request, response);
+            } else if(grDtos_new.size() == 5){
+                isOK = false;
+                request.setAttribute("ERROR_UPDATE_GROUP", "Group is full");
+                request.getRequestDispatcher(url).forward(request, response);
+            } 
+            if(grDtos_old.size() == 3) {
+                isOK = false;
+                request.setAttribute("ERROR_UPDATE_GROUP", "Group must be have 3 member");
+                request.getRequestDispatcher(url).forward(request, response);
             }
             if (isOK) {
-                boolean result = dao.updateStudentInfo(studentId, true, groupId);
+                boolean result = dao.updateStudentInfo(studentId, true, groupId_new);
 
                 boolean check = groupDao.isStudentInGroup(studentId);
                 System.out.println("check: " + check);
 
-                String topicId = grDtos.get(0).getTopicId();
+                String topicId = grDtos_new.get(0).getTopicId();
                 System.out.println("topic: " + topicId);
                 if (check) {
                     groupDao.removeStudentFromGroup(studentId);
@@ -93,14 +104,14 @@ public class AdminUpdateStudentInfoServlet extends HttpServlet {
 
                     // String topicId = groupDao.getTopicOfGroup(groupId);
 //                result2 = groupDao.updateStudentToOtherGroup(groupId, studentId);
-                    result2 = groupDao.insertStudentIntoGroupWithTopic(groupId, studentId, fullname, role, topicId);
+                    result2 = groupDao.insertStudentIntoGroupWithTopic(groupId_new, studentId, fullname, role, topicId);
 //                    System.out.println("Update Group");
                 } else {
-                    result2 = groupDao.adminAddStudentIntoGroup(groupId, studentId, fullname, role, topicId);
+                    result2 = groupDao.adminAddStudentIntoGroup(groupId_new, studentId, fullname, role, topicId);
                 }
 
                 if (result) {
-                    url = "adminSearchStudentAction?"
+                    url = "searchStudentAction?"
                             + "txtSearchStudent=" + searchValue;
                     response.sendRedirect(url);
                 }

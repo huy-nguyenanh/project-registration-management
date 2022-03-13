@@ -1,5 +1,5 @@
 
-<%@page import="erros_entity.LoginCreateError" %>
+<%@page import="entity.errors.LoginCreateError" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -27,6 +27,9 @@
         <title>Admin Page</title>
         <script src="./main.js"></script>
     </head>
+    <c:if test="${not empty sessionScope.ROLE}">
+        <c:redirect url="homePage"/>
+    </c:if>
     <body>
         <div class="admin">
             <div class="admin__login">
@@ -51,7 +54,7 @@
                         /> <br/>
                     <c:if test="${not empty errors.accountOrPasswordIncorrect}">
                         <font color ="red">
-                            ${errors.accountOrPasswordIncorrect}
+                        ${errors.accountOrPasswordIncorrect}
                         </font><br/>
                     </c:if>
                     <button

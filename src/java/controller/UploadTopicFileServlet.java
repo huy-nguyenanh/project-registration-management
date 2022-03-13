@@ -5,8 +5,8 @@
  */
 package controller;
 
-import enitiy.TopicDTO;
-import erros_entity.UploadFileError;
+import entity.core.TopicDTO;
+import entity.errors.UploadFileError;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;

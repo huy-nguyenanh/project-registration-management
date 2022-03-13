@@ -1,6 +1,6 @@
 package manager_dao.impl;
 
-import enitiy.AdminDTO;
+import entity.core.AdminDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

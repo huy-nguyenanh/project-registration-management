@@ -5,10 +5,10 @@
  */
 package controller;
 
-import enitiy.AdminDTO;
-import enitiy.LecturerDTO;
-import enitiy.StudentDTO;
-import erros_entity.LoginCreateError;
+import entity.core.AdminDTO;
+import entity.core.LecturerDTO;
+import entity.core.StudentDTO;
+import entity.errors.LoginCreateError;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -87,6 +87,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("ROLE", role);
                 session.setAttribute("WELCOME_NAME", fullName);
                 session.setAttribute("STUDENT_ID", studentID);
+                session.setAttribute("STUDENT_GROUP_ID", student.getGroupID());
                 url = site_Map.getProperty(ApplicationConstant.LoginServlet.HOME_PAGE);
             } else if (role.equals("Lecture")){
                 HttpSession session = request.getSession(true);

@@ -26,6 +26,9 @@
         <c:set var="role" value="${sessionScope.ROLE}"/>
         <c:set var="welcome_name" value="${sessionScope.WELCOME_NAME}"/>
     </head>
+    <c:if test="${sessionScope.ROLE == null}">
+        <c:redirect url="loginPage"></c:redirect>
+    </c:if>
     <c:if test="${role eq 'Admin'}">
         <body>
             <div class="wrapper">
@@ -163,7 +166,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="topic.html">
+                                <a href="topicPage">
                                     <span class="fa-solid fa-shapes"> </span>
                                     <span>Topic</span>
                                 </a>
@@ -268,7 +271,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="topic.html">
+                                <a href="topicPage">
                                     <span class="fa-solid fa-shapes"> </span>
                                     <span>Topic</span>
                                 </a>

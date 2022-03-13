@@ -1,6 +1,6 @@
 package manager_dao.inter;
 
-import enitiy.StudentDTO;
+import entity.core.StudentDTO;
 import java.sql.SQLException;
 import java.util.List;
 import javax.naming.NamingException;

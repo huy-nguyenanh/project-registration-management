@@ -1,37 +1,30 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
 
-import enitiy.StudentDTO;
+import entity.core.TopicDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import manager_dao.impl.StudentInfoDAO;
-
+import manager_dao.impl.TopicInfoDAO;
 import utillsHelper.ApplicationConstant;
 
 /**
  *
- * @author Minh Phuc
+ * @author Asus
  */
-@WebServlet(name = "AdminSearchStudentServlet", urlPatterns = {"/AdminSearchStudentServlet"})
-public class AdminSearchStudentServlet extends HttpServlet {
-
-    private final String STUDENT_INFO = "studentInfoPage";
+public class SearchTopicServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,38 +43,38 @@ public class AdminSearchStudentServlet extends HttpServlet {
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
 
-        String searchStudentById = request.getParameter("txtSearchStudent");
-        // String url = STUDENT_INFO;
+        String searchTopicByMajor = request.getParameter("txtSearchTopic");
+        // String url = LECTURER_INFO;
         HttpSession session = request.getSession(false);
         String role = (String) session.getAttribute("ROLE");
         String url = null;
         if (role.equals("Admin")) {
-            url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
+            url = site_Map.getProperty(ApplicationConstant.AdminSearchTopicServlet.SEARCH_RETURN);
         } else if (role.equals("Student")) {
-            url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
+            url = site_Map.getProperty(ApplicationConstant.AdminSearchTopicServlet.SEARCH_RETURN);
         }
         try {
 
             if (role.equals("Admin")) {
-                if (!searchStudentById.trim().isEmpty()) {
-                    StudentInfoDAO dao = new StudentInfoDAO();
-                    dao.searchStudent(searchStudentById);
-                    List<StudentDTO> result = dao.getListStudents();
-                    request.setAttribute("SEARCH_STUDENT", result);
+                if (!searchTopicByMajor.trim().isEmpty()) {
+                    TopicInfoDAO dao = new TopicInfoDAO();
+                    dao.searchTopic(searchTopicByMajor);
+                    List<TopicDTO> result = dao.getListTopics();
+                    request.setAttribute("SEARCH_TOPIC", result);
                 } // end search Values has values
             } else if (role.equals("Student")) {
-                if (!searchStudentById.trim().isEmpty()) {
-                    StudentInfoDAO dao = new StudentInfoDAO();
-                    dao.searchStudent(searchStudentById);
-                    List<StudentDTO> result = dao.getListStudents();
-                    request.setAttribute("SEARCH_STUDENT", result);
+                if (!searchTopicByMajor.trim().isEmpty()) {
+                    TopicInfoDAO dao = new TopicInfoDAO();
+                    dao.searchTopic(searchTopicByMajor);
+                    List<TopicDTO> result = dao.getListTopics();
+                    request.setAttribute("SEARCH_TOPIC", result);
                 } // end search Values has values
             }
 
         } catch (SQLException ex) {
-            log("AdminSearchStudentByIdServlet _ SQL" + ex.getMessage());
-        } catch (NamingException ex) {
-            log("AdminSearchStudentByIdServlet _ Naming" + ex.getMessage());
+            log("AdminSearchTopicByIdServlet _ SQL" + ex.getMessage());
+        } catch (Exception ex) {
+            log("AdminSearchTopicByIdServlet _ Naming" + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

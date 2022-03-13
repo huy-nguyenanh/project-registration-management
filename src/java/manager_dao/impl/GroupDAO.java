@@ -5,7 +5,7 @@
  */
 package manager_dao.impl;
 
-import enitiy.GroupDTO;
+import entity.core.GroupDTO;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -401,7 +401,7 @@ public class GroupDAO implements Serializable {
                 if (con != null) {
                     String sql = "SELECT GroupID, MemberId, Fullname, Role, TopicID "
                             + "FROM Groups "
-                            + "Where GroupID = ?";
+                            + "Where GroupID = ? and Role like 'Student'";
                     stm = con.prepareStatement(sql);
                     stm.setString(1, groupId);
 
@@ -409,7 +409,7 @@ public class GroupDAO implements Serializable {
 
                 rs = stm.executeQuery();
 
-                if (rs.next()) {
+                while (rs.next()) {
     //                String groupId = rs.getString("GroupID");
                     String memberId = rs.getString("MemberId");
                     String fullname = rs.getString("Fullname");

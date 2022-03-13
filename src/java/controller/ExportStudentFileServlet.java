@@ -5,11 +5,13 @@
  */
 package controller;
 
-import enitiy.StudentDTO;
+import entity.core.StudentDTO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import manager_dao.impl.ExportStudentFileDAO;
+import manager_dao.impl.StudentInfoDAO;
 import manager_dao.impl.UploadFileDAO;
 import utillsHelper.ApplicationConstant;
 
@@ -42,21 +45,24 @@ public class ExportStudentFileServlet extends HttpServlet {
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
         String filename = request.getParameter("file_name");
-        String locationFilePath = "C:\\" + filename;
-        String url = site_Map.getProperty(ApplicationConstant.ExportStudentFileServlet.RETURN_ADMIN_HOME);
-        
+        String locationFilePath = "C:\\Users\\84399\\Desktop\\FPT\\SWP\\" + filename;
+        String url = site_Map.getProperty(ApplicationConstant.ExportStudentFileServlet.RETURN_STUDENT_HOME);
+
         try {
             HttpSession session = request.getSession(false);
-            
-            List<StudentDTO> student_list = (List<StudentDTO>) session.getAttribute("STUDENT_LIST");
+            StudentInfoDAO stu_dao = new StudentInfoDAO();
+            List<StudentDTO> student_list = stu_dao.getStudentsInfo();
             ExportStudentFileDAO exportDAO = new ExportStudentFileDAO();
             exportDAO.write_file_student(student_list, locationFilePath);
-        } catch(FileNotFoundException e){
+        } catch (SQLException e) {
+            log("ExportStudentFileServlet   SQLException: " + e.getMessage());
+        } catch (NamingException e) {
+            log("ExportStudentFileServlet   NamingException: " + e.getMessage());
+        } catch (FileNotFoundException e) {
             log("ExportStudentFileServlet   FileNotFoundException: " + e.getMessage());
-        } catch(IOException e){
+        } catch (IOException e) {
             log("ExportStudentFileServlet   IOException: " + e.getMessage());
-        }
-            finally {
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

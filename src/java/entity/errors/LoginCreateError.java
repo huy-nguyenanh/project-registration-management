@@ -1,5 +1,5 @@
 
-package errors_entity;
+package entity.errors;
 
 import java.io.Serializable;
 

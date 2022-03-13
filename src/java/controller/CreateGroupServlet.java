@@ -8,8 +8,10 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.Random;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,16 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 import manager_dao.impl.GroupDAO;
 import manager_dao.impl.StudentInfoDAO;
 import entity.core.StudentDTO;
-import java.util.Properties;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import utillsHelper.ApplicationConstant;
 
 /**
  *
- * @author Admins
+ * @author Minh Phuc
  */
-@WebServlet(name = "StudentCreateGroupServlet", urlPatterns = {"/StudentCreateGroupServlet"})
-public class StudentCreateGroupServlet extends HttpServlet {
+@WebServlet(name = "CreateGroupServlet", urlPatterns = {"/CreateGroupServlet"})
+public class CreateGroupServlet extends HttpServlet {
+
+    private final String STUDENT_INFO = "studentInfoPage";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,7 +48,7 @@ public class StudentCreateGroupServlet extends HttpServlet {
 
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
-        String url = site_Map.getProperty(ApplicationConstant.StudentCreateGroupServlet.CREATE_GROUP_RETURN);
+        String url = site_Map.getProperty(ApplicationConstant.AdminCreateGroupServlet.CREATE_GROUP_RETURN);
         boolean result = true;
         Random rand = new Random();
 
@@ -53,24 +56,50 @@ public class StudentCreateGroupServlet extends HttpServlet {
         int n = rand.nextInt(1000);
 
         try {
+            HttpSession session = request.getSession(false);
             GroupDAO grdao = new GroupDAO();
             StudentInfoDAO dao = new StudentInfoDAO();
             String[] studentList = request.getParameterValues("chkCreate");
             String searchValue = request.getParameter("lastSearchValue");
             boolean isOk = true;
-            if (studentList.length > 4 && studentList.length < 2) {
-                isOk = false;
-                request.setAttribute("ERROR", "Student in one group is 3-5 people");
-            } else {
-                for (int i = 0; i < studentList.length; i++) {
-                    String studentID = studentList[i];
-                    StudentDTO std = dao.getStudentbyID(studentID);
-                    System.out.println("-" + std.getGroupID() + "-");
+            String role = (String) session.getAttribute("ROLE");
+            if (role.equals("Admin")) {
+                if (studentList.length < 3) {
+                    isOk = false;
+                    request.setAttribute("ERROR_CREATE_GROUP", "Min student in one group is 3");
+                    request.getRequestDispatcher(url).forward(request, response);
+                }
+                if (studentList.length > 5) {
+                    isOk = false;
+                    request.setAttribute("ERROR_CREATE_GROUP", "Max student in one group is 5");
+                } else {
+                    for (int i = 0; i < studentList.length; i++) {
+                        String studentID = studentList[i];
+                        StudentDTO std = dao.getStudentbyID(studentID);
 
-                    if (null == std.getGroupID() || !std.getGroupID().equals("")) {
-                        isOk = false;
-                        request.setAttribute("ERROR", "Students already in group");
-                        System.out.println(isOk);
+                        if (null == std.getGroupID() || !std.getGroupID().equals("")) {
+                            isOk = false;
+                            request.setAttribute("ERROR_CREATE_GROUP", "Students already in group");
+                            System.out.println(isOk);
+                        }
+                    }
+                }
+            }
+            if (role.equals("Student")) {
+                if (studentList.length > 4 || studentList.length < 2) {
+                    isOk = false;
+                    request.setAttribute("ERROR_CREATE_GROUP", "Student in one group is 3-5 people");
+                } else {
+                    for (int i = 0; i < studentList.length; i++) {
+                        String studentID = studentList[i];
+                        StudentDTO std = dao.getStudentbyID(studentID);
+                        System.out.println("-" + std.getGroupID() + "-");
+
+                        if (null == std.getGroupID() || !std.getGroupID().equals("")) {
+                            isOk = false;
+                            request.setAttribute("ERROR_CREATE_GROUP", "Students already in group");
+                            System.out.println(isOk);
+                        }
                     }
                 }
             }
@@ -92,10 +121,9 @@ public class StudentCreateGroupServlet extends HttpServlet {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

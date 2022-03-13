@@ -6,7 +6,7 @@
 package manager_dao.impl;
 
 import manager_dao.inter.IStudentInfoDAO;
-import enitiy.StudentDTO;
+import entity.core.StudentDTO;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

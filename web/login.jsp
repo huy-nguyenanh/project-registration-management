@@ -25,14 +25,17 @@
         <title>Login Page</title>
 
     </head>
-    <c:if test="${not empty sessionScope.ROLE}">
-        <c:redirect url="homePage"/>
-    </c:if>
     <body>
+        <c:if test="${sessionScope.ROLE != null }">
+            <c:if test="${not empty sessionScope.ROLE}">
+                <c:redirect url="homePage"/>
+            </c:if>
+        </c:if>
         <div class="admin">
             <div class="admin__login">
                 <h1 class="admin__login-title">Login</h1>
                 <form action="loginAction" class="login-form" method="POST">
+                    <c:set var="errors" value="${requestScope.LOGIN_ERRORS}" />
                     <label for="email" class="login-label">Email</label>
                     <input
                         type="text"
@@ -49,6 +52,11 @@
                         class="login-input"
                         required
                         />
+                    <c:if test="${not empty errors.accountOrPasswordIncorrect}">
+                        <font color ="red">
+                        ${errors.accountOrPasswordIncorrect}
+                        </font><br/>
+                    </c:if>
                     <button
                         class="login-submit"
                         type="submit"
@@ -67,7 +75,7 @@
                 </a>
             </div>
         </div>
-        
+
     </body>
 </html>
 

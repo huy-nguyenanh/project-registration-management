@@ -5,7 +5,7 @@
  */
 package manager_dao.impl;
 
-import enitiy.AccountDTO;
+import entity.core.AccountDTO;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

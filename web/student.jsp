@@ -20,44 +20,47 @@
         <jsp:useBean id="uploadDAO" class="manager_dao.impl.UploadFileDAO" scope="request"></jsp:useBean>
         <c:set var="role" value="${sessionScope.ROLE}"/>
     </head>
-    <c:if test="${role eq 'Admin'}">
-        <body>
-            <div class="wrapper">
-                <input type="checkbox" id="sidebar-toggle" />
-                <section class="sideBar">
-                    <div class="top-sideBar">
-                        <h3>Dashboard</h3>
-                        <label for="sidebar-toggle" class="fa-solid fa-bars"></label>
-                    </div>
-                    <div class="bottom-sideBar">
-                        <ul>
-                            <li>
-                                <a href="homePage">
-                                    <span class="fa-solid fa-house"> </span>
-                                    <span>Home</span>
-                                </a>
-                            </li>
-                            <li class="li-active">
-                                <a href="studentPage">
-                                    <span class="fa-solid fa-graduation-cap"> </span>
-                                    <span>Student</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="lecturePage">
-                                    <span class="fa-solid fa-chalkboard-user"> </span>
-                                    <span>Lecture</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="topicPage">
-                                    <span class="fa-solid fa-shapes"> </span>
-                                    <span>Topic</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
+    <c:if test="${sessionScope.ROLE == null}">
+        <c:redirect url="loginPage"/>
+    </c:if>
+    <body>
+        <div class="wrapper">
+            <input type="checkbox" id="sidebar-toggle" />
+            <section class="sideBar">
+                <div class="top-sideBar">
+                    <h3>Dashboard</h3>
+                    <label for="sidebar-toggle" class="fa-solid fa-bars"></label>
+                </div>
+                <div class="bottom-sideBar">
+                    <ul>
+                        <li>
+                            <a href="homePage">
+                                <span class="fa-solid fa-house"> </span>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="li-active">
+                            <a href="studentPage">
+                                <span class="fa-solid fa-graduation-cap"> </span>
+                                <span>Student</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="lecturePage">
+                                <span class="fa-solid fa-chalkboard-user"> </span>
+                                <span>Lecture</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="topicPage">
+                                <span class="fa-solid fa-shapes"> </span>
+                                <span>Topic</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <c:if test="${role eq 'Admin'}">
                 <main class="main-content">
                     <header>
                         <div class="left-content">
@@ -65,6 +68,7 @@
                             <h2></h2>
                         </div>
                         <div class="right-content">
+                            <span >${welcome_name}</span>
                             <span class="fa-solid fa-bell"></span>
                             <div class="profile">
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
@@ -122,8 +126,14 @@
                                         </c:if>
                                     </div>
 
+                                    <form action="exportStudentFileAction" >
+                                        <label for="export">Export</label>
+                                        <input type="text" id="export" name="file_name" />
+                                        <input type="submit" />
+                                    </form>
+
                                     <div class="list-action-right">
-                                        <form id="form-search-id" class="form-search" action="adminSearchStudentAction">
+                                        <form id="form-search-id" class="form-search" action="searchStudentAction">
                                             <input
                                                 type="text"
                                                 class="search-input"
@@ -194,7 +204,10 @@
                                                             </td>
                                                             <td>
                                                                 <%--${student.groupID}--%>
-                                                                <input type="text" name="txtGroupID" value="${student.groupID}" />
+                                                                <input type="text" name="txtGroupID_new" value="${student.groupID}" />
+                                                                <input type="hidden" name="txtGroupID_old" value="${student.groupID}" />
+                                                                <input type="hidden" name="txtRole" value="${student.role}" />
+
                                                             </td>
                                                             <td>
                                                                 <button
@@ -294,12 +307,185 @@
                         </section>
                     </div>
                 </main>
-            </div>
-            <script src="./assets/js/main.js"></script>
-            <script>
+            </c:if>
+            <c:if test="${role eq 'Student'}">
+                <main class="main-content">
+                    <header>
+                        <div class="left-content">
+                            <h2>Capstone Project Management</h2>
+                            <h2></h2>
+                        </div>
+                        <div class="right-content">
+                            <span >${welcome_name}</span>
+                            <span class="fa-solid fa-bell"></span>
+                            <div class="profile">
+                                <img src="./assets/img/ava.jpg" alt="profile-image" />
+                                <ul class="profile-link">
+                                    <li><a href="profilePage">Profile</a></li>
+                                    <li><a href="logoutAction">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="container">
+                        <h3 class="title">Student List</h3>
+
+                        <section class="list">
+                            <div class="table-grid">
+                                <div class="list-action">
+                                    <div class="list-action-right">
+                                        <form id="form-search-id" class="form-search" action="searchStudentAction">
+                                            <input
+                                                type="text"
+                                                class="search-input"
+                                                placeholder="Search Student ID"
+                                                name="txtSearchStudent"
+                                                value="${param.txtSearchStudent}"
+                                                />
+                                            <a
+                                                href="javascript:{}"
+                                                onclick="document.getElementById('form-search-id').submit();"
+                                                ><i class="fas fa-search search-btn"> </i>
+                                            </a>
+                                        </form>
+                                    </div>
+                                    <c:set var="searchValue" value="${param.txtSearchStudent}"/>
+                                </div>
+                                <h3>List</h3>
+                                <c:set var="errors_create_group" value="${requestScope.ERROR_CREATE_GROUP}"/>
+                                <c:if test="${not empty errors_create_group}">
+                                    ${errors_create_group}
+                                </c:if>
+                                <c:if test="${empty searchValue}">
+                                    <div class="table-responsive">
+                                        <table id="table-id">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Student ID</th>
+                                                    <th>Full name</th>
+                                                    <th>Mail</th>
+                                                    <th>Date of birth</th>
+                                                    <th>Major ID</th>
+                                                    <th>Group ID</th>
+                                                    <th>                                            
+                                                        <button type="button" onclick="createGroup()">Create Group</button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
+                                            <c:if test="${not empty student_list}">
+                                                <tbody>
+                                                    <c:forEach var="student" items= "${student_list}" varStatus="counter">
+
+                                                        <tr>
+                                                            <td>${counter.count}</td>
+                                                            <td>
+                                                                ${student.studentID}
+                                                                <input type="hidden" name="txtID" value="${student.studentID}" />
+                                                            </td>
+                                                            <td>
+                                                                ${student.fullName}
+                                                                <input type="hidden" name="txtFullname" value="${student.fullName}" />
+                                                            </td>
+                                                            <td>
+                                                                ${student.email}
+                                                                <input type="hidden" name="txtEmail" value="${student.email}" />
+                                                            </td>
+                                                            <td>
+                                                                ${student.DOB}
+                                                                <input type="hidden" name="txtDOB" value="${student.DOB}" />
+                                                            </td>
+                                                            <td>
+                                                                ${student.majorID}
+                                                                <input type="hidden" name="txtMajorID" value="${student.majorID}" />
+                                                            </td>
+                                                            <td>
+                                                                ${student.groupID}
+                                                                <input type="hidden" name="txtGroupID" value="${student.groupID}" />
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </c:if>
+                                        </table>
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty searchValue}">
+                                    <div class="table-responsive">
+                                        <c:set var="error_update_group" value="${requestScope.ERROR_UPDATE_GROUP}"/>
+                                        <c:if test="${not empty error_update_group}">
+                                            ${error_update_group}
+                                        </c:if>
+                                        <table id="table-id">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Student ID</th>
+                                                    <th>Full name</th>
+                                                    <th>Mail</th>
+                                                    <th>Date of birth</th>
+                                                    <th>Major ID</th>
+                                                    <th>Group ID</th>
+                                                    <th>                                            
+                                                        <button type="button" onclick="createGroup()">Create Group</button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <c:set var="student_search_value" value="${requestScope.SEARCH_STUDENT}"/>
+                                            <c:forEach var="student" items= "${student_search_value}" varStatus="counter">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>${counter.count}</td>
+                                                        <td>
+                                                            ${student.studentID}
+                                                            <input type="hidden" name="txtID" value="${student.studentID}" />
+                                                        </td>
+                                                        <td>
+                                                            ${student.fullName}
+                                                            <input type="hidden" name="txtFullname" value="${student.fullName}" />
+                                                        </td>
+                                                        <td>
+                                                            ${student.email}
+                                                            <input type="hidden" name="txtEmail" value="${student.email}" />
+                                                        </td>
+                                                        <td>
+                                                            ${student.DOB}
+                                                            <input type="hidden" name="txtDOB" value="${student.DOB}" />
+                                                        </td>
+                                                        <td>
+                                                            ${student.majorID}
+                                                            <input type="hidden" name="txtMajorID" value="${student.majorID}" />
+                                                        </td>
+                                                        <td>
+                                                            ${student.groupID}
+                                                            <input type="hidden" name="txtGroupID" value="${student.groupID}" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+            </c:if>
+        </div>
+        <script src="./assets/js/main.js"></script>
+        <script>
                                                             function createGroup() {
                                                             var list = document.querySelectorAll("#chkCreate");
-                                                            var str = "adminCreateGroupAction?";
+                                                            var str = "createGroupAction?";
                                                             if (list.length === 1)
                                                             {
                                                             str += "chkCreate" + list[0].value;
@@ -320,9 +506,10 @@
                                                             }
                                                             window.location.href = str;
                                                             }
-            </script>
-        </body>
-    </c:if>
-       
-        
+        </script>
+    </body>
+
+
+
+
 </html>

@@ -61,16 +61,16 @@
         <servlet-class>controller.UpdateProfileStudentServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminSearchTopicServlet</servlet-name>
-        <servlet-class>controller.AdminSearchTopicServlet</servlet-class>
+        <servlet-name>SearchTopicServlet</servlet-name>
+        <servlet-class>controller.SearchTopicServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchLecturerServlet</servlet-name>
         <servlet-class>controller.SearchLecturerServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminCreateGroupServlet</servlet-name>
-        <servlet-class>controller.AdminCreateGroupServlet</servlet-class>
+        <servlet-name>CreateGroupServlet</servlet-name>
+        <servlet-class>controller.CreateGroupServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginAdminServlet</servlet-name>
@@ -105,16 +105,16 @@
         <url-pattern>/UpdateProfileStudentServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminSearchTopicServlet</servlet-name>
-        <url-pattern>/AdminSearchTopicServlet</url-pattern>
+        <servlet-name>SearchTopicServlet</servlet-name>
+        <url-pattern>/SearchTopicServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchLecturerServlet</servlet-name>
         <url-pattern>/SearchLecturerServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminCreateGroupServlet</servlet-name>
-        <url-pattern>/AdminCreateGroupServlet</url-pattern>
+        <servlet-name>CreateGroupServlet</servlet-name>
+        <url-pattern>/CreateGroupServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

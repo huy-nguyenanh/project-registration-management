@@ -1,7 +1,7 @@
 
 package manager_dao.inter;
 
-import enitiy.StudentDTO;
+import entity.core.StudentDTO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;

@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import manager_dao.impl.GroupDAO;
-import enitiy.GroupDTO;
+import entity.core.GroupDTO;
+import entity.core.LecturerDTO;
 import manager_dao.impl.LecturerInfoDAO;
 import manager_dao.impl.TopicInfoDAO;
-import enitiy.TopicDTO;
+import entity.core.TopicDTO;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import utillsHelper.ApplicationConstant;
@@ -54,28 +55,27 @@ public class StudentChooseTopicServlet extends HttpServlet {
             GroupDAO grdao = new GroupDAO();
             TopicInfoDAO tdao = new TopicInfoDAO();
             LecturerInfoDAO ldao = new LecturerInfoDAO();
-            String[] topicList = request.getParameterValues("chkChoose");
-            String groupId = request.getParameter("groupId");
+            String topicId = request.getParameter("txtTopicId");
+            String groupId = request.getParameter("textGroupId");
 
             boolean isOk = true;
-            if (topicList.length > 1) {
-                isOk = false;
-                request.setAttribute("ERROR", "Only choose 1 topic");
-            } else {
-                String topicId = topicList[0];
+//            if (topicList.length > 1) {
+//                isOk = false;
+//                request.setAttribute("CREATE_GROUP_ERROR", "Only choose 1 topic");
+//            } 
+//            if {
                 TopicDTO ttd = tdao.getTopicById(topicId);
                 String test = ttd.getGroupID();
                 // Kiểm tra nếu Topic đã có group chọn
                 if (!ttd.getGroupID().equals("")) {
                     isOk = false;
-                    request.setAttribute("ERROR", "Topic has been choosen by another group.");
+                    request.setAttribute("CREATE_GROUP_ERROR", "Topic has been choosen by another group.");
                 } else {
-
                     ArrayList<GroupDTO> grDtos = grdao.getStudentsInGroup(groupId);
                     // Kiểm tra group đó có tồn tại hay không
                     if (grDtos.size() == 0) {
                         isOk = false;
-                        request.setAttribute("ERROR", "Group is not exist");
+                        request.setAttribute("CREATE_GROUP_ERROR", "Group is not exist");
                     }
                     // Kiểm tra nếu Group đã có Topic
                     if (grDtos.size() > 0) {
@@ -83,16 +83,39 @@ public class StudentChooseTopicServlet extends HttpServlet {
 
                         } else {
                             isOk = false;
-                            request.setAttribute("ERROR", "Group already had a topic!");
+                            request.setAttribute("CREATE_GROUP_ERROR", "Group already had a topic!");
                         }
                     }
                 }
-            }
+//            }
             if (isOk) {
-                String topicId = topicList[0];
-                TopicDTO ttd = tdao.getTopicById(topicId);
+                ttd = tdao.getTopicById(topicId);
                 result = grdao.updateTopicToGroup(groupId, topicId)
                         && tdao.updateTopicInfo(topicId, isOk, ttd.getLectureID(), groupId);
+                
+                String lectureValue = ttd.getLectureID();
+                String[] listLectureId = lectureValue.split(", ");
+                
+                int subString = listLectureId.length;
+                for (int i = 0; i < subString; i++) {
+                    LecturerDTO lecDTO = ldao.getLecturebyID(listLectureId[i]);
+                    if(!lecDTO.getGroupID().equals("")){
+                        if(!lecDTO.getGroupID().equals(groupId)){
+                            //có groupID
+                            grdao.insertLectureIntoGroup(groupId, listLectureId[i],
+                                    lecDTO.getFullname(), lecDTO.getRole(), topicId);
+                            lecDTO.setGroupID(lecDTO.getGroupID() + ", " + groupId);
+                            ldao.updateLecturetoGroup(listLectureId[i], lecDTO.getGroupID());
+                        } else {
+                            //chua co gr
+                            ldao.updateLecturetoGroup(listLectureId[i], groupId);
+                            grdao.insertLectureIntoGroup(groupId, listLectureId[i], lecDTO.getFullname(), lecDTO.getRole(), topicId);
+                        }
+                    }
+                }
+                if(result) {
+                    response.sendRedirect(url);
+                }
             }
 
         } catch (SQLException ex) {

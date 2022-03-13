@@ -1,9 +1,9 @@
 
 package manager_dao.inter;
 
-import enitiy.LecturerDTO;
-import enitiy.StudentDTO;
-import enitiy.TopicDTO;
+import entity.core.LecturerDTO;
+import entity.core.StudentDTO;
+import entity.core.TopicDTO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;

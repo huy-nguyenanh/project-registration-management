@@ -5,7 +5,7 @@
  */
 package manager_dao.impl;
 
-import enitiy.TopicDTO;
+import entity.core.TopicDTO;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;

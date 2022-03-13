@@ -1,7 +1,7 @@
 package manager_dao.impl;
 
 import manager_dao.inter.IExportStudentFileDAO;
-import enitiy.StudentDTO;
+import entity.core.StudentDTO;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

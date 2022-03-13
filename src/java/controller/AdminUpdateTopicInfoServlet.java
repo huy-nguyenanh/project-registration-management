@@ -5,9 +5,9 @@
  */
 package controller;
 
-import enitiy.GroupDTO;
-import enitiy.LecturerDTO;
-import enitiy.TopicDTO;
+import entity.core.GroupDTO;
+import entity.core.LecturerDTO;
+import entity.core.TopicDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;

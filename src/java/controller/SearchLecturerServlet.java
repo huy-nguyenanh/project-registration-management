@@ -4,7 +4,7 @@
  */
 package controller;
 
-import enitiy.LecturerDTO;
+import entity.core.LecturerDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -49,9 +49,9 @@ public class SearchLecturerServlet extends HttpServlet {
         String role = (String) session.getAttribute("ROLE");
         String url = null;
         if (role.equals("Admin")) {
-            url = site_Map.getProperty(ApplicationConstant.AdminSearchLecturerServlet.ADMIN_SEARCH_RETURN);
+            url = site_Map.getProperty(ApplicationConstant.AdminSearchLecturerServlet.SEARCH_RETURN);
         } else if (role.equals("Student")) {
-            url = site_Map.getProperty(ApplicationConstant.AdminSearchLecturerServlet.STUDENT_SEARCH_RETURN);
+            url = site_Map.getProperty(ApplicationConstant.AdminSearchLecturerServlet.SEARCH_RETURN);
         } 
         try {
 
