@@ -33,25 +33,25 @@ importFile.addEventListener("change", () => {
 });
 
 //////
-const modal = document.getElementById("myModal");
-const btn = document.getElementById("myBtn");
-const span = modal.querySelector(".close");
+const modals = document.querySelectorAll(".myModal");
+const btns = document.querySelectorAll(".myBtn");
 
-btn.onclick = function (e) {
-  console.log("btn");
-  e.preventDefault();
-  modal.style.display = "block";
-};
-
-span.onclick = function () {
-  modal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+for (const btn of btns) {
+  for (const modal of modals) {
+    btn.onclick = function (e) {
+      modal.style.display = "block";
+    };
+    const span = modal.querySelector(".close");
+    span.onclick = function () {
+      modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
   }
-};
+}
 
 // show error
 (() => {
