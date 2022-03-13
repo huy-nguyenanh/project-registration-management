@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel="stylesheet" href="./assets/css/main.css" />
-    <link rel="stylesheet" href="./assets/css/lecture.css" />
+    <link rel="stylesheet" href="./assets/css/student.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -81,6 +81,17 @@
                     <input type="file" id="import-file" />
                   </form>
                 </div>
+
+                <div id="error-modal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <form action="">
+                      <span class="close">&times;</span>
+                      <span class="error"></span>
+                    </form>
+                  </div>
+                </div>
+
                 <div class="list-action-right">
                   <input
                     type="text"
@@ -106,13 +117,27 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1</td>
+                      <td>2</td>
                       <td>2</td>
                       <td>3</td>
                       <td>3</td>
                       <td>4</td>
                       <td>5</td>
-                      <td>Update</td>
+                      <td>
+                        <button id="myBtn">Edit</button>
+                        <div id="myModal" class="modal">
+                          <!-- Modal content -->
+                          <div class="modal-content">
+                            <form action="">
+                              <span class="close">&times;</span>
+                              <input type="text" value="2" />
+                              <input type="text" value="3" />
+                              <input type="text" value="4" />
+                              <button class="confirm-submit">Update</button>
+                            </form>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                     <tr>
                       <td>6</td>

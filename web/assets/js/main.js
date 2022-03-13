@@ -31,3 +31,53 @@ const importFile = document.getElementById("import-file");
 importFile.addEventListener("change", () => {
   formImportFile.submit();
 });
+
+//////
+const modal = document.getElementById("myModal");
+const btn = document.getElementById("myBtn");
+const span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function () {
+  modal.style.display = "block";
+};
+
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+// show error
+(() => {
+  const a0 = document.getElementById("error-modal");
+  const a1 = document.getElementById("myBtn");
+  const a2 = document.getElementsByClassName("close")[0];
+  const a3 = document.querySelector(".error");
+  if (a3.textContent !== "") {
+    a0.style.display = "block";
+    a3.textContent = a0.textContent;
+    a2.onclick = function () {
+      a0.style.display = "none";
+      a3.textContent = "";
+    };
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        a0.style.display = "none";
+        a3.textContent = "";
+      }
+    };
+  }
+})();
+
+//
+const submitBtn = document.querySelector(".confirm-submit");
+submitBtn.addEventListener("click", () => {
+  if (!confirm("Are you sure ?")) {
+    return false;
+  }
+  this.form.submit();
+});
