@@ -14,28 +14,28 @@ const imgProfile = profile.querySelector("img");
 const dropdown = profile.querySelector(".profile-link");
 
 imgProfile.addEventListener("click", () => {
-    dropdown.classList.toggle("show");
+  dropdown.classList.toggle("show");
 });
 
 window.addEventListener("click", function (e) {
-    if (e.target !== imgProfile) {
-        if (dropdown.classList.contains("show")) {
-            dropdown.classList.remove("show");
-        }
+  if (e.target !== imgProfile) {
+    if (dropdown.classList.contains("show")) {
+      dropdown.classList.remove("show");
     }
+  }
 });
 
 // submit file on change
 const formImportFile = document.getElementById("import-form");
 const importFile = document.getElementById("import-file");
 importFile.addEventListener("change", () => {
-    formImportFile.submit();
+  formImportFile.submit();
 });
 
 //////
 const modal = document.getElementById("myModal");
 const btn = document.getElementById("myBtn");
-const span = document.getElementsByClassName("close")[0];
+const span = modal.querySelector(".close");
 
 btn.onclick = function () {
   modal.style.display = "block";

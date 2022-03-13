@@ -170,7 +170,7 @@
                                                     <th>Major ID</th>
                                                     <th>Group ID</th>
                                                     <th>Action</th>
-                                                    <th>                                            
+                                                    <th>              
                                                         <button type="button" onclick="createGroup()">Create Group</button>
                                                     </th>
                                                 </tr>
@@ -203,8 +203,18 @@
                                                                 <input type="hidden" name="txtMajorID" value="${student.majorID}" />
                                                             </td>
                                                             <td>
-                                                                <%--${student.groupID}--%>
-                                                                <input type="text" name="txtGroupID_new" value="${student.groupID}" />
+                                                                ${student.groupID}
+                                                                <div id="myModal" class="modal">
+                                                                    <!-- Modal content -->
+                                                                    <div class="modal-content">
+                                                                      <form action="">
+                                                                        <span class="close">&times;</span>
+                                                                        <input type="text" name="txtGroupID_new" value="${student.groupID}" />
+                                                                        <button class="confirm-submit">Update</button>
+                                                                      </form>
+                                                                    </div>
+                                                                  </div>
+
                                                                 <input type="hidden" name="txtGroupID_old" value="${student.groupID}" />
                                                                 <input type="hidden" name="txtRole" value="${student.role}" />
 
