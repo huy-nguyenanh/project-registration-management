@@ -5,30 +5,32 @@
  */
 package controller;
 
+import entity.core.GroupDTO;
 import entity.core.StudentDTO;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import manager_dao.impl.ExportStudentFileDAO;
+import manager_dao.impl.GroupDAO;
 import manager_dao.impl.StudentInfoDAO;
-import manager_dao.impl.UploadFileDAO;
 import utillsHelper.ApplicationConstant;
 
 /**
  *
  * @author 84399
  */
-public class ExportStudentFileServlet extends HttpServlet {
+@WebServlet(name = "ShowListMemberInGroupServlet", urlPatterns = {"/ShowListMemberInGroupServlet"})
+public class ShowListMemberInGroupServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,30 +44,33 @@ public class ExportStudentFileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
-        String filename = request.getParameter("file_name");
-        String locationFilePath = "C:\\Users\\Public\\Downloads" + filename;
-        String url = site_Map.getProperty(ApplicationConstant.ExportStudentFileServlet.RETURN_STUDENT_HOME);
 
+        String searchStudentByGroupId = request.getParameter("txtGroupId");
+        String url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
         try {
-            HttpSession session = request.getSession(false);
-            StudentInfoDAO stu_dao = new StudentInfoDAO();
-            List<StudentDTO> student_list = stu_dao.getStudentsInfo();
-            ExportStudentFileDAO exportDAO = new ExportStudentFileDAO();
-            exportDAO.write_file_student(student_list, locationFilePath);
-        } catch (SQLException e) {
-            log("ExportStudentFileServlet   SQLException: " + e.getMessage());
-        } catch (NamingException e) {
-            log("ExportStudentFileServlet   NamingException: " + e.getMessage());
-        } catch (FileNotFoundException e) {
-            log("ExportStudentFileServlet   FileNotFoundException: " + e.getMessage());
-        } catch (IOException e) {
-            log("ExportStudentFileServlet   IOException: " + e.getMessage());
+            if (!searchStudentByGroupId.trim().isEmpty()) {
+//                    StudentInfoDAO dao = new StudentInfoDAO();
+//                    dao.searchStudentByGorupID(searchStudentByGroupId);
+//                    List<StudentDTO> result = dao.getListStudents();
+                        GroupDAO grDao = new GroupDAO();
+                        ArrayList<GroupDTO> list_member = grDao.getStudentsInGroup(searchStudentByGroupId);
+                        
+                    request.setAttribute("LIST_MEMBER", list_member);
+                } // end search Values has values
+            
+        } catch (SQLException ex) {
+            log("AdminSearchStudentByIdServlet _ SQL" + ex.getMessage());
+        } catch (NamingException ex) {
+            log("AdminSearchStudentByIdServlet _ Naming" + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

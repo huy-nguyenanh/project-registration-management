@@ -187,7 +187,7 @@
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
                                 <ul class="profile-link">
                                     <li><a href="profile.html">Profile</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </div>
                         </div>

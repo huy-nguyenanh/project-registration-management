@@ -424,6 +424,60 @@ public class StudentInfoDAO implements Serializable, IStudentInfoDAO {
         }
         return null;
     }
-    
-    
+
+    public void searchStudentByGorupID(String groupID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            //1. Connect DB
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select StudentID, Fullname, Email, Date_Of_Birth, MajorID, Status, GroupID, AccountID, Phone_Number "
+                        + "From Students "
+                        + "Where GroupID Like ? ";
+
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + groupID + "%");
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. Process Result
+                while (rs.next()) {
+                    String studentId = rs.getString("StudentID");
+                    String fullname = rs.getString("Fullname");
+                    String majorId = rs.getString("MajorID");
+                    String email = rs.getString("Email");
+                    String accountId = rs.getString("AccountID");
+                    String phonenumber = rs.getString("Phone_Number");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    String DOB = dateFormat.format(rs.getDate("Date_Of_Birth"));
+//                    Date dateOfBirth = rs.getDate("Date_Of_Birth");
+                    boolean status = rs.getBoolean("Status");
+                    groupID = rs.getString("GroupID");
+
+                    StudentDTO std = new StudentDTO(studentId, accountId, fullname,
+                            DOB, email, phonenumber, majorId, groupID, status);
+                    if (this.listStudents == null) {
+                        this.listStudents = new ArrayList<>();
+                    } // end if account List is not existed
+                    // Account List is Existed
+                    this.listStudents.add(std);
+                } // end while rs has pointed to EOF
+            } // end connection is 
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import manager_dao.impl.GroupDAO;
 import manager_dao.impl.StudentInfoDAO;
 import entity.core.StudentDTO;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.http.HttpSession;
 import utillsHelper.ApplicationConstant;
 
@@ -61,8 +63,11 @@ public class CreateGroupServlet extends HttpServlet {
             StudentInfoDAO dao = new StudentInfoDAO();
             String[] studentList = request.getParameterValues("chkCreate");
             String searchValue = request.getParameter("lastSearchValue");
+            ArrayList<String> stuID = new ArrayList<>(Arrays.asList(studentList));;
+            String id = ((StudentDTO) (request.getSession().getAttribute("ACCOUNT"))).getStudentID();
             boolean isOk = true;
             String role = (String) session.getAttribute("ROLE");
+
             if (role.equals("Admin")) {
                 if (studentList.length < 3) {
                     isOk = false;
@@ -86,19 +91,19 @@ public class CreateGroupServlet extends HttpServlet {
                 }
             }
             if (role.equals("Student")) {
-                if (studentList.length > 4 || studentList.length < 2) {
+                if (stuID.size() > 4 || stuID.size() < 2) {
                     isOk = false;
                     request.setAttribute("ERROR_CREATE_GROUP", "Student in one group is 3-5 people");
                 } else {
-                    for (int i = 0; i < studentList.length; i++) {
-                        String studentID = studentList[i];
+                    stuID.add(id);
+                    for (int i = 0; i < stuID.size(); i++) {
+                        String studentID = stuID.get(i);
                         StudentDTO std = dao.getStudentbyID(studentID);
-                        System.out.println("-" + std.getGroupID() + "-");
 
                         if (null == std.getGroupID() || !std.getGroupID().equals("")) {
                             isOk = false;
                             request.setAttribute("ERROR_CREATE_GROUP", "Students already in group");
-                            System.out.println(isOk);
+
                         }
                     }
                 }

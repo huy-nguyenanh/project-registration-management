@@ -18,6 +18,7 @@
         <jsp:useBean id="topicDAO" class="manager_dao.impl.TopicInfoDAO" scope="request"></jsp:useBean>
         <jsp:useBean id="uploadDAO" class="manager_dao.impl.UploadFileDAO" scope="request"></jsp:useBean>
         <c:set var="role" value="${sessionScope.ROLE}"/>
+        <c:set var="welcome_name" value="${sessionScope.WELCOME_NAME}"/>
     </head>
     <c:if test="${sessionScope.ROLE == null}">
         <c:redirect url="loginPage"/>
