@@ -88,6 +88,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("WELCOME_NAME", fullName);
                 session.setAttribute("STUDENT_ID", studentID);
                 session.setAttribute("STUDENT_GROUP_ID", student.getGroupID());
+                session.setAttribute("ACCOUNT", student);
                 url = site_Map.getProperty(ApplicationConstant.LoginServlet.HOME_PAGE);
             } else if (role.equals("Lecture")){
                 HttpSession session = request.getSession(true);

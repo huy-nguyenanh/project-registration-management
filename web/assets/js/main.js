@@ -44,6 +44,7 @@ for (const btn of btns) {
     // };
     btn.addEventListener("click", (e) => {
       e.preventDefault();
+      console.log(btn);
       modal.style.display = "block";
     });
 

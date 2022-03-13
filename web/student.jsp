@@ -15,10 +15,11 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
-        <link rel="stylesheet" href="./assets/css/lecture.css" />
+        <link rel="stylesheet" href="./assets/css/student.css" />
         <jsp:useBean id="stuDAO" class="manager_dao.impl.StudentInfoDAO" scope="request"></jsp:useBean>
         <jsp:useBean id="uploadDAO" class="manager_dao.impl.UploadFileDAO" scope="request"></jsp:useBean>
         <c:set var="role" value="${sessionScope.ROLE}"/>
+        <c:set var="welcome_name" value="${sessionScope.WELCOME_NAME}"/>
     </head>
     <c:if test="${sessionScope.ROLE == null}">
         <c:redirect url="loginPage"/>
@@ -179,7 +180,7 @@
                                             <c:if test="${not empty student_list}">
                                                 <tbody>
                                                     <c:forEach var="student" items= "${student_list}" varStatus="counter">
-                                                    <form action="adminUpdateStudentInfoAction" enctype="multipart/form-data">
+
                                                         <tr>
                                                             <td>${counter.count}</td>
                                                             <td>
@@ -204,16 +205,24 @@
                                                             </td>
                                                             <td>
                                                                 ${student.groupID}
-                                                                <div id="myModal" class="modal">
+                                                                <button class="myBtn">Edit</button>
+                                                                <div class="modal myModal">
                                                                     <!-- Modal content -->
+
                                                                     <div class="modal-content">
-                                                                      <form action="">
-                                                                        <span class="close">&times;</span>
-                                                                        <input type="text" name="txtGroupID_new" value="${student.groupID}" />
-                                                                        <button class="confirm-submit">Update</button>
-                                                                      </form>
+                                                                        <form action="adminUpdateStudentInfoAction" enctype="multipart/form-data">
+                                                                            <span class="close">X</span>
+                                                                            <input type="text" name="txtGroupID_new" value="${student.groupID}" />
+                                                                            <input type="hidden" name="txtID" value="${student.studentID}" />
+                                                                            <input type="hidden" name="txtFullname" value="${student.fullName}" />
+                                                                            <input type="hidden" name="txtGroupID_old" value="${student.groupID}" />
+                                                                            <input type="hidden" name="txtRole" value="${student.role}" />
+                                                                            <input type="hidden" name="lastSearchValue" value="${searchValue}" />
+                                                                            <button class="confirm-submit">Update</button>
+                                                                        </form>
                                                                     </div>
-                                                                  </div>
+
+                                                                </div>
 
                                                                 <input type="hidden" name="txtGroupID_old" value="${student.groupID}" />
                                                                 <input type="hidden" name="txtRole" value="${student.role}" />
@@ -232,8 +241,8 @@
                                                                 <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
                                                             </td>
                                                         </tr>
-                                                    </form>
-                                                </c:forEach>
+
+                                                    </c:forEach>
                                                 </tbody>
                                             </c:if>
 
@@ -362,34 +371,146 @@
                                         </form>
                                     </div>
                                     <c:set var="searchValue" value="${param.txtSearchStudent}"/>
+                                    <form action="ShowListMemberInGroupServlet">
+                                        <input type="hidden" name="txtGroupId" value="${sessionScope.STUDENT_GROUP_ID}" />
+                                        <input type="submit" value="Group's member list" />
+                                    </form>
+
                                 </div>
                                 <h3>List</h3>
                                 <c:set var="errors_create_group" value="${requestScope.ERROR_CREATE_GROUP}"/>
                                 <c:if test="${not empty errors_create_group}">
                                     ${errors_create_group}
                                 </c:if>
-                                <c:if test="${empty searchValue}">
+                                <c:set var="list_member" value="${requestScope.LIST_MEMBER}"/>
+                                <c:if test="${not empty list_member}">
                                     <div class="table-responsive">
+                                        <c:set var="error_update_group" value="${requestScope.ERROR_UPDATE_GROUP}"/>
+                                        <c:if test="${not empty error_update_group}">
+                                            ${error_update_group}
+                                        </c:if>
                                         <table id="table-id">
                                             <thead>
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>Student ID</th>
-                                                    <th>Full name</th>
-                                                    <th>Mail</th>
-                                                    <th>Date of birth</th>
-                                                    <th>Major ID</th>
                                                     <th>Group ID</th>
-                                                    <th>                                            
-                                                        <button type="button" onclick="createGroup()">Create Group</button>
-                                                    </th>
+                                                    <th>Full name</th>
+                                                    <th>Member ID</th>
+                                                    <th>Topic ID</th>
                                                 </tr>
                                             </thead>
-                                            <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
-                                            <c:if test="${not empty student_list}">
+                                            <c:forEach var="member" items= "${list_member}" varStatus="counter">
                                                 <tbody>
-                                                    <c:forEach var="student" items= "${student_list}" varStatus="counter">
+                                                    <tr>
+                                                        <td>${counter.count}</td>
+                                                        <td>
+                                                            ${member.groupId}
+                                                            <input type="hidden" name="txtGroupID" value="${student.groupID}" />
+                                                        </td>
+                                                        <td>
+                                                            ${member.fullname}
+                                                            <input type="hidden" name="txtFullname" value="${student.fullName}" />
+                                                        </td>
+                                                        <td>
+                                                            ${member.memberId}
+                                                            <input type="hidden" name="txtEmail" value="${student.email}" />
+                                                        </td>
+                                                        <td>
+                                                            ${member.topicId}
+                                                            <input type="hidden" name="txtDOB" value="${student.DOB}" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+                                </c:if>
+                                <c:if test="${empty list_member}">
+                                    <c:if test="${empty searchValue}">
+                                        <div class="table-responsive">
+                                            <table id="table-id">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Student ID</th>
+                                                        <th>Full name</th>
+                                                        <th>Mail</th>
+                                                        <th>Date of birth</th>
+                                                        <th>Major ID</th>
+                                                        <th>Group ID</th>
+                                                        <th>                                            
+                                                            <button type="button" onclick="createGroup()">Create Group</button>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
+                                                <c:if test="${not empty student_list}">
+                                                    <tbody>
+                                                        <c:forEach var="student" items= "${student_list}" varStatus="counter">
 
+                                                            <tr>
+                                                                <td>${counter.count}</td>
+                                                                <td>
+                                                                    ${student.studentID}
+                                                                    <input type="hidden" name="txtID" value="${student.studentID}" />
+                                                                </td>
+                                                                <td>
+                                                                    ${student.fullName}
+                                                                    <input type="hidden" name="txtFullname" value="${student.fullName}" />
+                                                                </td>
+                                                                <td>
+                                                                    ${student.email}
+                                                                    <input type="hidden" name="txtEmail" value="${student.email}" />
+                                                                </td>
+                                                                <td>
+                                                                    ${student.DOB}
+                                                                    <input type="hidden" name="txtDOB" value="${student.DOB}" />
+                                                                </td>
+                                                                <td>
+                                                                    ${student.majorID}
+                                                                    <input type="hidden" name="txtMajorID" value="${student.majorID}" />
+                                                                </td>
+                                                                <td>
+                                                                    ${student.groupID}
+                                                                    <input type="hidden" name="txtGroupID" value="${student.groupID}" />
+                                                                </td>
+
+                                                                <td>
+                                                                    <c:if test="${student.studentID != sessionScope.STUDENT_ID}">
+                                                                        <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
+                                                                    </c:if>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </c:if>
+                                            </table>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${not empty searchValue}">
+                                        <div class="table-responsive">
+                                            <c:set var="error_update_group" value="${requestScope.ERROR_UPDATE_GROUP}"/>
+                                            <c:if test="${not empty error_update_group}">
+                                                ${error_update_group}
+                                            </c:if>
+                                            <table id="table-id">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Student ID</th>
+                                                        <th>Full name</th>
+                                                        <th>Mail</th>
+                                                        <th>Date of birth</th>
+                                                        <th>Major ID</th>
+                                                        <th>Group ID</th>
+                                                        <th>                                            
+                                                            <button type="button" onclick="createGroup()">Create Group</button>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <c:set var="student_search_value" value="${requestScope.SEARCH_STUDENT}"/>
+                                                <c:forEach var="student" items= "${student_search_value}" varStatus="counter">
+                                                    <tbody>
                                                         <tr>
                                                             <td>${counter.count}</td>
                                                             <td>
@@ -416,75 +537,17 @@
                                                                 ${student.groupID}
                                                                 <input type="hidden" name="txtGroupID" value="${student.groupID}" />
                                                             </td>
-
                                                             <td>
-                                                                <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
+                                                                <c:if test="${student.studentID != sessionScope.STUDENT_ID}">
+                                                                    <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
+                                                                </c:if>
                                                             </td>
                                                         </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </c:if>
-                                        </table>
-                                    </div>
-                                </c:if>
-                                <c:if test="${not empty searchValue}">
-                                    <div class="table-responsive">
-                                        <c:set var="error_update_group" value="${requestScope.ERROR_UPDATE_GROUP}"/>
-                                        <c:if test="${not empty error_update_group}">
-                                            ${error_update_group}
-                                        </c:if>
-                                        <table id="table-id">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Student ID</th>
-                                                    <th>Full name</th>
-                                                    <th>Mail</th>
-                                                    <th>Date of birth</th>
-                                                    <th>Major ID</th>
-                                                    <th>Group ID</th>
-                                                    <th>                                            
-                                                        <button type="button" onclick="createGroup()">Create Group</button>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <c:set var="student_search_value" value="${requestScope.SEARCH_STUDENT}"/>
-                                            <c:forEach var="student" items= "${student_search_value}" varStatus="counter">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>${counter.count}</td>
-                                                        <td>
-                                                            ${student.studentID}
-                                                            <input type="hidden" name="txtID" value="${student.studentID}" />
-                                                        </td>
-                                                        <td>
-                                                            ${student.fullName}
-                                                            <input type="hidden" name="txtFullname" value="${student.fullName}" />
-                                                        </td>
-                                                        <td>
-                                                            ${student.email}
-                                                            <input type="hidden" name="txtEmail" value="${student.email}" />
-                                                        </td>
-                                                        <td>
-                                                            ${student.DOB}
-                                                            <input type="hidden" name="txtDOB" value="${student.DOB}" />
-                                                        </td>
-                                                        <td>
-                                                            ${student.majorID}
-                                                            <input type="hidden" name="txtMajorID" value="${student.majorID}" />
-                                                        </td>
-                                                        <td>
-                                                            ${student.groupID}
-                                                            <input type="hidden" name="txtGroupID" value="${student.groupID}" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" name="chkCreate" id="chkCreate" value="${student.studentID}">
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </c:forEach>
-                                        </table>
-                                    </div>
+                                                    </tbody>
+                                                </c:forEach>
+                                            </table>
+                                        </div>
+                                    </c:if>
                                 </c:if>
                             </div>
                         </section>
@@ -517,6 +580,35 @@
                                                             }
                                                             window.location.href = str;
                                                             }
+        </script>
+        <script>
+            function findGetParameter(parameterName) {
+            var result = null,
+                    tmp = [];
+            location.search
+                    .substr(1)
+                    .split("&")
+                    .forEach(function (item) {
+                    tmp = item.split("=");
+                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                    });
+            return result;
+            }
+            tableForFilter = document.getElementById("students");
+            tr = tableForFilter.getElementsByTagName("tr");
+            if (findGetParameter("findInGroup") != null) {
+            for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[7];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(findGetParameter("findInGroup")) > - 1) {
+            tr[i].style.display = "";
+            } else {
+            tr[i].style.display = "none";
+            }
+            }
+            }
+            }
         </script>
     </body>
 
