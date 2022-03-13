@@ -207,7 +207,6 @@
                                                                 <input type="text" name="txtGroupID_new" value="${student.groupID}" />
                                                                 <input type="hidden" name="txtGroupID_old" value="${student.groupID}" />
                                                                 <input type="hidden" name="txtRole" value="${student.role}" />
-
                                                             </td>
                                                             <td>
                                                                 <button
@@ -281,7 +280,9 @@
                                                             </td>
                                                             <td>
                                                                 <%--${student.groupID}--%>
-                                                                <input type="text" name="txtGroupID" value="${student.groupID}" />
+                                                                <input type="text" name="txtGroupID_new" value="${student.groupID}" />
+                                                                <input type="hidden" name="txtGroupID_old" value="${student.groupID}" />
+                                                                <input type="hidden" name="txtRole" value="${student.role}" />
                                                             </td>
                                                             <td>
                                                                 <button

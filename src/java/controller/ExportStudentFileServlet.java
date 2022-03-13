@@ -45,7 +45,7 @@ public class ExportStudentFileServlet extends HttpServlet {
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
         String filename = request.getParameter("file_name");
-        String locationFilePath = "C:\\Users\\84399\\Desktop\\FPT\\SWP\\" + filename;
+        String locationFilePath = "C:\\Users\\Public\\Downloads" + filename;
         String url = site_Map.getProperty(ApplicationConstant.ExportStudentFileServlet.RETURN_STUDENT_HOME);
 
         try {
