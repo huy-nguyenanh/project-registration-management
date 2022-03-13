@@ -116,35 +116,37 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>2</td>
-                      <td>2</td>
-                      <td>3</td>
-                      <td>3</td>
-                      <td>4</td>
-                      <td>
-                        5
-                        <button class="myBtn">Edit</button>
-                        <div class="modal myModal">
-                          <!-- Modal content -->
-                          <div class="modal-content">
-                            <form action="">
-                              <span class="close">X</span>
-                              <input type="text" value="5" />
-                              <button class="confirm-submit">Update</button>
-                            </form>
-                          </div>
-                        </div>
-                      </td>
-                      <td>Update</td>
-                    </tr>
+                    <form id="updateId-form" action="">
+                      <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>
+                          <span class="edit-span">5</span>
+                          <input
+                            type="hidden"
+                            name=""
+                            id="edit-input"
+                            value="5"
+                          />
+                        </td>
+                        <td>
+                          <button class="edit-btn">Edit group ID</button>
+                        </td>
+                      </tr>
+                    </form>
                     <tr>
                       <td>6</td>
                       <td>7</td>
                       <td>8</td>
                       <td>9</td>
                       <td>10</td>
-                      <td>11</td>
+                      <td>
+                        11
+                        <button class="myBtn">Edit</button>
+                      </td>
                       <td>Update</td>
                     </tr>
                   </tbody>
@@ -153,8 +155,46 @@
             </div>
           </section>
         </div>
+
+        <!-- Table template -->
+        <div class="table-responsive modal myModal">
+          <table id="table-id-edit" class="modal-content">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>FullName</th>
+                <th>Mail</th>
+                <th>Phone</th>
+                <th>Topic</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" /></td>
+                <td>2</td>
+                <td>3</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td><button class="confirm-submit">Update</button></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
+                <td>11</td>
+                <td>Update</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
+
     <script src="./assets/js/main.js"></script>
   </body>
 </html>
