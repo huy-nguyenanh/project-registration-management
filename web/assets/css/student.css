@@ -29,6 +29,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.list-action-left {
+  display: flex;
+}
 .list-action-left label {
   display: inline-block;
   padding: 10px 12px;
@@ -37,9 +40,16 @@
   color: var(--text-white);
   border-radius: 1rem;
 }
+.list-action-left label:nth-child(2) {
+  margin-left: 30px;
+}
 .list-action-left #import-file {
   display: none;
 }
+.list-action-left #edit-btn {
+  display: none;
+}
+
 .list-action-right {
   display: flex;
   align-items: center;

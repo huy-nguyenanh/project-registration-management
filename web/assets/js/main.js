@@ -25,21 +25,18 @@ function submitImportOnchange() {
   });
 }
 function editButton() {
-  const editBtn = document.querySelector(".edit-btn");
-  const editSpan = document.querySelector(".edit-span");
-  const editInput = document.getElementById("edit-input");
-  const formUpdateId = document.getElementById("updateId-form");
+  const editBtn = document.getElementById("edit-btn");
+  const table = document.querySelector(".table-responsive");
+  const tableEdit = document.querySelector(".table-responsive2");
+
   editBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    if (editSpan.style.display !== "none") {
-      editSpan.style.display = "none";
-      editInput.setAttribute("type", "text");
-      editBtn.textContent = "Update";
+    if (table.style.display !== "none") {
+      table.style.display = "none";
+      tableEdit.style.display = "block";
     } else {
-      editSpan.style.display = "block";
-      editInput.setAttribute("type", "hidden");
-      editBtn.textContent = "Edit this post";
-      formUpdateId.submit();
+      table.style.display = "block";
+      tableEdit.style.display = "none";
     }
   });
 }
