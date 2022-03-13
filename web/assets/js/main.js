@@ -37,7 +37,8 @@ const modal = document.getElementById("myModal");
 const btn = document.getElementById("myBtn");
 const span = modal.querySelector(".close");
 
-btn.onclick = function () {
+btn.onclick = function (e) {
+  e.preventDefault();
   modal.style.display = "block";
 };
 
