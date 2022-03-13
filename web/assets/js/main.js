@@ -38,9 +38,15 @@ const btns = document.querySelectorAll(".myBtn");
 
 for (const btn of btns) {
   for (const modal of modals) {
-    btn.onclick = function (e) {
+    // btn.onclick = function (e) {
+    //   e.preventDefault();
+    //   modal.style.display = "block";
+    // };
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
       modal.style.display = "block";
-    };
+    });
+
     const span = modal.querySelector(".close");
     span.onclick = function () {
       modal.style.display = "none";
