@@ -80,8 +80,21 @@
                     <label for="import-file">Import</label>
                     <input type="file" id="import-file" />
                   </form>
-                  <label for="edit-btn">Edit group ID</label>
-                  <input type="submit" class="edit-btn" id="edit-btn" />
+                  <form id="export-form" action="">
+                    <label for="export-btn">Export</label>
+                    <input type="submit" class="edit-btn" id="export-btn" />
+                  </form>
+                  <form id="import-form" action="">
+                    <label for="edit-btn">Edit</label>
+                    <input type="submit" class="edit-btn" id="edit-btn" />
+                  </form>
+                  <form id="import-form" action="">
+                    <label for="create-btn">Create</label>
+                    <input type="submit" class="edit-btn" id="create-btn" />
+                  </form>
+
+                  <!-- <label for="edit-btn">Edit group ID</label>
+                  <input type="submit" class="edit-btn" id="edit-btn" /> -->
                   <!--   -->
                 </div>
 
@@ -105,6 +118,7 @@
                 </div>
               </div>
               <h3>List</h3>
+
               <!-- table -->
               <div class="table-responsive">
                 <table id="table-id">
@@ -116,7 +130,7 @@
                       <th>Mail</th>
                       <th>Phone</th>
                       <th>Topic</th>
-                      <th>Action</th>
+                      <!-- <th>Action</th> -->
                     </tr>
                   </thead>
                   <form id="updateId-form" action="">
@@ -136,7 +150,7 @@
                             value="5"
                           />
                         </td>
-                        <td></td>
+                        <!-- <td><button class="myBtn">Update</button></td> -->
                       </tr>
 
                       <tr>
@@ -146,7 +160,7 @@
                         <td>9</td>
                         <td>10</td>
                         <td>11</td>
-                        <td><button class="myBtn">Edit</button></td>
+                        <!-- <td><button class="myBtn">Update</button></td> -->
                       </tr>
                     </tbody>
                   </form>
@@ -174,7 +188,6 @@
                         <td>3</td>
                         <td>4</td>
                         <td>
-                          
                           <input
                             type="text"
                             name=""
@@ -182,9 +195,8 @@
                             value="5"
                           />
                         </td>
-                        <td></td>
+                        <td><button class="myBtn">Update</button></td>
                       </tr>
-
                       <tr>
                         <td>6</td>
                         <td>7</td>
@@ -192,7 +204,7 @@
                         <td>9</td>
                         <td>10</td>
                         <td>11</td>
-                        <td><button class="myBtn">Edit</button></td>
+                        <td><button class="myBtn">Update</button></td>
                       </tr>
                     </tbody>
                   </form>

@@ -134,7 +134,7 @@ header {
   background-color: #fff;
 }
 .left-content h2 {
-  font-size: 20px;
+  font-size: 22px;
 }
 .right-content {
   display: flex;
@@ -185,4 +185,20 @@ header {
 }
 .right-content .profile-link a:hover {
   opacity: 0.5;
+}
+
+.container {
+  margin-top: 60px;
+  background: #f1f5f9;
+  height: 100%;
+  width: 100%;
+  padding: 0.9rem 3rem;
+  /* padding-bottom: 0; */
+}
+
+.container .title {
+  color: black;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+  font-size: 18px;
 }

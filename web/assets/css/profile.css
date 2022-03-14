@@ -1,116 +1,30 @@
-#student {
-  margin-top: 0;
-}
-.card-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 3rem;
-}
 
-.card-item {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-}
 
-.card-content {
-  padding: 2rem 1rem;
+.profile-content {
+  background-color: #fff;
+  margin: 0 2rem;
+  border-radius: 0.5rem;
+
   display: flex;
-  flex-flow: row wrap;
   align-items: center;
 }
 
-.card-content div h5,
-h4 {
-  margin-top: 0;
-}
-
-.card-content span {
-  color: #777;
-  padding: 0 1.5rem;
-  font-size: 3rem;
-}
-
-.card-content h5 {
-  color: grey;
-  font-size: 1.5rem;
-}
-
-.card-content h4 {
-  color: black;
-  font-size: 1.5rem;
-  margin-top: 1rem;
-}
-
-.list {
-  margin: 3rem 0;
-}
-
-.list-action {
-  /* margin-bottom: 1rem; */
+.profile-list {
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.list-action-right {
-  display: flex;
-  align-items: center;
-}
-.table-grid {
-  background: #fff;
-  border-radius: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 20%;
 }
 
-.table-grid h3 {
-  color: grey;
-  padding: 1rem;
+.profile-list:last-child {
+  width: 80%;
 }
 
-.table-responsive {
-  overflow-x: auto;
+.profile-list li {
 }
-
-#table-id {
-  width: 100%;
-  overflow-x: auto;
-  border-collapse: collapse;
-}
-#table-id thead {
-  background: #efefef;
-  text-align: left;
-}
-
-#table-id th,
-td {
-  padding: 1.2rem 1rem;
-  color: black;
-}
-
-#table-id tbody tr:nth-child(even) {
-  background: #f9fafc;
-}
-
-.search-input {
-  height: 30px;
-  padding: 0 5px 0 19px;
-  border: 1px solid #e1e1e1;
-  border-right: 0;
-  border-radius: 5px 0 0 5px;
-}
-.search-btn {
-  height: 30px;
-  width: 30px;
-  border: 0;
-  border-radius: 0 5px 5px 0;
-  background: #f26f21;
-  color: #fff;
-  text-align: center;
-  padding-top: 8px;
-}
-.search-input:focus {
-  border: 1px solid #000000;
-  border-right: 0;
+.profile-list li:not(:first-child) {
+  margin-top: 1rem;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -175,12 +89,16 @@ td {
   .table-grid {
     display: block;
   }
+  .profile-content {
+    margin: 0 1rem;
+  }
 }
 
 @media only screen and (max-width: 600px) {
   .container {
     padding: 1rem 0.5rem;
   }
+
   .card-list {
     grid-template-columns: 100%;
   }
@@ -192,5 +110,8 @@ td {
   }
   .left-content h2:last-child::after {
     content: "CPM";
+  }
+  .profile-content {
+    margin: 0;
   }
 }

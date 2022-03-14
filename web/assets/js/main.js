@@ -28,12 +28,11 @@ function editButton() {
   const editBtn = document.getElementById("edit-btn");
   const table = document.querySelector(".table-responsive");
   const tableEdit = document.querySelector(".table-responsive2");
-
   editBtn.addEventListener("click", (e) => {
     e.preventDefault();
     if (table.style.display !== "none") {
       table.style.display = "none";
-      tableEdit.style.display = "block";
+      tableEdit.style.display = "block";  
     } else {
       table.style.display = "block";
       tableEdit.style.display = "none";
@@ -73,32 +72,12 @@ function showErrorModal() {
     }
   })();
 }
-function showEditModal() {
-  //////
-  const modal = document.querySelector(".myModal");
-  const btn = document.querySelector(".myBtn");
-  // const span = modal.querySelector(".close");
 
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    console.log(btn);
-    modal.style.display = "block";
-  });
 
-  // span.onclick = function () {
-  //   modal.style.display = "none";
-  // };
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-}
 (() => {
   dropdownProfile();
   submitImportOnchange();
   confirmSubmit();
   showErrorModal();
-  showEditModal();
   editButton();
 })();
