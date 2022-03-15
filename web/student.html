@@ -252,5 +252,31 @@
     </div>
 
     <script src="./assets/js/main.js"></script>
+    <script>
+      function showErrorModal() {
+        const a0 = document.getElementById("error-modal");
+        const a1 = document.getElementById("myBtn");
+        const a2 = document.getElementsByClassName("close")[0];
+        const a3 = document.querySelector("span.error");
+
+        if (a3.textContent !== "") {
+          alert(a3.textContent);
+          a0.style.display = "block";
+          a2.onclick = function () {
+            a0.style.display = "none";
+            a3.textContent = "";
+          };
+          window.onclick = function (event) {
+            if (event.target == a0) {
+              a0.style.display = "none";
+              a3.textContent = "";
+            }
+          };
+        }
+      }
+      (() => {
+        showErrorModal();
+      })();
+    </script>
   </body>
 </html>
