@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capstone Project Management</title>
+
+    <link
+      rel="stylesheet"
+      href="./assets/icon/fontawesome-free-6.0.0-web/css/all.css"
+    />
+
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/notification.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <input type="checkbox" id="sidebar-toggle" />
+      <section class="sideBar">
+        <div class="top-sideBar">
+          <h3>Dashboard</h3>
+          <label for="sidebar-toggle" class="fa-solid fa-bars"></label>
+        </div>
+        <div class="bottom-sideBar">
+          <ul>
+            <li>
+              <a href="index.html">
+                <span class="fa-solid fa-house"> </span>
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="student.html">
+                <span class="fa-solid fa-graduation-cap"> </span>
+                <span>Student</span>
+              </a>
+            </li>
+            <li class="li-active">
+              <a href="lecture.html">
+                <span class="fa-solid fa-chalkboard-user"> </span>
+                <span>Lecture</span>
+              </a>
+            </li>
+            <li>
+              <a href="topic.html">
+                <span class="fa-solid fa-shapes"> </span>
+                <span>Topic</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <main class="main-content">
+        <header>
+          <div class="left-content">
+            <h2>Capstone Project Management</h2>
+            <h2></h2>
+          </div>
+          <div class="right-content">
+            <span class="fa-solid fa-bell"></span>
+            <div class="profile">
+              <img src="./assets/img/ava.jpg" alt="profile-image" />
+              <ul class="profile-link">
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <div class="container">
+          <h3 class="title">Message</h3>
+          <div class="content">
+            <label for="select-id">Choose GroupID</label>
+            <select name="" id="select-id">
+              <option value="">1</option>
+              <option value="">2</option>
+              <option value="">3</option>
+            </select>
+            <textarea name="" id="" cols="50" rows="10" placeholder="Send text."></textarea>
+            <button type="submit">Send</button>
+          </div>
+        </div>
+        </main>
+    <script src="./assets/js/main.js"></script>
+  </body>
+</html>

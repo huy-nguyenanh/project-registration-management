@@ -32,7 +32,7 @@ function editButton() {
     e.preventDefault();
     if (table.style.display !== "none") {
       table.style.display = "none";
-      tableEdit.style.display = "block";  
+      tableEdit.style.display = "block";
     } else {
       table.style.display = "block";
       tableEdit.style.display = "none";
@@ -51,33 +51,34 @@ function confirmSubmit() {
 }
 function showErrorModal() {
   // Error modal
-  (() => {
-    const a0 = document.getElementById("error-modal");
-    const a1 = document.getElementById("myBtn");
-    const a2 = document.getElementsByClassName("close")[0];
-    const a3 = document.querySelector(".error");
-    if (a3.textContent !== "") {
-      a0.style.display = "block";
-      a3.textContent = a0.textContent;
-      a2.onclick = function () {
+
+  const a0 = document.getElementById("error-modal");
+  const a1 = document.getElementById("myBtn");
+  const a2 = document.getElementsByClassName("close")[0];
+  const a3 = document.querySelector("span.error");
+
+ 
+  
+  if (a3.textContent !== "") {
+    alert(a3.textContent);
+    a0.style.display = "block";
+    a2.onclick = function () {
+      a0.style.display = "none";
+      a3.textContent = "";
+    };
+    window.onclick = function (event) {
+      if (event.target == a0) {
         a0.style.display = "none";
         a3.textContent = "";
-      };
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          a0.style.display = "none";
-          a3.textContent = "";
-        }
-      };
-    }
-  })();
+      }
+    };
+  }
 }
-
 
 (() => {
   dropdownProfile();
   submitImportOnchange();
   confirmSubmit();
-  showErrorModal();
   editButton();
+  showErrorModal();
 })();
