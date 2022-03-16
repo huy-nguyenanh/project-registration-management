@@ -20,6 +20,7 @@ function submitImportOnchange() {
   // submit file on change
   const formImportFile = document.getElementById("import-form");
   const importFile = document.getElementById("import-file");
+  if (!importFile) return;
   importFile.addEventListener("change", () => {
     formImportFile.submit();
   });
@@ -28,6 +29,8 @@ function editButton() {
   const editBtn = document.getElementById("edit-btn");
   const table = document.querySelector(".table-responsive");
   const tableEdit = document.querySelector(".table-responsive2");
+
+  if (!editBtn) return;
   editBtn.addEventListener("click", (e) => {
     e.preventDefault();
     if (table.style.display !== "none") {
@@ -42,6 +45,7 @@ function editButton() {
 function confirmSubmit() {
   // confirm submit button
   const submitBtn = document.querySelector(".confirm-submit");
+  if (!submitBtn) return;
   submitBtn.addEventListener("click", () => {
     if (!confirm("Are you sure ?")) {
       return false;
@@ -57,8 +61,6 @@ function showErrorModal() {
   const a2 = document.getElementsByClassName("close")[0];
   const a3 = document.querySelector("span.error");
 
- 
-  
   if (a3.textContent !== "") {
     alert(a3.textContent);
     a0.style.display = "block";
@@ -74,11 +76,44 @@ function showErrorModal() {
     };
   }
 }
+function updateProfile() {
+  const btn = document.getElementById("update-profile-btn");
+  // const submitBtn = document.getElementById("submit-profile-btn");
+  const profileContent1 = document.getElementById("profile-1");
+  const profileContent2 = document.getElementById("profile-2");
+  // console.log(updateProfileBtn);
+  if (!btn) return;
 
+  btn.addEventListener("click", (e) => {
+    // e.preventDefault();
+    if (profileContent1.style.display !== "none") {
+      profileContent1.style.display = "none";
+      profileContent2.style.display = "flex";
+      btn.textContent = "Back";
+      // submitBtn.style.display = "inline-block";
+    } else {
+      profileContent1.style.display = "flex";
+      profileContent2.style.display = "none";
+      btn.textContent = "Change Password";
+      // submitBtn.style.display = "none";
+    }
+  });
+}
+
+function validatePassword() {
+  const password = document.querySelector("input[name=password]");
+  const confirm = document.querySelector("input[name=confirm]");
+  if (confirm.value === password.value) {
+    confirm.setCustomValidity("");
+  } else {
+    confirm.setCustomValidity("Passwords do not match");
+  }
+}
 (() => {
   dropdownProfile();
   submitImportOnchange();
   confirmSubmit();
   editButton();
-  showErrorModal();
+  // showErrorModal();
+  updateProfile();
 })();

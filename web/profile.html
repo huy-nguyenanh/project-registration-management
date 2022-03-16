@@ -71,19 +71,53 @@
 
         <div class="container">
           <h3 class="title">Profile Information</h3>
-          <div class="profile-content">
+          <button id="update-profile-btn">Change Password</button>
+
+          <div id="profile-1" class="profile-content">
             <ul class="profile-list">
               <li>Name</li>
-              <li>Password</li>
+             
               <li>Phone</li>
 
             </ul>
             <ul class="profile-list">
               <li>Nguyen Van A</li>
-              <li>********</li>
+
               <li>84 123 456 789</li>
             </ul>
             </ul>
+          </div>
+
+          <div id="profile-2" class="profile-content">
+            <ul class="profile-list">
+              <li>ID</li>
+              <li>Old Password</li>
+              <li>New Password</li>
+              <li>Confirm Password</li>
+              <li></li>
+             
+
+            </ul>
+            <ul class="profile-list">
+              <li>
+                SE150994
+              </li>
+              <li>
+                <input type="password" name="" id="2" required>
+              </li>
+              <li>
+                <input type="password" name="password" id="3" onChange="onChange()" required >
+              </li>
+              <li>
+                <input type="password" name="confirm" id="4" onChange="onChange()" required>
+              </li>
+              <li>
+                <button id="" type="reset">Reset</button>
+                <button id="submit-profile-btn" type="submit">Submit</button>
+
+              </li>
+            </ul>
+            
           </div>
         </div>
       </main>

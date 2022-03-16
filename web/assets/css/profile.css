@@ -1,10 +1,22 @@
-
-
+#update-profile-btn {
+  margin-bottom: 2rem;
+}
+#submit-profile-btn {
+  /* display: none; */
+}
+button {
+  background: var(--background-nav);
+  outline: none;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
 .profile-content {
   background-color: #fff;
   margin: 0 2rem;
   border-radius: 0.5rem;
-
   display: flex;
   align-items: center;
 }
@@ -14,19 +26,32 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-width: 20%;
+  /* min-width: 20%; */
 }
 
-.profile-list:last-child {
+/* .profile-list:last-child {
   width: 80%;
-}
+} */
 
 .profile-list li {
+  min-height: 60px;
 }
-.profile-list li:not(:first-child) {
+/* .profile-list li:not(:first-child) {
+  margin-top: 1rem;
+} */
+.profile-list li {
   margin-top: 1rem;
 }
 
+#profile-2 {
+  display: none;
+}
+#profile-2 .profile-list:first-child li {
+  padding-top: 5px;
+}
+#profile-2 .profile-list li {
+  margin-top: calc(1rem - 5px);
+}
 @media only screen and (max-width: 1200px) {
   .sideBar {
     width: 60px;
