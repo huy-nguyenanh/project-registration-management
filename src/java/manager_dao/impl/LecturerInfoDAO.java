@@ -81,8 +81,8 @@ public class LecturerInfoDAO implements Serializable {
     }
 
     // Update Lecture's Info
-    public boolean updateLectureInfo(String lectureID, String groupID,
-            String topicID) throws SQLException, NamingException {
+    public boolean updateLectureInfo(String lectureID, String groupID) 
+            throws SQLException, NamingException {
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -90,12 +90,11 @@ public class LecturerInfoDAO implements Serializable {
             con = DBHelpers.makeConnection();
             if (con != null) {
                 String sql = "Update Lectures "
-                        + "Set TopicID = ?, GroupID = ? "
+                        + "Set GroupID = ? "
                         + "Where LecturerID = ? ";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, topicID);
-                stm.setString(2, groupID);
-                stm.setString(3, lectureID);
+                stm.setString(1, groupID);
+                stm.setString(2, lectureID);
 
                 int effectRows = stm.executeUpdate();
                 if (effectRows > 0) {
@@ -318,6 +317,37 @@ public class LecturerInfoDAO implements Serializable {
             }
         }
 
+        return false;
+    }
+
+    public boolean updateNotify(String lectureID, String notify) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "Update Lectures "
+                        + "Set Notify = ? "
+                        + "Where LecturerID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(0, notify);
+                stm.setString(1, lectureID);
+
+                int affectRow = stm.executeUpdate();
+                if (affectRow > 0) {
+                    return true;
+                }
+            }
+
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
         return false;
     }
 }

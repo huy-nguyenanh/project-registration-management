@@ -480,4 +480,35 @@ public class StudentInfoDAO implements Serializable, IStudentInfoDAO {
             }
         }
     }
+    
+    public boolean updateNotify(String studentID, String notify) throws NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "Update Students "
+                        + "Set Notify = ? "
+                        + "Where StudentID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(0, notify);
+                stm.setString(1, studentID);
+                
+                int affectRow = stm.executeUpdate();
+                if(affectRow > 0){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }

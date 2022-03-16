@@ -54,7 +54,6 @@ public class AdminUpdateStudentInfoServlet extends HttpServlet {
         String url = site_Map.getProperty(ApplicationConstant.AdminUpdateStudentInfoServlet.STUDENT_INFO);
         try {
             String studentId = request.getParameter("txtID");
-            String status = request.getParameter("grStatus");
             String fullname = request.getParameter("txtFullname");
             String groupId_new = request.getParameter("txtGroupID_new");
             String groupId_old = request.getParameter("txtGroupID_old");

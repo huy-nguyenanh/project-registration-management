@@ -32,6 +32,11 @@ public class TopicInfoDAO implements Serializable {
         return listTopics;
     }
 
+    public List<TopicDTO> getTopicInfoByLecID(String lecID) throws NamingException, SQLException {
+        searchTopicByLecID(lecID);  //co gia tri cua private listTopic
+        return getListTopics();
+    }
+
     // Load Topic
     public List<TopicDTO> loadTopic() throws NamingException, SQLException {
         Connection con = null;
@@ -241,6 +246,52 @@ public class TopicInfoDAO implements Serializable {
                 String sql = "Select TopicID, Topic_Name, DeadLine, Category, MajorID, Status, LectureID, GroupID "
                         + " From Topics "
                         + " Where MajorID Like ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, "%" + searchValue + "%");
+
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String TopicID = rs.getString("TopicID");
+                    String Topic_Name = rs.getString("Topic_Name");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    String DeadLine = dateFormat.format(rs.getDate("DeadLine"));
+                    String Category = rs.getString("Category");
+                    String MajorID = rs.getString("MajorID");
+                    boolean Status = rs.getBoolean("Status");
+                    String LectureID = rs.getString("LectureID");
+                    String GroupID = rs.getString("GroupID");
+
+                    TopicDTO tp = new TopicDTO(TopicID, Topic_Name, DeadLine, Category, MajorID, Status, LectureID, GroupID);
+                    if (this.listTopics == null) {
+                        this.listTopics = new ArrayList<>();
+                    }
+                    this.listTopics.add(tp);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public void searchTopicByLecID(String searchValue)
+            throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelpers.makeConnection();
+            if (conn != null) {
+                String sql = "Select TopicID, Topic_Name, DeadLine, Category, MajorID, Status, LectureID, GroupID "
+                        + " From Topics "
+                        + " Where LectureID Like ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + searchValue + "%");
 

@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 import utillsHelper.DBHelpers;
 
@@ -20,7 +21,13 @@ import utillsHelper.DBHelpers;
  * @author Minh Phuc
  */
 public class GroupDAO implements Serializable {
-    
+
+    private List<GroupDTO> groupList;
+
+    public List<GroupDTO> getMembersByLecID() {
+        return groupList;
+    }
+
     // admin
     public boolean adminAddStudentIntoGroup(String groupId, String studentId, String fullname, String role, String topicID)
             throws SQLException, NamingException {
@@ -45,7 +52,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -79,7 +86,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -113,7 +120,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -180,7 +187,7 @@ public class GroupDAO implements Serializable {
             if (rs.next()) {
                 String TopicID = rs.getString("TopicID");
                 groupIdList.add((new GroupDTO(TopicID)));
-                
+
             }
 
         } finally {
@@ -194,14 +201,14 @@ public class GroupDAO implements Serializable {
                 con.close();
             }
         }
-            return groupIdList;
-        
+        return groupIdList;
+
     }
 
     public boolean removeStudentFromGroup(String studentId) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
-        
+
         try {
             con = DBHelpers.makeConnection();
             if (con != null) {
@@ -212,7 +219,7 @@ public class GroupDAO implements Serializable {
                 stm.setString(1, studentId);
 
                 int effecRows = stm.executeUpdate();
-                if(effecRows > 0) {
+                if (effecRows > 0) {
                     return true;
                 }
             }
@@ -248,7 +255,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -282,7 +289,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -346,7 +353,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -379,7 +386,7 @@ public class GroupDAO implements Serializable {
                 }
             }
         } finally {
-            if(stm != null) {
+            if (stm != null) {
                 stm.close();
             }
             if (con != null) {
@@ -390,46 +397,105 @@ public class GroupDAO implements Serializable {
         return false;
     }
 
-        public ArrayList<GroupDTO> getStudentsInGroup(String groupId) throws SQLException, NamingException {
-            Connection con = null;
-            PreparedStatement stm = null;
-            ResultSet rs = null;
-            ArrayList<GroupDTO> memberList = new ArrayList<GroupDTO>();
+    public ArrayList<GroupDTO> getStudentsInGroup(String groupId) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<GroupDTO> memberList = new ArrayList<GroupDTO>();
 
-            try {
-                con = DBHelpers.makeConnection();
-                if (con != null) {
-                    String sql = "SELECT GroupID, MemberId, Fullname, Role, TopicID "
-                            + "FROM Groups "
-                            + "Where GroupID = ? and Role like 'Student'";
-                    stm = con.prepareStatement(sql);
-                    stm.setString(1, groupId);
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "SELECT GroupID, MemberId, Fullname, Role, TopicID "
+                        + "FROM Groups "
+                        + "Where GroupID = ? and Role like 'Student'";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, groupId);
 
+            }
+
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                //                String groupId = rs.getString("GroupID");
+                String memberId = rs.getString("MemberId");
+                String fullname = rs.getString("Fullname");
+                String role = rs.getString("Role");
+                String TopicID = rs.getString("TopicID");
+                memberList.add(new GroupDTO(groupId, memberId, fullname, TopicID, role));
+
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return memberList;
+        }
+    }
+
+    public List<GroupDTO> getGroupMembersByGroupID(String groupID) throws SQLException {
+        if (!groupID.isEmpty()) {
+            if (groupID.contains(",")) {
+                String[] list_GrId = groupID.split(", ", 5);
+                for (String grID : list_GrId) {
+                    searchMembersByGroupID(grID);
                 }
+                return getMembersByLecID();
+            } else {
+                searchMembersByGroupID(groupID);
+                return getMembersByLecID();
+            }
 
+        }
+        return null;
+    }
+
+    public void searchMembersByGroupID(String grID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelpers.makeConnection();
+            if (conn != null) {
+                String sql = "Select GroupID, MemberId, Fullname, Role, TopicID, Status "
+                        + "From Groups "
+                        + "Where GroupID like ? and Role <> 'Lecture'";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, grID);
                 rs = stm.executeQuery();
-
                 while (rs.next()) {
-    //                String groupId = rs.getString("GroupID");
+                    String groupId = rs.getString("GroupId");
                     String memberId = rs.getString("MemberId");
                     String fullname = rs.getString("Fullname");
                     String role = rs.getString("Role");
-                    String TopicID = rs.getString("TopicID");
-                    memberList.add(new GroupDTO(groupId, memberId, fullname, TopicID, role));
-                    
-                }
+                    String topicID = rs.getString("TopicID");
+                    boolean status = rs.getBoolean("Status");
 
-            } finally {
-                if (rs != null) {
-                    rs.close();
+                    GroupDTO gr = new GroupDTO(groupId, memberId, fullname, topicID, role, status);
+                    if (this.groupList == null) {
+                        this.groupList = new ArrayList<>();
+                    }
+                    this.groupList.add(gr);
                 }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-                return memberList;
+            }
+        } catch (Exception e) {
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
             }
         }
+    }
 }

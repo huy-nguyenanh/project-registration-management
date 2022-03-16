@@ -1,13 +1,10 @@
-
 package entity.core;
 
 import java.io.Serializable;
 import java.util.List;
 
+public class StudentDTO implements Serializable {
 
-
-
-public class StudentDTO implements Serializable{
     private String studentID;
     private String accountID;
     private String fullName;
@@ -18,7 +15,7 @@ public class StudentDTO implements Serializable{
     private String groupID;
     private boolean status;
     private String role = "Student";
-    
+
     private List<StudentDTO> student_list;
 
     public StudentDTO() {
@@ -41,9 +38,9 @@ public class StudentDTO implements Serializable{
     }
 
     public void setStudent_list(List<StudentDTO> student_list) {
-       this.student_list = student_list;
+        this.student_list = student_list;
     }
-    
+
     /**
      * @return the studentID
      */
@@ -156,7 +153,6 @@ public class StudentDTO implements Serializable{
         this.groupID = groupID;
     }
 
-
     /**
      * @return the status
      */
@@ -189,7 +185,5 @@ public class StudentDTO implements Serializable{
     public String toString() {
         return "StudentDTO{" + "studentID=" + studentID + ", accountID=" + accountID + ", fullName=" + fullName + ", DOB=" + DOB + ", email=" + email + ", phoneNumber=" + phoneNumber + ", majorID=" + majorID + ", groupID=" + groupID + ", status=" + status + ", role=" + role + '}';
     }
-    
-    
-    
+
 }

@@ -64,7 +64,66 @@ public class AccountDAO implements Serializable {
         }
         return null;
     }
+    
+    public String checkPassword(String password) throws NamingException, SQLException {
 
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "Select Username, Password "
+                        + "from Accounts "
+                        + "Where Password = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, password);
+
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String username = rs.getString("Username");
+                    return username;
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return null;
+    }
+
+//    public boolean changePassword(String username, String password) throws NamingException, SQLException {
+//
+//        Connection con = null;
+//        PreparedStatement stm = null;
+//        ResultSet rs = null;
+//
+//        try {
+//            con = DBHelpers.makeConnection();
+//            if (con != null) {
+//                String sql = "Update Account "
+//                        + "Set Password = ? "
+//                        + "Where Username = ? ";
+//                stm = con.prepareStatement(sql);
+//                stm.setString(1, password);
+//                stm.setString(2, username);
+//
+//                int effectRows = stm.executeUpdate();
+//                if (effectRows > 0) {
+//                    return true;
+//                }
+//            }
+//        } finally {
+//            if (con != null) {
+//                con.close();
+//            }
+//        }
+//
+//        return false;
+//    }
+    
     public boolean changePassword(String accountID, String password)
             throws NamingException, SQLException {
         Connection con = null;

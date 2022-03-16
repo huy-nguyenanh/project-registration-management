@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -27,6 +26,7 @@ import utillsHelper.ApplicationConstant;
  */
 @WebServlet(name = "AdminUpdateLectureInfoServlet", urlPatterns = {"/AdminUpdateLectureInfoServlet"})
 public class AdminUpdateLectureInfoServlet extends HttpServlet {
+
     private final String LECTURE_INFO = "lectureInfoPage";
 
     /**
@@ -42,25 +42,27 @@ public class AdminUpdateLectureInfoServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
-        
+
         String url = "";
-        
+
         String lectureId = request.getParameter("txtID");
-        String topicId = request.getParameter("txtTopicId");
         String groupId = request.getParameter("txtGroupId");
-        
+
         try {
             LecturerInfoDAO dao = new LecturerInfoDAO();
-            boolean result = dao.updateLectureInfo(lectureId, groupId, topicId);
-            
-            if(result) {
+            boolean result = dao.updateLectureInfo(lectureId, groupId);
+
+            if (result) {
                 url = site_Map.getProperty(ApplicationConstant.AdminUpdateLectureInfoServlet.LECTURE_INFO);
+            } else {
+                String Errmsg = "Update fails!!!";
+                request.setAttribute("ERROR_UPDATE", Errmsg);
             }
-            
-        } catch(SQLException ex) {
+
+        } catch (SQLException ex) {
             log("AdminUpdateLectureInfoServlet _ SQL" + ex.getMessage());
         } catch (NamingException ex) {
             log("AdminUpdateLectureInfoServlet _ Naming" + ex.getMessage());

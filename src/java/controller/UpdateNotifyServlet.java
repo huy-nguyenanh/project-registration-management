@@ -5,23 +5,18 @@
  */
 package controller;
 
-import entity.core.GroupDTO;
 import entity.core.StudentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import manager_dao.impl.GroupDAO;
+import manager_dao.impl.LecturerInfoDAO;
 import manager_dao.impl.StudentInfoDAO;
 import utillsHelper.ApplicationConstant;
 
@@ -29,8 +24,8 @@ import utillsHelper.ApplicationConstant;
  *
  * @author 84399
  */
-@WebServlet(name = "ShowListMemberInGroupServlet", urlPatterns = {"/ShowListMemberInGroupServlet"})
-public class ShowListMemberInGroupServlet extends HttpServlet {
+@WebServlet(name = "UpdateNotifyServlet", urlPatterns = {"/UpdateNotifyServlet"})
+public class UpdateNotifyServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,41 +39,35 @@ public class ShowListMemberInGroupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
 
-        String searchStudentByGroupId = request.getParameter("txtGroupId");
-        String url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
+        String lecID = request.getParameter("lectureID");
+        String groupID = request.getParameter("groupID");
+        String notify = request.getParameter("txtNotify");
+
+        String url = site_Map.getProperty(ApplicationConstant.UpdateNotifyServlet.RETURN_PAGE);
+
         try {
             boolean foundErr = false;
-            String Errmsg = "";
-            if (!searchStudentByGroupId.trim().isEmpty()) {
-//                    StudentInfoDAO dao = new StudentInfoDAO();
-//                    dao.searchStudentByGorupID(searchStudentByGroupId);
-//                    List<StudentDTO> result = dao.getListStudents();
-                        GroupDAO grDao = new GroupDAO();
-                        ArrayList<GroupDTO> list_member = grDao.getStudentsInGroup(searchStudentByGroupId);
-                        
-                    request.setAttribute("LIST_MEMBER", list_member);
-                } // end search Values has values
-            else {
-                foundErr = true;
-                Errmsg = "Student not in group";
-            }
-            if(foundErr){
-                request.setAttribute("ERROR_LIST_MEMBER", Errmsg);
-            }
-        } catch (SQLException ex) {
-            log("AdminSearchStudentByIdServlet _ SQL" + ex.getMessage());
-        } catch (NamingException ex) {
-            log("AdminSearchStudentByIdServlet _ Naming" + ex.getMessage());
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            LecturerInfoDAO lecDAO = new LecturerInfoDAO();
+            StudentInfoDAO stuDAO = new StudentInfoDAO();
 
+            boolean lec_update_notify_result = lecDAO.updateNotify(lecID, notify);
+            if (!lec_update_notify_result) {
+                foundErr = true;
+            } else {
+                stuDAO.searchStudentByGorupID(groupID);
+                List<StudentDTO> list_student_in_group = stuDAO.getListStudents();
+                for (StudentDTO student : list_student_in_group) {
+                    String studentID = student.getStudentID();
+                    boolean stu_update_notify_result = stuDAO.updateNotify(studentID, notify);
+                }
+            }
+
+        } catch (Exception e) {
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

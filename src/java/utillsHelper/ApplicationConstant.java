@@ -35,7 +35,7 @@ public class ApplicationConstant {
 
     public class LoginServlet {
 
-        public static final String INVALID_PAGE = "loginPageErrors";
+        public static final String INVALID_PAGE = "loginPage";
         public static final String STUDENT_HOME_PAGE = "studentHomePage";
         public static final String LECTURE_HOME_PAGE = "lectureHomePage";
         public static final String HOME_PAGE = "homePage";
@@ -93,10 +93,15 @@ public class ApplicationConstant {
         public static final String STUDENT_HOME_PAGE = "studentHomePage";
     }
 
+    public class UpdateProfileLectureServlet {
+
+        public static final String PROFILE_PAGE = "changePasswordPage";
+    }
+
     public class AdminSearchLecturerServlet {
 
         public static final String SEARCH_RETURN = "lecturePage";
-        
+
     }
 
     public class AdminSearchTopicServlet {
@@ -109,4 +114,14 @@ public class ApplicationConstant {
         public static final String CREATE_GROUP_RETURN = "studentPage";
     }
 
+    public class UpdateNotifyServlet {
+
+        public static final String RETURN_PAGE = "notifyPage";
+    }
+    public class SendEmailServlet {
+
+        public static final String RETURN_PAGE = "notifyPage";
+    }
+    
+    
 }

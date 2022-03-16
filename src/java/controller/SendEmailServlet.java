@@ -5,23 +5,25 @@
  */
 package controller;
 
-import entity.core.GroupDTO;
 import entity.core.StudentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import manager_dao.impl.GroupDAO;
+import javax.servlet.http.HttpSession;
+import manager_dao.impl.GmailDAO;
 import manager_dao.impl.StudentInfoDAO;
 import utillsHelper.ApplicationConstant;
 
@@ -29,8 +31,8 @@ import utillsHelper.ApplicationConstant;
  *
  * @author 84399
  */
-@WebServlet(name = "ShowListMemberInGroupServlet", urlPatterns = {"/ShowListMemberInGroupServlet"})
-public class ShowListMemberInGroupServlet extends HttpServlet {
+@WebServlet(name = "SendEmailServlet", urlPatterns = {"/SendEmailServlet"})
+public class SendEmailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,41 +46,53 @@ public class ShowListMemberInGroupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
 
-        String searchStudentByGroupId = request.getParameter("txtGroupId");
-        String url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
+        String notify = request.getParameter("txtNotify");
+        String groupId = request.getParameter("txtGroupId");
+        HttpSession session = request.getSession(false);
+        String url = site_Map.getProperty(ApplicationConstant.SendEmailServlet.RETURN_PAGE);
         try {
             boolean foundErr = false;
-            String Errmsg = "";
-            if (!searchStudentByGroupId.trim().isEmpty()) {
-//                    StudentInfoDAO dao = new StudentInfoDAO();
-//                    dao.searchStudentByGorupID(searchStudentByGroupId);
-//                    List<StudentDTO> result = dao.getListStudents();
-                        GroupDAO grDao = new GroupDAO();
-                        ArrayList<GroupDTO> list_member = grDao.getStudentsInGroup(searchStudentByGroupId);
-                        
-                    request.setAttribute("LIST_MEMBER", list_member);
-                } // end search Values has values
-            else {
-                foundErr = true;
-                Errmsg = "Student not in group";
-            }
-            if(foundErr){
-                request.setAttribute("ERROR_LIST_MEMBER", Errmsg);
-            }
-        } catch (SQLException ex) {
-            log("AdminSearchStudentByIdServlet _ SQL" + ex.getMessage());
-        } catch (NamingException ex) {
-            log("AdminSearchStudentByIdServlet _ Naming" + ex.getMessage());
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            String ErrMsg = "";
 
+            StudentInfoDAO studao = new StudentInfoDAO();
+            studao.searchStudentByGorupID(groupId);
+            List<StudentDTO> student_list = studao.getListStudents();
+            if (student_list == null) {
+                foundErr = true;
+                ErrMsg = "This group not exist";
+                response.sendRedirect(url);
+            }
+            String lecId = (String) session.getAttribute("LECTURE_ID");
+            String to_email = null;
+            for (StudentDTO stu : student_list) {
+                to_email = stu.getEmail() + " ";
+            }
+            GmailDAO gmail_dao = new GmailDAO();
+            if (to_email != null) {
+                gmail_dao.sendText(to_email, notify, lecId);
+            } else {
+                foundErr = true;
+                ErrMsg = "No email to send!!!";
+            }
+            if (foundErr) {
+                request.setAttribute("SEND_MAIL_ERROR", ErrMsg);
+                response.sendRedirect(url);
+            }
+        } catch (AddressException e) {
+            log("SendEmailServlet   AddressException: " + e.getMessage());
+        } catch (MessagingException e) {
+            log("SendEmailServlet   MessagingException: " + e.getMessage());
+        } catch (SQLException e) {
+            log("SendEmailServlet   SQLException: " + e.getMessage());
+        } catch (NamingException e) {
+            log("SendEmailServlet   NamingException: " + e.getMessage());
+        } finally{
+            response.sendRedirect(url);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

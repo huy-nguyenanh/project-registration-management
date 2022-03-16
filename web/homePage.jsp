@@ -12,13 +12,13 @@
             href="./assets/icon/fontawesome-free-6.0.0-web/css/all.css"
             />
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        
-<!--        <script type = "text/javascript" >
-            window.history.pushState(null, null, window.location.href);
-            window.onpopstate = function () {
-                window.history.go(1);
-            };
-        </script>-->
+
+        <!--        <script type = "text/javascript" >
+                    window.history.pushState(null, null, window.location.href);
+                    window.onpopstate = function () {
+                        window.history.go(1);
+                    };
+                </script>-->
 
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css">
@@ -81,7 +81,7 @@
                             <div class="profile">
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
                                 <ul class="profile-link">
-                                    <li><a href="profile.html">Profile</a></li>
+                                    
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </div>
@@ -160,7 +160,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="lecture.html">
+                                <a href="lecturePage">
                                     <span class="fa-solid fa-chalkboard-user"> </span>
                                     <span>Lecture</span>
                                 </a>
@@ -182,11 +182,11 @@
                         </div>
                         <div class="right-content">
                             <span >${welcome_name}</span>
-                            <span class="fa-solid fa-bell"></span>
+                            <!--<span class="fa-solid fa-bell"></span>-->
                             <div class="profile">
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
                                 <ul class="profile-link">
-                                    <li><a href="profile.html">Profile</a></li>
+                                    <li><a href="profilePage">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </div>
@@ -241,6 +241,8 @@
     </c:if>
     <c:if test="${role eq 'Lecture'}">
         <body>
+            <c:set var="lecID" value="${sessionScope.LECTURE_ID}"/>
+            <c:set var="grID" value="${sessionScope.LECTURE_GROUP_ID}"/>
             <div class="wrapper">
                 <input type="checkbox" id="sidebar-toggle" />
                 <section class="sideBar">
@@ -264,16 +266,22 @@
                                     <span>Student</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="lecture.html">
-                                    <span class="fa-solid fa-chalkboard-user"> </span>
-                                    <span>Lecture</span>
-                                </a>
-                            </li>
+                            <!--                            <li>
+                                                            <a href="lecturePage">
+                                                                <span class="fa-solid fa-chalkboard-user"> </span>
+                                                                <span>Lecture</span>
+                                                            </a>
+                                                        </li>-->
                             <li>
                                 <a href="topicPage">
                                     <span class="fa-solid fa-shapes"> </span>
                                     <span>Topic</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="notifyPage">
+                                    <span class="fa-solid fa-shapes"> </span>
+                                    <span>Notify</span>
                                 </a>
                             </li>
                         </ul>
@@ -287,12 +295,12 @@
                         </div>
                         <div class="right-content">
                             <span >${welcome_name}</span>
-                            <span class="fa-solid fa-bell"></span>
+                            <!--<span class="fa-solid fa-bell"></span>-->
                             <div class="profile">
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
                                 <ul class="profile-link">
-                                    <li><a href="profile.html">Profile</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="profilePage">Profile</a></li>
+                                    <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </div>
                         </div>

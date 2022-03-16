@@ -3,7 +3,7 @@
     <Resource auth="Container" 
               driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
               name="NguyenAnhHuy" 
-              password="huy7105143" 
+              password="1234567890" 
               type="javax.sql.DataSource" 
               url="jdbc:sqlserver://localhost:1433;database=SWP_Project;instanceName=SQLEXPRESS" 
               username="sa"/>

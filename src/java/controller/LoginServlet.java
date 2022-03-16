@@ -12,6 +12,8 @@ import entity.errors.LoginCreateError;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -46,7 +48,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
 
@@ -59,16 +61,16 @@ public class LoginServlet extends HttpServlet {
             //call DAO
             LoginDAO dao = new LoginDAO();
             String role = dao.checkLogin(username, password);
-            
-            if(role == null) {
+
+            if (role == null) {
                 foundErr = true;
                 errors.setAccountOrPasswordIncorrect("Username or Password is incorrect");
             }
-            if(foundErr) {
+            if (foundErr) {
                 request.setAttribute("LOGIN_ERRORS", errors);
                 return;
             }
-            if(role.equals("Admin")){
+            if (role.equals("Admin")) {
                 HttpSession session = request.getSession(true);
                 AdminManagerDAO adminDAO = new AdminManagerDAO();
                 AdminDTO admin = adminDAO.getAdminByUsername(username);
@@ -77,8 +79,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("ADMIN_ID", adminID);
                 session.setAttribute("WELCOME_NAME", adminID);
                 url = site_Map.getProperty(ApplicationConstant.LoginServlet.HOME_PAGE);
-            }
-            else if (role.equals("Student")) {
+            } else if (role.equals("Student")) {
                 HttpSession session = request.getSession(true);
                 StudentInfoDAO stuDAO = new StudentInfoDAO();
                 StudentDTO student = stuDAO.getStudentbyEmail(username);
@@ -86,20 +87,35 @@ public class LoginServlet extends HttpServlet {
                 String studentID = student.getStudentID();
                 session.setAttribute("ROLE", role);
                 session.setAttribute("WELCOME_NAME", fullName);
+                session.setAttribute("USER_NAME", student.getEmail());
                 session.setAttribute("STUDENT_ID", studentID);
                 session.setAttribute("STUDENT_GROUP_ID", student.getGroupID());
                 session.setAttribute("ACCOUNT", student);
                 url = site_Map.getProperty(ApplicationConstant.LoginServlet.HOME_PAGE);
-            } else if (role.equals("Lecture")){
+            } else if (role.equals("Lecture")) {
                 HttpSession session = request.getSession(true);
                 LecturerInfoDAO lecDAO = new LecturerInfoDAO();
                 LecturerDTO lecture = lecDAO.getLecturebyEmail(username);
                 String fullName = lecture.getFullname();
+                String lectureID = lecture.getLectureID();
+                String groupID = lecture.getGroupID();
+                String [] arr_groupId_affter_split = groupID.split(", ");
+                List<String> list_groupID = null;
+                for (int i = 0; i < arr_groupId_affter_split.length; i++) {
+                    if(list_groupID == null)
+                        list_groupID = new ArrayList<>();
+                    list_groupID.add(arr_groupId_affter_split[i]);
+                }
                 session.setAttribute("ROLE", role);
                 session.setAttribute("WELCOME_NAME", fullName);
+                session.setAttribute("LECTURE_ID", lectureID);
+                session.setAttribute("USER_NAME", lecture.getEmail());
+                session.setAttribute("LECTURE_GROUP_ID", groupID);
+                session.setAttribute("LECTURE_INFO", lecture);
+                session.setAttribute("LIST_GROUPID_MENTIT_BY_LECTURE", list_groupID);
                 url = site_Map.getProperty(ApplicationConstant.LoginServlet.HOME_PAGE);
             }
-            
+
         } catch (NamingException ex) {
             log("LoginAdminServlet   Naming: " + ex.getMessage());
         } catch (SQLException ex) {
@@ -109,7 +125,7 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             out.close();
         }
-            }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

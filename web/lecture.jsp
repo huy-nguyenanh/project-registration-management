@@ -70,11 +70,10 @@
                         </div>
                         <div class="right-content">
                             <span >${welcome_name}</span>
-                            <span class="fa-solid fa-bell"></span>
+                            <!--<span class="fa-solid fa-bell"></span>-->
                             <div class="profile">
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
                                 <ul class="profile-link">
-                                    <li><a href="profile.html">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </div>
@@ -93,6 +92,27 @@
                                             <input type="file" id="import-file" name="file_name" />
                                         </form>
                                     </div>
+                                    <c:set var="errors" value="${requestScope.UPLOAD_LECTURE_FILE_ERROR}"/>
+                                    <c:if test="${not empty errors}">
+                                        <div id="error-modal" class="">
+                                            <!-- Modal content -->
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <c:if test="${not empty errors.uploadFile_False}">
+                                                    <span class="error">${errors.uploadFile_False} </span>
+                                                </c:if>
+                                                <c:if test="${not empty errors.email_Not_Correct_In_Excel}">
+                                                    <span class="error">${errors.email_Not_Correct_In_Excel} </span>
+                                                </c:if>
+                                                <c:if test="${not empty errors.insertToDB_False}">
+                                                    <span class="error">${errors.insertToDB_False} </span>
+                                                </c:if>
+                                                <c:if test="${not empty errors.create_acount_in_DB}">
+                                                    <span class="error">${errors.create_acount_in_DB} </span>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </c:if>
                                     <div class="list-action-right">
                                         <form id="form-search-lecture" class="form-search" action="searchLectureAction">
                                             <input
@@ -112,6 +132,16 @@
                                     </div>
                                 </div>
                                 <h3>List</h3>
+                                <c:set var="error_update" value="${requestScope.ERROR_UPDATE}"/>
+                                <c:if test="${not empty error_update}">
+                                    <div id="error-modal" class="">
+                                        <!-- Modal content -->
+                                        <div class="modal-content">
+                                            <span class="close">&times;</span>
+                                            <span class="error">${error_update}</span>
+                                        </div>
+                                    </div>
+                                </c:if>
                                 <c:if test="${empty searchLectureValue}" >
                                     <div class="table-responsive">
                                         <table id="table-id">
@@ -124,14 +154,12 @@
                                                     <th>Phone</th>
                                                     <th>Topic ID</th>
                                                     <th>Group ID</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <c:set var="lecture_list" value="${lecDAO.loadLecturerInfo()}"/>
                                             <c:if test="${not empty lecture_list}">
                                                 <tbody>
                                                     <c:forEach var="lecture" items= "${lecture_list}" varStatus="counter">
-                                                    <form action="adminUpdateLectureInfoAction" enctype="multipart/form-data">
                                                         <tr>
                                                             <td>${counter.count}</td>
                                                             <td>
@@ -151,24 +179,14 @@
                                                                 <input type="hidden" name="txtDOB" value="${lecture.phoneNumber}" />
                                                             </td>
                                                             <td>
-                                                                <%--${lecture.topicID}--%>
-                                                                <input type="text" name="txtTopicId" value="${lecture.topicID}" />
+                                                                ${lecture.topicID}
+                                                                <input type="hidden" name="txtTopicId" value="${lecture.topicID}" />
                                                             </td>
                                                             <td>
-                                                                <%--${lecture.groupID}--%>
-                                                                <input type="text" name="txtGroupId" value="${lecture.groupID}" />
-                                                            </td>
-                                                            <td>
-                                                                <button
-                                                                    style="width: 100%; background: red; color: aliceblue"
-                                                                    type="submit"
-                                                                    >
-                                                                    Update
-                                                                </button>
+                                                                ${lecture.groupID}
                                                             </td>
                                                         </tr>
-                                                    </form>
-                                                </c:forEach>
+                                                    </c:forEach>
                                                 </tbody>
                                             </c:if>
                                         </table>
@@ -186,14 +204,13 @@
                                                     <th>Phone</th>
                                                     <th>Topic ID</th>
                                                     <th>Group ID</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
+
                                             <c:set var="lecture_search_value" value="${requestScope.SEARCH_LECTURER}"/>
                                             <c:if test="${not empty lecture_search_value}">
                                                 <tbody>
                                                     <c:forEach var="lecture" items= "${lecture_search_value}" varStatus="counter">
-                                                    <form action="adminUpdateLectureInfoAction" enctype="multipart/form-data">
                                                         <tr>
                                                             <td>${counter.count}</td>
                                                             <td>
@@ -217,22 +234,18 @@
                                                                 <input type="text" name="txtTopicId" value="${lecture.topicID}" />
                                                             </td>
                                                             <td>
-                                                                <%--${lecture.groupID}--%>
-                                                                <input type="text" name="txtGroupId" value="${lecture.groupID}" />
+                                                                ${lecture.groupID}
                                                             </td>
-                                                            <td>
-                                                                <button
-                                                                    style="width: 100%; background: red; color: aliceblue"
-                                                                    type="submit"
-                                                                    >
-                                                                    Update
-                                                                </button>
-                                                            </td>
+
                                                         </tr>
-                                                    </form>
-                                                </c:forEach>
+                                                    </c:forEach>
                                                 </tbody>
                                             </c:if>
+                                            <c:if test="${empty lecture_search_value}">
+                                                <tr>
+                                                    <td>No result matches!!!</td>
+                                                </tr>
+                                            </c:if> 
                                         </table>
                                     </div>
                                 </c:if>
@@ -254,7 +267,7 @@
                             <div class="profile">
                                 <img src="./assets/img/ava.jpg" alt="profile-image" />
                                 <ul class="profile-link">
-                                    <li><a href="profile.html">Profile</a></li>
+                                    <li><a href="profilePage">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </div>
@@ -286,6 +299,7 @@
                                     </div>
                                 </div>
                                 <h3>List</h3>
+
                                 <c:if test="${empty searchLectureValue}">
                                     <div class="table-responsive">
                                         <table id="table-id">
@@ -304,7 +318,6 @@
                                             <c:if test="${not empty lecture_list}">
                                                 <tbody>
                                                     <c:forEach var="lecture" items= "${lecture_list}" varStatus="counter">
-                                                    <form action="adminUpdateLectureInfoAction" enctype="multipart/form-data">
                                                         <tr>
                                                             <td>${counter.count}</td>
                                                             <td>
@@ -332,8 +345,7 @@
                                                                 <input type="hidden" name="txtGroupId" value="${lecture.groupID}" />
                                                             </td>
                                                         </tr>
-                                                    </form>
-                                                </c:forEach>
+                                                    </c:forEach>
                                                 </tbody>
                                             </c:if>
                                         </table>
@@ -389,6 +401,11 @@
                                                 </c:forEach>
                                                 </tbody>
                                             </c:if>
+                                            <c:if test="${empty lecture_search_value}">
+                                                <tr>
+                                                    <td>No result matches!!!</td>
+                                                </tr>
+                                            </c:if> 
                                         </table>
                                     </div>
                                 </c:if>
