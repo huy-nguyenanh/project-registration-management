@@ -132,7 +132,8 @@ td {
   .main-content {
     margin-left: 60px;
   }
-  .main-content header {
+  .main-content header,
+  .main-content footer {
     left: 60px;
     width: calc(100% - 60px);
   }
@@ -157,7 +158,8 @@ td {
   #sidebar-toggle:checked ~ .main-content {
     margin-left: 60px;
   }
-  #sidebar-toggle:checked ~ .main-content header {
+  #sidebar-toggle:checked ~ .main-content header,
+  #sidebar-toggle:checked ~ .main-content footer {
     left: 60px;
   }
 }
@@ -193,4 +195,47 @@ td {
   .left-content h2:last-child::after {
     content: "CPM";
   }
+  .link {
+  }
+}
+
+.my-carsousel img {
+  max-height: 750px;
+  height: 100%;
+}
+
+footer {
+  position: fixed;
+  left: 240px;
+  bottom: 0;
+  z-index: 100;
+  width: calc(100% - 240px);
+  height: 170px;
+  padding: 0rem 3rem;
+  border-bottom: 1px solid #ccc;
+  transition: left 500ms;
+  background-color: #fff;
+}
+footer img {
+  padding-top: 20px;
+  object-fit: cover;
+  height: 60px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
+}
+
+.link {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.link ul > li:first-child {
+  font-size: 1.5rem;
+  padding-bottom: 15px;
+  color: goldenrod;
+}
+.link ul > li {
 }

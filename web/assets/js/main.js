@@ -62,8 +62,6 @@ function showErrorModal() {
   const a3 = document.querySelector("span.error");
 
   if (a3.textContent !== "") {
-    alert(a3.textContent);
-    a0.style.display = "block";
     a2.onclick = function () {
       a0.style.display = "none";
       a3.textContent = "";

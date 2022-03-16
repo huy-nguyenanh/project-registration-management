@@ -43,7 +43,8 @@ img {
 #sidebar-toggle:checked ~ .main-content {
   margin-left: 60px;
 }
-#sidebar-toggle:checked ~ .main-content header {
+#sidebar-toggle:checked ~ .main-content header,
+#sidebar-toggle:checked ~ .main-content footer {
   left: 60px;
   width: calc(100% - 60px);
 }
@@ -81,7 +82,7 @@ img {
 .bottom-sideBar li a:hover {
   background: #faae2d;
 }
-.li-active a{
+.li-active a {
   background: #faae2d;
 }
 /* .bottom-sideBar a i {
@@ -201,4 +202,10 @@ header {
   margin-bottom: 1rem;
   padding: 1rem 0;
   font-size: 18px;
+}
+
+@media only screen and (max-width: 600px) {
+  .left-content h2:last-child::after {
+    content: "CPM";
+  }
 }
