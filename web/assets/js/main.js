@@ -99,10 +99,29 @@ function updateProfile() {
     }
   });
 }
+function editMode() {
+  const viewBtn = document.getElementById("view-mode");
+  const editBtn = document.getElementById("edit-mode");
+  const table = document.querySelector(".table-responsive");
+  const tableEdit = document.querySelector(".table-responsive2");
+
+  if (!viewBtn || !editBtn) return;
+
+  editBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    table.style.display = "none";
+    tableEdit.style.display = "block";
+  });
+  viewBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    table.style.display = "block";
+    tableEdit.style.display = "none";
+  });
+}
 
 function validatePassword() {
-  const password = document.querySelector("input[name=password]");
-  const confirm = document.querySelector("input[name=confirm]");
+  const password = document.getElementById("3");
+  const confirm = document.getElementById("4");
   if (confirm.value === password.value) {
     confirm.setCustomValidity("");
   } else {
@@ -113,7 +132,8 @@ function validatePassword() {
   dropdownProfile();
   submitImportOnchange();
   confirmSubmit();
-  editButton();
+  // editButton();
   // showErrorModal();
   updateProfile();
+  editMode();
 })();

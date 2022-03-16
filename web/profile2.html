@@ -71,23 +71,43 @@
 
         <div class="container">
           <h3 class="title">Profile Information</h3>
-          <!-- <button id="update-profile-btn">Change Password</button> -->
-          <a href="profile2.html">Change Password</a>
+          <!-- <button id="update-profile-btn">Back</button> -->
+          <a href="profile.html" class="">Back</a>
+         
 
-          <div id="profile-1" class="profile-content">
+          <div id="profile-2" class="profile-content">
             <ul class="profile-list">
-              <li>Name</li>
-              <li>Phone</li>
+              <li>ID</li>
+              <li>Old Password</li>
+              <li>New Password</li>
+              <li>Confirm Password</li>
+              <li></li>
+             
 
             </ul>
+            <form action="">
+          
             <ul class="profile-list">
-              <li>Nguyen Van A</li>
-              <li>84 123 456 789</li>
+              <li>
+                SE150994
+              </li>
+              <li>
+                <input type="password" name="" id="2" required>
+              </li>
+              <li>
+                <input type="password" name="password" id="3" placeholder="New password" onChange="validatePassword()" required >
+              </li>
+              <li>
+                <input type="password" name="confirm" id="4" placeholder="Confirm password" onChange="validatePassword()" required>
+              </li>
+              <li>
+                <button id="" type="reset">Reset</button>
+                <button id="submit-profile-btn" type="submit">Submit</button>
+              </li>
             </ul>
-            </ul>
+          </form> 
+            
           </div>
-
-       
         </div>
       </main>
       <script src="./assets/js/main.js"></script>

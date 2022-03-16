@@ -557,29 +557,29 @@
         </div>
         <script src="./assets/js/main.js"></script>
         <script>
-                                                            function createGroup() {
-                                                            var list = document.querySelectorAll("#chkCreate");
-                                                            var str = "createGroupAction?";
-                                                            if (list.length === 1)
-                                                            {
-                                                            str += "chkCreate" + list[0].value;
-                                                            }
-                                                            else
-                                                            {
-                                                            for (i = 0; i <= list.length; i++) {
-                                                            try {
-                                                            if (list[i].checked) {
-                                                            if (i === 0) {
-                                                            str += "chkCreate=" + list[0].value;
-                                                            } else {
-                                                            str += "&chkCreate=" + list[i].value;
-                                                            }
-                                                            }
-                                                            } catch {}
-                                                            }
-                                                            }
-                                                            window.location.href = str;
-                                                            }
+                function createGroup() {
+                var list = document.querySelectorAll("#chkCreate");
+                var str = "createGroupAction?";
+                if (list.length === 1)
+                {
+                str += "chkCreate" + list[0].value;
+                }
+                else
+                {
+                for (i = 0; i <= list.length; i++) {
+                try {
+                if (list[i].checked) {
+                if (i === 0) {
+                str += "chkCreate=" + list[0].value;
+                } else {
+                str += "&chkCreate=" + list[i].value;
+                }
+                }
+                } catch {}
+                }
+                }
+                window.location.href = str;
+                }
         </script>
         <script>
             function findGetParameter(parameterName) {
