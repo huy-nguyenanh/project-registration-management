@@ -16,10 +16,10 @@ function dropdownProfile() {
     }
   });
 }
-function submitImportOnchange() {
+function submitImportOnchange(form, button) {
   // submit file on change
-  const formImportFile = document.getElementById("import-form");
-  const importFile = document.getElementById("import-file");
+  const formImportFile = document.getElementById(form);
+  const importFile = document.getElementById(button);
   if (!importFile) return;
   importFile.addEventListener("change", () => {
     formImportFile.submit();
@@ -54,26 +54,26 @@ function confirmSubmit() {
   });
 }
 function showErrorModal() {
-  // Error modal
-
   const a0 = document.getElementById("error-modal");
-  const a1 = document.getElementById("myBtn");
   const a2 = document.getElementsByClassName("close")[0];
   const a3 = document.querySelector("span.error");
 
-  if (a3.textContent !== "") {
+  if (!a0) return;
+
+  if (a2) {
     a2.onclick = function () {
       a0.style.display = "none";
       a3.textContent = "";
     };
-    window.onclick = function (event) {
-      if (event.target == a0) {
-        a0.style.display = "none";
-        a3.textContent = "";
-      }
-    };
   }
+  window.onclick = function (event) {
+    if (event.target == a0) {
+      a0.style.display = "none";
+      a3.textContent = "";
+    }
+  };
 }
+
 function updateProfile() {
   const btn = document.getElementById("update-profile-btn");
   // const submitBtn = document.getElementById("submit-profile-btn");
@@ -116,7 +116,6 @@ function editMode() {
     tableEdit.style.display = "none";
   });
 }
-
 function validatePassword() {
   const password = document.getElementById("3");
   const confirm = document.getElementById("4");
@@ -126,12 +125,33 @@ function validatePassword() {
     confirm.setCustomValidity("Passwords do not match");
   }
 }
+function createGroup() {
+  const list = document.querySelectorAll("#chkCreate");
+  const str = "createGroupAction?";
+  if (!Array.isArray(list) || list.length === 0) return;
+  if (list.length === 1) {
+    str += "chkCreate" + list[0].value;
+  } else {
+    for (i = 0; i <= list.length; i++) {
+      try {
+        if (list[i].checked) {
+          if (i === 0) {
+            str += "chkCreate=" + list[0].value;
+          } else {
+            str += "&chkCreate=" + list[i].value;
+          }
+        }
+      } catch {}
+    }
+  }
+  window.location.href = str;
+}
 (() => {
   dropdownProfile();
-  submitImportOnchange();
+  submitImportOnchange("import-form", "import-file");
   confirmSubmit();
-  // editButton();
-  // showErrorModal();
+  showErrorModal();
   updateProfile();
   editMode();
+  createGroup();
 })();

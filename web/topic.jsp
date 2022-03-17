@@ -11,7 +11,6 @@
             rel="stylesheet"
             href="./assets/icon/fontawesome-free-6.0.0-web/css/all.css"
             />
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
         <link rel="stylesheet" href="./assets/css/student.css" />
@@ -717,26 +716,6 @@
             </c:if>
         </div>
         <script src="./assets/js/main.js"></script>
-        <script>
-                                                    function showErrorModal() {
-                                                    const a0 = document.getElementById("error-modal");
-                                                    const a2 = document.getElementsByClassName("close")[0];
-                                                    const a3 = document.querySelector("span.error");
-                                                    a2.onclick = function () {
-                                                    a0.style.display = "none";
-                                                    a3.textContent = "";
-                                                    };
-                                                    window.onclick = function (event) {
-                                                    if (event.target == a0) {
-                                                    a0.style.display = "none";
-                                                    a3.textContent = "";
-                                                    }
-                                                    };
-                                                    }
-                                                    (() => {
-                                                    showErrorModal();
-                                                    })();
-        </script>
     </body>
 
 </html>

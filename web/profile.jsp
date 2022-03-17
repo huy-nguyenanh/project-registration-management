@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </header>
-
+                <c:if test="${role eq 'Student'}">
                 <div class="container">
                     <h3 class="title">Profile Information</h3>
                     <!-- <button id="update-profile-btn">Change Password</button> -->
@@ -120,6 +120,35 @@
 
 
                 </div>
+                </c:if>
+                <c:if test="${role eq 'Lecture'}">
+                <div class="container">
+                    <h3 class="title">Profile Information</h3>
+                    <!-- <button id="update-profile-btn">Change Password</button> -->
+                    <!-- <a href="changePasswordPage">Change Password</a> -->
+                    <div id="profile-1" class="profile-content">
+                        <ul class="profile-list">
+                            <li>Name</li>
+                            <li>Phone</li>
+                            <li>Student ID</li>
+                            <li>Email</li>
+                            <li>Date Of Birth</li>
+                            <li>Major</li>
+                        </ul>
+                        <c:set var="stuInfo" value="${stuDAO.getStudentbyID(stuID)}"/>
+                        <ul class="profile-list">
+                            <li>${stuInfo.fullName}</li>
+                            <li>${stuInfo.phoneNumber}</li>
+                            <li>${stuInfo.studentID}</li>
+                            <li>${stuInfo.email}</li>
+                            <li>${stuInfo.DOB}</li>
+                            <li>${stuInfo.majorID}</li>
+                        </ul>
+                    </div>
+
+
+                </div>
+                </c:if>
             </main>
             <script src="./assets/js/main.js"></script>
     </body>

@@ -6,6 +6,7 @@ textarea {
   border-radius: 5px;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px #999;
+  margin: 10px 0;
 }
 
 label {
@@ -14,4 +15,17 @@ label {
 
 select {
   display: inline-block;
+}
+
+.content button {
+  background-color: var(--background-nav);
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.content button[type = reset] {
+  background-color: #faae2d;
 }

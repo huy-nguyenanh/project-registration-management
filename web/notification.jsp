@@ -16,7 +16,6 @@
 
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
-        <link rel="stylesheet" href="./assets/css/student.css" />
         <link rel="stylesheet" href="./assets/css/notification.css" />
         <c:set var="grID_list" value="${sessionScope.LIST_GROUPID_MENTIT_BY_LECTURE}"/>
         <c:set var="role" value="${sessionScope.ROLE}"/>
@@ -123,8 +122,9 @@
                                 </c:forEach>
                                 <input type="hidden" name="txtGroupId" value="${groupID_todo}" />
                             </select>
-                            <textarea name="txtNotify" id="" cols="50" rows="10" placeholder="Send text."></textarea>
-                            <button class="myBtn" type="submit">Send</button>
+                            <textarea name="txtNotify" id="" cols="50" rows="10" placeholder="Send text..."></textarea>
+                            <button type="reset">Reset</button>
+                            <button type="submit">Send</button>
                         </div>
                     </form>
                 </div>

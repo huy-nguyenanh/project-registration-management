@@ -104,6 +104,11 @@
                                             <label for="import-file">Import</label>
                                             <input type="file" id="import-file" name="file_name" />
                                         </form>
+                                        <form action="exportStudentFileAction" >
+                                            <label for="export-file">Export</label>
+                                            <input style="display:inline-block;" type="text" id="export-file" name="file_name" />
+                                            <input type="submit" />
+                                        </form>
                                         <c:set var="errors" value="${requestScope.UPLOAD_FILE_ERROR}"/>
                                         <c:if test="${not empty errors}">
                                             <div id="error-modal" class="">
@@ -133,11 +138,7 @@
                                         </c:if>
                                     </div>
 
-                                    <form action="exportStudentFileAction" >
-                                        <label for="export">Export</label>
-                                        <input type="text" id="export" name="file_name" />
-                                        <input type="submit" />
-                                    </form>
+                                 
 
                                     <div class="list-action-right">
                                         <form id="form-search-id" class="form-search" action="searchStudentAction">
@@ -799,54 +800,6 @@
                 </main>
             </c:if>
             <script src="./assets/js/main.js"></script>
-            <script>
-                                                    function createGroup() {
-                                                    var list = document.querySelectorAll("#chkCreate");
-                                                    var str = "createGroupAction?";
-                                                    if (list.length === 1)
-                                                    {
-                                                    str += "chkCreate" + list[0].value;
-                                                    }
-                                                    else
-                                                    {
-                                                    for (i = 0; i <= list.length; i++) {
-                                                    try {
-                                                    if (list[i].checked) {
-                                                    if (i === 0) {
-                                                    str += "chkCreate=" + list[0].value;
-                                                    } else {
-                                                    str += "&chkCreate=" + list[i].value;
-                                                    }
-                                                    }
-                                                    } catch {}
-                                                    }
-                                                    }
-                                                    window.location.href = str;
-                                                    }
-            </script>
-            <script>
-                function showErrorModal() {
-                const a0 = document.getElementById("error-modal");
-                const a2 = document.getElementsByClassName("close")[0];
-                const a3 = document.querySelector("span.error");
-                if (!a2) return;
-                a2.onclick = function () {
-                a0.style.display = "none";
-                a3.textContent = "";
-                };
-                window.onclick = function (event) {
-                if (event.target == a0) {
-                a0.style.display = "none";
-                a3.textContent = "";
-                }
-                };
-                }
-                (() => {
-                showErrorModal();
-                })();
-            </script>
-
-
         </div>
     </body>
 

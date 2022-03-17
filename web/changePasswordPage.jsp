@@ -12,10 +12,9 @@
             rel="stylesheet"
             href="./assets/icon/fontawesome-free-6.0.0-web/css/all.css"
             />
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+       
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
-        <link rel="stylesheet" href="./assets/css/student.css" />
         <link rel="stylesheet" href="./assets/css/profile.css">
 
         <jsp:useBean id="stuDAO" class="manager_dao.impl.StudentInfoDAO" scope="request"/>
