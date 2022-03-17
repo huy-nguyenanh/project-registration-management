@@ -1,32 +1,36 @@
 #update-profile-btn {
   margin-bottom: 2rem;
 }
-#submit-profile-btn {
-  /* display: none; */
-}
+
 button {
-  background: var(--background-nav);
-  outline: none;
+  padding: 10px 12px;
+
   color: #fff;
+  background: var(--background-nav);
+
+  outline: none;
   border: 0;
   border-radius: 10px;
-  padding: 10px 12px;
+
   cursor: pointer;
 }
+
 .profile-content {
-  background-color: #fff;
-  margin: 0 2rem;
-  border-radius: 0.5rem;
   display: flex;
   align-items: center;
+
+  margin: 0 2rem;
+
+  border-radius: 0.5rem;
+  background-color: #fff;
 }
 
 .profile-list {
-  padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* min-width: 20%; */
+
+  padding: 1rem 2rem;
 }
 
 .profile-list li {
@@ -37,31 +41,33 @@ button {
   margin-top: 1rem;
 }
 
-#profile-2 .profile-list:first-child li {
-  /* padding-top: 5px; */
-}
 #profile-2 .profile-list li {
   margin-top: calc(1rem - 5px);
 }
+
 @media only screen and (max-width: 1200px) {
   .sideBar {
     width: 60px;
     z-index: 150;
   }
+
   .sideBar .top-sideBar h3,
   .sideBar .sideBar-profile span,
   .sideBar li span:last-child {
     display: none;
   }
+
   .sideBar .top-sideBar,
   .sideBar li,
   img {
     display: flex;
     justify-content: center;
   }
+
   .main-content {
     margin-left: 60px;
   }
+
   .main-content header {
     left: 60px;
     width: calc(100% - 60px);
@@ -70,11 +76,13 @@ button {
   #sidebar-toggle:checked ~ .sideBar {
     width: 240px;
   }
+
   #sidebar-toggle:checked ~ .sideBar .top-sideBar h3,
   #sidebar-toggle:checked ~ .sideBar .sideBar-profile img,
   #sidebar-toggle:checked ~ .sideBar li span:last-child {
     display: inline;
   }
+
   #sidebar-toggle:checked ~ .sideBar .top-sideBar {
     display: flex;
     justify-content: space-between;
@@ -84,9 +92,11 @@ button {
   img {
     display: block;
   }
+
   #sidebar-toggle:checked ~ .main-content {
     margin-left: 60px;
   }
+
   #sidebar-toggle:checked ~ .main-content header {
     left: 60px;
   }
@@ -96,15 +106,19 @@ button {
   .card-list {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .card-item {
     margin-bottom: 1rem;
   }
+
   .list-action {
     display: none;
   }
+
   .table-grid {
     display: block;
   }
+
   .profile-content {
     margin: 0 1rem;
   }
@@ -118,15 +132,16 @@ button {
   .card-list {
     grid-template-columns: 100%;
   }
-  .list-action {
-    display: none;
-  }
+
+  .list-action,
   .left-content h2:first-child {
     display: none;
   }
+
   .left-content h2:last-child::after {
     content: "CPM";
   }
+
   .profile-content {
     margin: 0;
   }
@@ -134,10 +149,13 @@ button {
 
 .container > a {
   display: inline-block;
+
   padding: 1rem 1rem;
   margin-bottom: 1.5rem;
+
   background: var(--background-nav);
   color: white;
+
   border-radius: 10px;
 }
 
@@ -145,21 +163,15 @@ button {
   border: 0;
   border-bottom: 1px solid #ccc;
 }
+
 .profile-list input:focus {
   outline: none;
   border: 0;
   border-bottom: 1px solid var(--background-nav);
 }
+
 .profile-list input:focus::placeholder {
   visibility: hidden;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  /* width: 100%; */
 }
 
 /* error modal */
@@ -168,19 +180,25 @@ button {
   z-index: 1000000; /* Sit on top */
   left: 0;
   top: 0;
+  overflow: auto; /* Enable scroll if needed */
+
   width: 100%;
   height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #error-modal .modal-content {
+  position: relative;
+
+  margin: 10% 35%;
+  padding: 30px;
+
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid #888;
+
   background-color: #fefefe;
   color: red;
-  margin: 10% 40%;
-  padding: 40px;
-  border: 1px solid #888;
-  position: relative;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -198,7 +216,7 @@ button {
 
 .close:hover,
 .close:focus {
-  color: black;
   text-decoration: none;
+  color: black;
   cursor: pointer;
 }

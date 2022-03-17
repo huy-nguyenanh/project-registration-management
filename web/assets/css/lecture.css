@@ -1,36 +1,40 @@
-
-
 #student {
   margin-top: 0;
 }
-
 
 .list {
   margin: 1rem 0;
 }
 
 .list-action {
-  /* margin-bottom: 1rem; */
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  padding: 1rem 2rem;
 }
+
 .list-action-left label {
   display: inline-block;
+  
   padding: 10px 12px;
-  cursor: pointer;
+  
   background-color: var(--background-nav);
   color: var(--text-white);
+  
   border-radius: 1rem;
+  cursor: pointer;
 }
+
 .list-action-left #import-file {
   display: none;
 }
+
 .list-action-right {
   display: flex;
   align-items: center;
 }
+
 .table-grid {
   background: #fff;
   border-radius: 10px;
@@ -61,15 +65,15 @@ td {
   color: black;
 }
 
-
-
 #table-id tbody tr:nth-child(even) {
   background: #f9fafc;
 }
 
 .search-input {
   height: 30px;
+
   padding: 0 5px 0 19px;
+
   border: 1px solid #e1e1e1;
   border-right: 0;
   border-radius: 5px 0 0 5px;
@@ -77,13 +81,17 @@ td {
 .search-btn {
   height: 30px;
   width: 30px;
+
+  padding-top: 8px;
+  
   border: 0;
   border-radius: 0 5px 5px 0;
+
   background: #f26f21;
   color: #fff;
   text-align: center;
-  padding-top: 8px;
 }
+
 .search-input:focus {
   border: 1px solid #000000;
   border-right: 0;
@@ -94,20 +102,24 @@ td {
     width: 60px;
     z-index: 150;
   }
+
   .sideBar .top-sideBar h3,
   .sideBar .sideBar-profile span,
   .sideBar li span:last-child {
     display: none;
   }
+
   .sideBar .top-sideBar,
   .sideBar li,
   img {
     display: flex;
     justify-content: center;
   }
+
   .main-content {
     margin-left: 60px;
   }
+
   .main-content header {
     left: 60px;
     width: calc(100% - 60px);
@@ -116,11 +128,13 @@ td {
   #sidebar-toggle:checked ~ .sideBar {
     width: 240px;
   }
+
   #sidebar-toggle:checked ~ .sideBar .top-sideBar h3,
   #sidebar-toggle:checked ~ .sideBar .sideBar-profile img,
   #sidebar-toggle:checked ~ .sideBar li span:last-child {
     display: inline;
   }
+
   #sidebar-toggle:checked ~ .sideBar .top-sideBar {
     display: flex;
     justify-content: space-between;
@@ -130,9 +144,11 @@ td {
   img {
     display: block;
   }
+
   #sidebar-toggle:checked ~ .main-content {
     margin-left: 60px;
   }
+
   #sidebar-toggle:checked ~ .main-content header {
     left: 60px;
   }
@@ -142,30 +158,37 @@ td {
   .card-list {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .card-item {
     margin-bottom: 1rem;
   }
+
   .list-action {
     display: none;
   }
+
   .table-grid {
     display: block;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  .container{
+  .container {
     padding: 1rem 0.5rem;
   }
+
   .card-list {
     grid-template-columns: 100%;
   }
+
   .list-action {
     display: none;
   }
+
   .left-content h2:first-child {
     display: none;
   }
+  
   .left-content h2:last-child::after {
     content: "CPM";
   }

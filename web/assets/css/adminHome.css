@@ -1,6 +1,7 @@
 #student {
   margin-top: 0;
 }
+
 .card-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -14,10 +15,11 @@
 }
 
 .card-content {
-  padding: 2rem 1rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+
+  padding: 2rem 1rem;
 }
 
 .card-content div h5,
@@ -37,9 +39,10 @@ h4 {
 }
 
 .card-content h4 {
+  margin-top: 1rem;
+
   color: black;
   font-size: 1.5rem;
-  margin-top: 1rem;
 }
 
 .list {
@@ -47,16 +50,18 @@ h4 {
 }
 
 .list-action {
-  /* margin-bottom: 1rem; */
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  padding: 1rem 2rem;
 }
+
 .list-action-right {
   display: flex;
   align-items: center;
 }
+
 .table-grid {
   background: #fff;
   border-radius: 10px;
@@ -76,6 +81,7 @@ h4 {
   overflow-x: auto;
   border-collapse: collapse;
 }
+
 #table-id thead {
   background: #efefef;
   text-align: left;
@@ -98,28 +104,31 @@ td {
   border-right: 0;
   border-radius: 5px 0 0 5px;
 }
+
 .search-btn {
   height: 30px;
   width: 30px;
+
+  padding-top: 8px;
+
   border: 0;
   border-radius: 0 5px 5px 0;
+
   background: #f26f21;
   color: #fff;
   text-align: center;
-  padding-top: 8px;
 }
+
 .search-input:focus {
   border: 1px solid #000000;
   border-right: 0;
 }
-.container-fluid {
-}
-.my-carsousel {
-}
+
 .my-carsousel img {
   width: 100%;
   max-width: 100%;
   height: 700px;
+
   object-fit: cover;
 }
 
@@ -128,20 +137,24 @@ td {
     width: 60px;
     z-index: 150;
   }
+
   .sideBar .top-sideBar h3,
   .sideBar .sideBar-profile span,
   .sideBar li span:last-child {
     display: none;
   }
+
   .sideBar .top-sideBar,
   .sideBar li,
   img {
     display: flex;
     justify-content: center;
   }
+
   .main-content {
     margin-left: 60px;
   }
+
   .main-content header,
   .main-content footer {
     left: 60px;
@@ -151,11 +164,13 @@ td {
   #sidebar-toggle:checked ~ .sideBar {
     width: 240px;
   }
+
   #sidebar-toggle:checked ~ .sideBar .top-sideBar h3,
   #sidebar-toggle:checked ~ .sideBar .sideBar-profile img,
   #sidebar-toggle:checked ~ .sideBar li span:last-child {
     display: inline;
   }
+
   #sidebar-toggle:checked ~ .sideBar .top-sideBar {
     display: flex;
     justify-content: space-between;
@@ -165,9 +180,11 @@ td {
   img {
     display: block;
   }
+
   #sidebar-toggle:checked ~ .main-content {
     margin-left: 60px;
   }
+
   #sidebar-toggle:checked ~ .main-content header,
   #sidebar-toggle:checked ~ .main-content footer {
     left: 60px;
@@ -178,15 +195,19 @@ td {
   .card-list {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .card-item {
     margin-bottom: 1rem;
   }
+
   .list-action {
     display: none;
   }
+
   .table-grid {
     display: block;
   }
+
   .my-carsousel img {
   }
 }
@@ -195,18 +216,23 @@ td {
   .container {
     padding: 1rem 0.5rem;
   }
+
   .card-list {
     grid-template-columns: 100%;
   }
+
   .list-action {
     display: none;
   }
+
   .left-content h2:first-child {
     display: none;
   }
+
   .left-content h2:last-child::after {
     content: "CPM";
   }
+
   .my-carsousel img {
   }
 }
@@ -216,33 +242,40 @@ footer {
   left: 240px;
   bottom: 0;
   z-index: 100;
+
   width: calc(100% - 240px);
   height: 170px;
+
   padding: 0rem 3rem;
+
   border-bottom: 1px solid #ccc;
-  transition: left 500ms;
+
   background-color: #fff;
+
+  transition: left 500ms;
 }
+
 footer img {
-  padding-top: 20px;
-  object-fit: cover;
-  height: 60px;
   display: block;
+
+  height: 60px;
+
+  padding-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  /* width: 50%; */
+
+  object-fit: cover;
 }
 
 .link {
-  padding: 20px 0;
   display: flex;
   justify-content: space-around;
+
+  padding: 20px 0;
 }
 
 .link ul > li:first-child {
   font-size: 1.5rem;
   padding-bottom: 15px;
   color: goldenrod;
-}
-.link ul > li {
 }
