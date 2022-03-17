@@ -24,8 +24,9 @@
 
         <c:set var="role" value="${sessionScope.ROLE}"/>
         <c:set var="welcome_name" value="${sessionScope.WELCOME_NAME}"/>
-        <c:set var="stuID" value="${sessionScope.STUDENT_ID}"/>
+
         <jsp:useBean id="stuDAO" class="manager_dao.impl.StudentInfoDAO" scope="request"/>
+        <jsp:useBean id="lecDAO" class="manager_dao.impl.LecturerInfoDAO" scope="request"/>
     </head>
     <body>
         <div class="wrapper">
@@ -94,60 +95,58 @@
                     </div>
                 </header>
                 <c:if test="${role eq 'Student'}">
-                <div class="container">
-                    <h3 class="title">Profile Information</h3>
-                    <!-- <button id="update-profile-btn">Change Password</button> -->
-                    <a href="changePasswordPage">Change Password</a>
-                    <div id="profile-1" class="profile-content">
-                        <ul class="profile-list">
-                            <li>Name</li>
-                            <li>Phone</li>
-                            <li>Student ID</li>
-                            <li>Email</li>
-                            <li>Date Of Birth</li>
-                            <li>Major</li>
-                        </ul>
-                        <c:set var="stuInfo" value="${stuDAO.getStudentbyID(stuID)}"/>
-                        <ul class="profile-list">
-                            <li>${stuInfo.fullName}</li>
-                            <li>${stuInfo.phoneNumber}</li>
-                            <li>${stuInfo.studentID}</li>
-                            <li>${stuInfo.email}</li>
-                            <li>${stuInfo.DOB}</li>
-                            <li>${stuInfo.majorID}</li>
-                        </ul>
+                    <c:set var="stuID" value="${sessionScope.STUDENT_ID}"/>
+                    <div class="container">
+                        <h3 class="title">Profile Information</h3>
+                        <!-- <button id="update-profile-btn">Change Password</button> -->
+                        <a href="changePasswordPage">Change Password</a>
+                        <div id="profile-1" class="profile-content">
+                            <ul class="profile-list">
+                                <li>Name</li>
+                                <li>Phone</li>
+                                <li>Student ID</li>
+                                <li>Email</li>
+                                <li>Date Of Birth</li>
+                                <li>Major</li>
+                            </ul>
+                            <c:set var="stuInfo" value="${stuDAO.getStudentbyID(stuID)}"/>
+                            <ul class="profile-list">
+                                <li>${stuInfo.fullName}</li>
+                                <li>${stuInfo.phoneNumber}</li>
+                                <li>${stuInfo.studentID}</li>
+                                <li>${stuInfo.email}</li>
+                                <li>${stuInfo.DOB}</li>
+                                <li>${stuInfo.majorID}</li>
+                            </ul>
+                        </div>
+
+
                     </div>
-
-
-                </div>
                 </c:if>
                 <c:if test="${role eq 'Lecture'}">
-                <div class="container">
-                    <h3 class="title">Profile Information</h3>
-                    <!-- <button id="update-profile-btn">Change Password</button> -->
-                    <!-- <a href="changePasswordPage">Change Password</a> -->
-                    <div id="profile-1" class="profile-content">
-                        <ul class="profile-list">
-                            <li>Name</li>
-                            <li>Phone</li>
-                            <li>Student ID</li>
-                            <li>Email</li>
-                            <li>Date Of Birth</li>
-                            <li>Major</li>
-                        </ul>
-                        <c:set var="stuInfo" value="${stuDAO.getStudentbyID(stuID)}"/>
-                        <ul class="profile-list">
-                            <li>${stuInfo.fullName}</li>
-                            <li>${stuInfo.phoneNumber}</li>
-                            <li>${stuInfo.studentID}</li>
-                            <li>${stuInfo.email}</li>
-                            <li>${stuInfo.DOB}</li>
-                            <li>${stuInfo.majorID}</li>
-                        </ul>
+                    <c:set var="lecID" value="${sessionScope.LECTURE_ID}"/>
+                    <div class="container">
+                        <h3 class="title">Profile Information</h3>
+                        <!-- <button id="update-profile-btn">Change Password</button> -->
+                        <!-- <a href="changePasswordPage">Change Password</a> -->
+                        <div id="profile-1" class="profile-content">
+                            <ul class="profile-list">
+                                <li>Name</li>
+                                <li>Phone</li>
+                                <li>Lecture ID</li>
+                                <li>Email</li>
+                            </ul>
+                            <c:set var="lecInfo" value="${lecDAO.getLecturebyID(lecID)}"/>
+                            <ul class="profile-list">
+                                <li>${lecInfo.fullname}</li>
+                                <li>${lecInfo.phoneNumber}</li>
+                                <li>${lecInfo.lectureID}</li>
+                                <li>${lecInfo.email}</li>
+                            </ul>
+                        </div>
+
+
                     </div>
-
-
-                </div>
                 </c:if>
             </main>
             <script src="./assets/js/main.js"></script>

@@ -106,8 +106,8 @@
                                         </form>
                                         <form action="exportStudentFileAction" >
                                             <label for="export-file">Export</label>
-                                            <input style="display:inline-block;" type="text" id="export-file" name="file_name" />
-                                            <input type="submit" />
+                                            <input type="submit" id="export-file"/>
+                                            
                                         </form>
                                         <c:set var="errors" value="${requestScope.UPLOAD_FILE_ERROR}"/>
                                         <c:if test="${not empty errors}">
@@ -138,7 +138,7 @@
                                         </c:if>
                                     </div>
 
-                                 
+
 
                                     <div class="list-action-right">
                                         <form id="form-search-id" class="form-search" action="searchStudentAction">

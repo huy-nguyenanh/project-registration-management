@@ -71,22 +71,15 @@ public class SendEmailServlet extends HttpServlet {
             } else {
                 String lec_email = (String) session.getAttribute("USER_NAME");
                 String to_email = "";
-                if (student_list.size() == 1) {
-                    for (StudentDTO stu : student_list) {
-                        to_email = stu.getEmail();
+                for (StudentDTO stu : student_list) {
+                    to_email = stu.getEmail();
+                    GmailDAO gmail_dao = new GmailDAO();
+                    if (to_email != null) {
+                        gmail_dao.sendText(to_email, notify, lec_email);
+                    } else {
+                        foundErr = true;
+                        ErrMsg = "No email to send!";
                     }
-                } else {
-                    for (StudentDTO stu : student_list) {
-//                        to_email = stu.getEmail() + ", ";
-                        to_email = to_email + stu.getEmail() + ", ";
-                    }
-                }
-                GmailDAO gmail_dao = new GmailDAO();
-                if (to_email != null) {
-                    gmail_dao.sendText(to_email, notify, lec_email);
-                } else {
-                    foundErr = true;
-                    ErrMsg = "No email to send!";
                 }
             }
             if (foundErr) {

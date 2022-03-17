@@ -6,6 +6,7 @@
 package manager_dao.impl;
 
 import entity.core.GroupDTO;
+import entity.core.LecturerDTO;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -497,5 +498,47 @@ public class GroupDAO implements Serializable {
                 conn.close();
             }
         }
+    }
+    
+    public List<GroupDTO> loadGroupInfo() throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "Select GroupID, MemberId, Fullname, Role, TopicID "
+                        + "From Groups";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String groupID = rs.getString("GroupID");
+                    String memberId = rs.getString("MemberId");
+                    String name = rs.getString("Fullname");
+                    String role = rs.getString("Role");
+                    String topicId = rs.getString("TopicID");
+
+                    GroupDTO group = new GroupDTO(groupID, memberId, name, topicId, role);
+                    
+                    if (this.groupList == null) {
+                        this.groupList = new ArrayList<>();
+                    }
+                    this.groupList.add(group);
+                }
+                return this.groupList;
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
     }
 }

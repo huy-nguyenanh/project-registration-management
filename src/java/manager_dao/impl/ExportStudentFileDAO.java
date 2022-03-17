@@ -1,5 +1,6 @@
 package manager_dao.impl;
 
+import entity.core.GroupDTO;
 import manager_dao.inter.IExportStudentFileDAO;
 import entity.core.StudentDTO;
 import java.io.FileNotFoundException;
@@ -19,17 +20,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExportStudentFileDAO implements IExportStudentFileDAO{
 
-    private static final int COLUMN_INDEX_STUDENTID = 0;
-    private static final int COLUMN_INDEX_ACCOUNTID = 1;
+    private static final int COLUMN_INDEX_GROUPID = 0;
+    private static final int COLUMN_INDEX_MEMBERID = 1;
     private static final int COLUMN_INDEX_FULLNAME = 2;
-    private static final int COLUMN_INDEX_DOB = 3;
-    private static final int COLUMN_INDEX_EMAIL = 4;
-    private static final int COLUMN_INDEX_PHONENUMBER = 5;
-    private static final int COLUMN_INDEX_MAJORID = 6;
-    private static final int COLUMN_INDEX_GROUPID = 7;
+    private static final int COLUMN_INDEX_TOPICID = 3;
     private static CellStyle cellStyleFormatNumber = null;
 
-    public void write_file_student(List<StudentDTO> student_list, String excelFilePath) throws IOException {
+    public void write_file_student(List<GroupDTO> group_list, String excelFilePath) throws IOException {
         //create workbook
         Workbook workbook = getWorkbook(excelFilePath);
 
@@ -42,11 +39,11 @@ public class ExportStudentFileDAO implements IExportStudentFileDAO{
         write_Student_Header(sheet, rowIndex);
         //write data
         rowIndex++;
-        for (StudentDTO student : student_list) {
+        for (GroupDTO group : group_list) {
             //create row
             Row row = sheet.createRow(rowIndex);
             //write data on row
-            writeData(student, row);
+            writeData(group, row);
             rowIndex++;
         }
 
@@ -83,42 +80,26 @@ public class ExportStudentFileDAO implements IExportStudentFileDAO{
         Row row = sheet.createRow(rowIndex);
 
         //Create cells
-        Cell cell = row.createCell(COLUMN_INDEX_STUDENTID);
+        Cell cell = row.createCell(COLUMN_INDEX_GROUPID);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Student ID");
+        cell.setCellValue("Group ID");
 
-        cell = row.createCell(COLUMN_INDEX_ACCOUNTID);
+        cell = row.createCell(COLUMN_INDEX_MEMBERID);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Account ID");
+        cell.setCellValue("Member ID");
 
         cell = row.createCell(COLUMN_INDEX_FULLNAME);
         cell.setCellStyle(cellStyle);
         cell.setCellValue("Full name");
 
-        cell = row.createCell(COLUMN_INDEX_DOB);
+        cell = row.createCell(COLUMN_INDEX_TOPICID);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("DOB");
-
-        cell = row.createCell(COLUMN_INDEX_EMAIL);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Email");
-
-        cell = row.createCell(COLUMN_INDEX_PHONENUMBER);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Phone number");
-
-        cell = row.createCell(COLUMN_INDEX_MAJORID);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Major ID");
-
-        cell = row.createCell(COLUMN_INDEX_GROUPID);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Group ID");
+        cell.setCellValue("Topic ID");
     }
     
     //Write Data
     @Override
-    public void writeData(StudentDTO student, Row row) {
+    public void writeData(GroupDTO group, Row row) {
         if (cellStyleFormatNumber == null) {
             //format number
             short format = (short) BuiltinFormats.getBuiltinFormat("#,##0");
@@ -128,29 +109,18 @@ public class ExportStudentFileDAO implements IExportStudentFileDAO{
             cellStyleFormatNumber.setDataFormat(format);
         }
 
-        Cell cell = row.createCell(COLUMN_INDEX_STUDENTID);
-        cell.setCellValue(student.getStudentID());
+        Cell cell = row.createCell(COLUMN_INDEX_GROUPID);
+        cell.setCellValue(group.getGroupId());
 
-        cell = row.createCell(COLUMN_INDEX_ACCOUNTID);
-        cell.setCellValue(student.getAccountID());
+        cell = row.createCell(COLUMN_INDEX_MEMBERID);
+        cell.setCellValue(group.getMemberId());
 
         cell = row.createCell(COLUMN_INDEX_FULLNAME);
-        cell.setCellValue(student.getFullName());
+        cell.setCellValue(group.getFullname());
 
-        cell = row.createCell(COLUMN_INDEX_DOB);
-        cell.setCellValue(student.getDOB());
+        cell = row.createCell(COLUMN_INDEX_TOPICID);
+        cell.setCellValue(group.getTopicId());
 
-        cell = row.createCell(COLUMN_INDEX_EMAIL);
-        cell.setCellValue(student.getEmail());
-
-        cell = row.createCell(COLUMN_INDEX_PHONENUMBER);
-        cell.setCellValue(student.getPhoneNumber());
-
-        cell = row.createCell(COLUMN_INDEX_MAJORID);
-        cell.setCellValue(student.getMajorID());
-
-        cell = row.createCell(COLUMN_INDEX_GROUPID);
-        cell.setCellValue(student.getGroupID());
     }
 
     //Create Cellstyle for header

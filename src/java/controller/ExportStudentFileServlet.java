@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.core.GroupDTO;
 import entity.core.StudentDTO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import manager_dao.impl.ExportStudentFileDAO;
+import manager_dao.impl.GroupDAO;
 import manager_dao.impl.StudentInfoDAO;
 import manager_dao.impl.UploadFileDAO;
 import utillsHelper.ApplicationConstant;
@@ -44,16 +46,18 @@ public class ExportStudentFileServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
-        String filename = request.getParameter("file_name");
-        String locationFilePath = "C:\\Users\\Public\\Downloads" + filename;
+//        String filename = request.getParameter("file_name");
+        String locationFilePath = "C:\\Users\\Public\\Downloads\\group-member-list.xlsx" ;
         String url = site_Map.getProperty(ApplicationConstant.ExportStudentFileServlet.RETURN_STUDENT_HOME);
 
         try {
             HttpSession session = request.getSession(false);
             StudentInfoDAO stu_dao = new StudentInfoDAO();
+            GroupDAO gr_dao = new GroupDAO();
             List<StudentDTO> student_list = stu_dao.getStudentsInfo();
+            List<GroupDTO> group_list = gr_dao.loadGroupInfo();
             ExportStudentFileDAO exportDAO = new ExportStudentFileDAO();
-            exportDAO.write_file_student(student_list, locationFilePath);
+            exportDAO.write_file_student(group_list, locationFilePath);
         } catch (SQLException e) {
             log("ExportStudentFileServlet   SQLException: " + e.getMessage());
         } catch (NamingException e) {
