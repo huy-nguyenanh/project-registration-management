@@ -112,6 +112,16 @@ td {
   border: 1px solid #000000;
   border-right: 0;
 }
+.container-fluid {
+}
+.my-carsousel {
+}
+.my-carsousel img {
+  width: 100%;
+  max-width: 100%;
+  height: 700px;
+  object-fit: cover;
+}
 
 @media only screen and (max-width: 1200px) {
   .sideBar {
@@ -177,6 +187,8 @@ td {
   .table-grid {
     display: block;
   }
+  .my-carsousel img {
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -195,13 +207,8 @@ td {
   .left-content h2:last-child::after {
     content: "CPM";
   }
-  .link {
+  .my-carsousel img {
   }
-}
-
-.my-carsousel img {
-  max-height: 750px;
-  height: 100%;
 }
 
 footer {

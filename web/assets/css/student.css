@@ -185,6 +185,9 @@ td {
   .table-grid {
     display: block;
   }
+  .hide-on-moblie {
+    visibility: hidden;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -202,6 +205,9 @@ td {
   }
   .left-content h2:last-child::after {
     content: "CPM";
+  }
+  .hide-on-moblie {
+    visibility: hidden;
   }
 }
 
