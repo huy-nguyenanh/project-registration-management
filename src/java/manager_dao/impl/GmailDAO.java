@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class GmailDAO {
 
-    public void sendText(String email, String notify, String lecID) throws AddressException, MessagingException {
+    public void sendText(String email, String notify, String lec_email) throws AddressException, MessagingException {
         Properties mailServerProperties;
         Session getMailSession;
         MimeMessage mailMessage;
@@ -32,7 +32,7 @@ public class GmailDAO {
         // Bạn có thể chọn CC, BCC
 //    generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("cc@gmail.com")); //Địa chỉ cc gmail
         mailMessage.setSubject("Notify time meeting");
-        mailMessage.setText("From: " + lecID + "\n" + "\t" + notify);
+        mailMessage.setText("From: " + lec_email + "\n" + notify);
 
         // Step3: Send mail
         Transport transport = getMailSession.getTransport("smtp");

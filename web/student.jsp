@@ -111,34 +111,22 @@
                                                 <div class="modal-content">
                                                     <span class="close">&times;</span>
                                                     <c:if test="${not empty errors.uploadFile_False}">
-                                                        <font color="red">
                                                         <span class="error">${errors.uploadFile_False} </span>
-                                                        </font>
                                                     </c:if>
                                                     <c:if test="${not empty errors.studentID_Not_Correct_In_Excel}">
-                                                        <font color="red">
                                                         <span class="error">${errors.studentID_Not_Correct_In_Excel} </span>
-                                                        </font>
                                                     </c:if>
                                                     <c:if test="${not empty errors.email_Not_Correct_In_Excel}">
-                                                        <font color="red">
                                                         <span class="error">${errors.email_Not_Correct_In_Excel} </span>
-                                                        </font>
                                                     </c:if>
                                                     <c:if test="${not empty errors.majorID_Not_Correct_In_Excel}">
-                                                        <font color="red">
                                                         <span class="error">${errors.majorID_Not_Correct_In_Excel} </span>
-                                                        </font>
                                                     </c:if>
                                                     <c:if test="${not empty errors.insertToDB_False}">
-                                                        <font color="red">
                                                         <span class="error">${errors.insertToDB_False} </span>
-                                                        </font>
                                                     </c:if>
                                                     <c:if test="${not empty errors.create_acount_in_DB}">
-                                                        <font color="red">
                                                         <span class="error">${errors.create_acount_in_DB} </span>
-                                                        </font>
                                                     </c:if>
                                                 </div>
                                             </div>
@@ -185,6 +173,16 @@
                                                 <div class="modal-content">
                                                     <span class="close">&times;</span>
                                                     <span class="error">${error_update_group}</span>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:set var="error_create_group" value="${requestScope.ERROR_CREATE_GROUP}"/>
+                                        <c:if test="${not empty error_create_group}">
+                                            <div id="error-modal" class="">
+                                                <!-- Modal content -->
+                                                <div class="modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <span class="error">${error_create_group}</span>
                                                 </div>
                                             </div>
                                         </c:if>
@@ -831,6 +829,7 @@
                 const a0 = document.getElementById("error-modal");
                 const a2 = document.getElementsByClassName("close")[0];
                 const a3 = document.querySelector("span.error");
+                if (!a2) return;
                 a2.onclick = function () {
                 a0.style.display = "none";
                 a3.textContent = "";

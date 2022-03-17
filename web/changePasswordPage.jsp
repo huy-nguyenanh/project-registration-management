@@ -15,6 +15,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
+        <link rel="stylesheet" href="./assets/css/student.css" />
         <link rel="stylesheet" href="./assets/css/profile.css">
 
         <jsp:useBean id="stuDAO" class="manager_dao.impl.StudentInfoDAO" scope="request"/>
@@ -91,7 +92,6 @@
                     <!-- <button id="update-profile-btn">Back</button> -->
                     <a href="profilePage" class="">Back</a>
                     <c:set var="msg" value="${requestScope.CHANGE_PASSWORD_COMPLETE}"/>
-                    <c:set var="change_passw_errors" value="${requestScope.CHANGE_PASSWORD_ERRORS}"/>
                     <c:if test="${not empty msg}">
                         <div id="error-modal" class="">
                             <!-- Modal content -->
@@ -101,6 +101,7 @@
                             </div>
                         </div>
                     </c:if>
+                    <c:set var="change_passw_errors" value="${requestScope.CHANGE_PASSWORD_ERRORS}"/>
                     <c:if test="${not empty change_passw_errors}">
                         <div id="error-modal" class="">
                             <!-- Modal content -->

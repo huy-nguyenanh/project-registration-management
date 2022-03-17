@@ -56,7 +56,7 @@ public class ChangePasswordServlet extends HttpServlet {
             AccountDAO accDAO = new AccountDAO();
             String check_old_password = accDAO.checkPassword(old_password);
             
-            if (!check_old_password.equals(username) || check_old_password == null) {
+            if (!check_old_password.equals(username) || check_old_password.equals("Not Match")) {
                 foundErr = true;
                 Errmsg = "Wrong old password";
             } else {

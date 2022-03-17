@@ -64,23 +64,35 @@ public class SendEmailServlet extends HttpServlet {
             if (student_list == null) {
                 foundErr = true;
                 ErrMsg = "This group not exist";
-                response.sendRedirect(url);
             }
-            String lecId = (String) session.getAttribute("LECTURE_ID");
-            String to_email = null;
-            for (StudentDTO stu : student_list) {
-                to_email = stu.getEmail() + " ";
-            }
-            GmailDAO gmail_dao = new GmailDAO();
-            if (to_email != null) {
-                gmail_dao.sendText(to_email, notify, lecId);
-            } else {
+            if (notify.isEmpty() || notify.length() == 0) {
                 foundErr = true;
-                ErrMsg = "No email to send!!!";
+                ErrMsg = "No content!";
+            } else {
+                String lec_email = (String) session.getAttribute("USER_NAME");
+                String to_email = "";
+                if (student_list.size() == 1) {
+                    for (StudentDTO stu : student_list) {
+                        to_email = stu.getEmail();
+                    }
+                } else {
+                    for (StudentDTO stu : student_list) {
+//                        to_email = stu.getEmail() + ", ";
+                        to_email = to_email + stu.getEmail() + ", ";
+                    }
+                }
+                GmailDAO gmail_dao = new GmailDAO();
+                if (to_email != null) {
+                    gmail_dao.sendText(to_email, notify, lec_email);
+                } else {
+                    foundErr = true;
+                    ErrMsg = "No email to send!";
+                }
             }
             if (foundErr) {
                 request.setAttribute("SEND_MAIL_ERROR", ErrMsg);
-                response.sendRedirect(url);
+            } else {
+                request.setAttribute("SEND_MAIL_COMPLETE", "Complete");
             }
         } catch (AddressException e) {
             log("SendEmailServlet   AddressException: " + e.getMessage());
@@ -90,8 +102,8 @@ public class SendEmailServlet extends HttpServlet {
             log("SendEmailServlet   SQLException: " + e.getMessage());
         } catch (NamingException e) {
             log("SendEmailServlet   NamingException: " + e.getMessage());
-        } finally{
-            response.sendRedirect(url);
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

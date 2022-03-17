@@ -64,7 +64,7 @@ public class CreateGroupServlet extends HttpServlet {
             String[] studentList = request.getParameterValues("chkCreate");
             String searchValue = request.getParameter("lastSearchValue");
             ArrayList<String> stuID = new ArrayList<>(Arrays.asList(studentList));;
-            String id = ((StudentDTO) (request.getSession().getAttribute("ACCOUNT"))).getStudentID();
+
             boolean isOk = true;
             String role = (String) session.getAttribute("ROLE");
 
@@ -91,6 +91,7 @@ public class CreateGroupServlet extends HttpServlet {
                 }
             }
             if (role.equals("Student")) {
+                String id = ((StudentDTO) (request.getSession().getAttribute("ACCOUNT"))).getStudentID();
                 if (stuID.size() > 4 || stuID.size() < 2) {
                     isOk = false;
                     request.setAttribute("ERROR_CREATE_GROUP", "Student in one group is 3-5 people");
@@ -111,8 +112,8 @@ public class CreateGroupServlet extends HttpServlet {
 
             if (isOk) {
 
-                for (int i = 0; i < studentList.length; i++) {
-                    String studentID = studentList[i];
+                for (int i = 0; i < stuID.size(); i++) {
+                    String studentID = stuID.get(i);
                     StudentDTO std = dao.getStudentbyID(studentID);
 
                     result = grdao.insertStudentIntoGroup(n + "", studentID, std.getFullName(), "Student");

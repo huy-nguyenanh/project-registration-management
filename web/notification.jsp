@@ -16,6 +16,7 @@
 
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
+        <link rel="stylesheet" href="./assets/css/student.css" />
         <link rel="stylesheet" href="./assets/css/notification.css" />
         <c:set var="grID_list" value="${sessionScope.LIST_GROUPID_MENTIT_BY_LECTURE}"/>
         <c:set var="role" value="${sessionScope.ROLE}"/>
@@ -90,6 +91,27 @@
                 </header>
 
                 <div class="container">
+                    <c:set var="send_email_error" value="${requestScope.SEND_MAIL_ERROR}"/>
+                    <c:if test="${not empty send_email_error}">
+                        <div id="error-modal" class="">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <span class="error">${send_email_error}</span>
+                            </div>
+                        </div>
+                    </c:if>
+                    
+                    <c:set var="send_email_complete" value="${requestScope.SEND_MAIL_COMPLETE}"/>
+                    <c:if test="${not empty send_email_complete}">
+                        <div id="error-modal" class="">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <span class="error">${send_email_complete}</span>
+                            </div>
+                        </div>
+                    </c:if>
                     <h3 class="title">Message</h3>
                     <form action="sendEmailAction">
                         <div class="content">
@@ -102,7 +124,7 @@
                                 <input type="hidden" name="txtGroupId" value="${groupID_todo}" />
                             </select>
                             <textarea name="txtNotify" id="" cols="50" rows="10" placeholder="Send text."></textarea>
-                            <button type="submit">Send</button>
+                            <button class="myBtn" type="submit">Send</button>
                         </div>
                     </form>
                 </div>

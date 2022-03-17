@@ -23,6 +23,7 @@ import manager_dao.impl.TopicInfoDAO;
 import entity.core.TopicDTO;
 import java.util.Properties;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import utillsHelper.ApplicationConstant;
 
 /**
@@ -42,7 +43,7 @@ public class StudentChooseTopicServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
@@ -56,7 +57,9 @@ public class StudentChooseTopicServlet extends HttpServlet {
             TopicInfoDAO tdao = new TopicInfoDAO();
             LecturerInfoDAO ldao = new LecturerInfoDAO();
             String topicId = request.getParameter("txtTopicId");
-            String groupId = request.getParameter("textGroupId");
+//            String groupId = request.getParameter("textGroupId");
+            HttpSession session = request.getSession();
+            String groupId = (String) session.getAttribute("STUDENT_GROUP_ID");
 
             boolean isOk = true;
 //            if (topicList.length > 1) {
@@ -64,56 +67,54 @@ public class StudentChooseTopicServlet extends HttpServlet {
 //                request.setAttribute("CREATE_GROUP_ERROR", "Only choose 1 topic");
 //            } 
 //            if {
-                TopicDTO ttd = tdao.getTopicById(topicId);
-                String test = ttd.getGroupID();
-                // Kiểm tra nếu Topic đã có group chọn
-                if (!ttd.getGroupID().equals("")) {
+            TopicDTO ttd = tdao.getTopicById(topicId);
+            String test = ttd.getGroupID();
+            // Kiểm tra nếu Topic đã có group chọn
+            if (!ttd.getGroupID().equals("")) {
+                isOk = false;
+                request.setAttribute("CREATE_GROUP_ERROR", "Topic has been choosen by another group.");
+            } else {
+                ArrayList<GroupDTO> grDtos = grdao.getStudentsInGroup(groupId);
+                // Kiểm tra group đó có tồn tại hay không
+                if (grDtos.size() == 0) {
                     isOk = false;
-                    request.setAttribute("CREATE_GROUP_ERROR", "Topic has been choosen by another group.");
-                } else {
-                    ArrayList<GroupDTO> grDtos = grdao.getStudentsInGroup(groupId);
-                    // Kiểm tra group đó có tồn tại hay không
-                    if (grDtos.size() == 0) {
-                        isOk = false;
-                        request.setAttribute("CREATE_GROUP_ERROR", "Group is not exist");
-                    }
-                    // Kiểm tra nếu Group đã có Topic
-                    if (grDtos.size() > 0) {
-                        if (null == grDtos.get(0).getTopicId() || ("").equals(grDtos.get(0).getTopicId())) {
+                    request.setAttribute("CREATE_GROUP_ERROR", "Group is not exist");
+                }
+                // Kiểm tra nếu Group đã có Topic
+                if (grDtos.size() > 0) {
+                    if (null == grDtos.get(0).getTopicId() || ("").equals(grDtos.get(0).getTopicId())) {
 
-                        } else {
-                            isOk = false;
-                            request.setAttribute("CREATE_GROUP_ERROR", "Group already had a topic!");
-                        }
+                    } else {
+                        isOk = false;
+                        request.setAttribute("CREATE_GROUP_ERROR", "Group already had a topic!");
                     }
                 }
+            }
 //            }
             if (isOk) {
                 ttd = tdao.getTopicById(topicId);
                 result = grdao.updateTopicToGroup(groupId, topicId)
                         && tdao.updateTopicInfo(topicId, isOk, ttd.getLectureID(), groupId);
-                
+
                 String lectureValue = ttd.getLectureID();
                 String[] listLectureId = lectureValue.split(", ");
-                
+
                 int subString = listLectureId.length;
                 for (int i = 0; i < subString; i++) {
                     LecturerDTO lecDTO = ldao.getLecturebyID(listLectureId[i]);
-                    if(!lecDTO.getGroupID().equals("")){
-                        if(!lecDTO.getGroupID().equals(groupId)){
-                            //có groupID
-                            grdao.insertLectureIntoGroup(groupId, listLectureId[i],
-                                    lecDTO.getFullname(), lecDTO.getRole(), topicId);
-                            lecDTO.setGroupID(lecDTO.getGroupID() + ", " + groupId);
-                            ldao.updateLecturetoGroup(listLectureId[i], lecDTO.getGroupID());
-                        } else {
-                            //chua co gr
-                            ldao.updateLecturetoGroup(listLectureId[i], groupId);
-                            grdao.insertLectureIntoGroup(groupId, listLectureId[i], lecDTO.getFullname(), lecDTO.getRole(), topicId);
-                        }
+                    if (lecDTO.getGroupID().isEmpty()) {
+                        //chưa có gr
+                        ldao.updateLecturetoGroup(listLectureId[i], groupId);
+                        grdao.insertLectureIntoGroup(groupId, listLectureId[i], lecDTO.getFullname(), lecDTO.getRole(), topicId);
+
+                    } else {
+                        grdao.insertLectureIntoGroup(groupId, listLectureId[i],
+                                lecDTO.getFullname(), lecDTO.getRole(), topicId);
+                        lecDTO.setGroupID(lecDTO.getGroupID() + ", " + groupId);
+                        ldao.updateLecturetoGroup(listLectureId[i], lecDTO.getGroupID());
                     }
                 }
-                if(result) {
+                if (result) {
                     response.sendRedirect(url);
                 }
             }
