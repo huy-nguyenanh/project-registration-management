@@ -128,9 +128,13 @@ function validatePassword() {
 function createGroup() {
   const list = document.querySelectorAll("#chkCreate");
   const str = "createGroupAction?";
-  if (!Array.isArray(list) || list.length === 0) return;
+
+  if (list.length === 0) {
+    return;
+  }
   if (list.length === 1) {
     str += "chkCreate" + list[0].value;
+    window.location.href = str;
   } else {
     for (i = 0; i <= list.length; i++) {
       try {
@@ -143,8 +147,8 @@ function createGroup() {
         }
       } catch {}
     }
+    window.location.href = str;
   }
-  window.location.href = str;
 }
 (() => {
   dropdownProfile();
