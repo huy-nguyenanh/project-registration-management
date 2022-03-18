@@ -128,7 +128,7 @@
                     <div class="container">
                         <h3 class="title">Profile Information</h3>
                         <!-- <button id="update-profile-btn">Change Password</button> -->
-                        <!-- <a href="changePasswordPage">Change Password</a> -->
+                         <a href="changePasswordPage">Change Password</a> 
                         <div id="profile-1" class="profile-content">
                             <ul class="profile-list">
                                 <li>Name</li>

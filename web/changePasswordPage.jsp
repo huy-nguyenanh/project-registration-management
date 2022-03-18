@@ -12,12 +12,13 @@
             rel="stylesheet"
             href="./assets/icon/fontawesome-free-6.0.0-web/css/all.css"
             />
-       
+
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
         <link rel="stylesheet" href="./assets/css/profile.css">
 
         <jsp:useBean id="stuDAO" class="manager_dao.impl.StudentInfoDAO" scope="request"/>
+        <jsp:useBean id="lecDAO" class="manager_dao.impl.LecturerInfoDAO" scope="request"/>
     </head>
     <body>
         <div class="wrapper">
@@ -118,13 +119,23 @@
                             <li>Confirm Password</li>
                             <li></li>
                         </ul>
-                        <c:set var="id" value="${sessionScope.STUDENT_ID}"/>
-                        <c:set var="student" value="${stuDAO.getStudentbyID(id)}"/>
+                        <c:set var="stu_id" value="${sessionScope.STUDENT_ID}"/>
+                        <c:set var="lec_id" value="${sessionScope.LECTURE_ID}"/>
+                        <c:set var="student" value="${stuDAO.getStudentbyID(stu_id)}"/>
+                        <c:set var="lec" value="${lecDAO.getLecturebyID(lec_id)}"/>
+                        
                         <form action="changePasswordAction">
                             <ul class="profile-list">
                                 <li>
-                                    ${student.studentID}
-                                    <input type="hidden" name="txtAccountID" value="${student.accountID}" />
+                                    <c:if test="${not empty stu_id}">
+                                        ${stu_id}
+                                        <input type="hidden" name="txtAccountID" value="${student.accountID}" />
+                                    </c:if>
+                                    <c:if test="${not empty lec_id}">
+                                        ${lec_id}
+                                        <input type="hidden" name="txtAccountID" value="${lec.accountID}" />
+                                    </c:if>
+                                    
                                 </li>
                                 <li>
                                     <input type="password" name="old_password" id="2" placeholder="Old password" required>

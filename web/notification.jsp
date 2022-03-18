@@ -16,6 +16,7 @@
 
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/main.css" />
+        <link rel="stylesheet" href="./assets/css/student.css" />
         <link rel="stylesheet" href="./assets/css/notification.css" />
         <c:set var="grID_list" value="${sessionScope.LIST_GROUPID_MENTIT_BY_LECTURE}"/>
         <c:set var="role" value="${sessionScope.ROLE}"/>
