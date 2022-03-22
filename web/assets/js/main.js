@@ -58,7 +58,7 @@ function showErrorModal() {
   const a2 = document.getElementsByClassName("close")[0];
   const a3 = document.querySelector("span.error");
 
-  if (!a0) return;
+//  if (!a0) return;
 
   if (a2) {
     a2.onclick = function () {
@@ -125,31 +125,31 @@ function validatePassword() {
     confirm.setCustomValidity("Passwords do not match");
   }
 }
-function createGroup() {
-  const list = document.querySelectorAll("#chkCreate");
-  const str = "createGroupAction?";
-
-  if (list.length === 0) {
-    return;
-  }
-  if (list.length === 1) {
-    str += "chkCreate" + list[0].value;
-    window.location.href = str;
-  } else {
-    for (i = 0; i <= list.length; i++) {
-      try {
-        if (list[i].checked) {
-          if (i === 0) {
-            str += "chkCreate=" + list[0].value;
-          } else {
-            str += "&chkCreate=" + list[i].value;
-          }
-        }
-      } catch {}
-    }
-    window.location.href = str;
-  }
-}
+//function createGroup() {
+//  const list = document.querySelectorAll("#chkCreate");
+//  const str = "createGroupAction?";
+//
+//  if (list.length === 0) {
+//    return;
+//  }
+//  if (list.length === 1) {
+//    str += "chkCreate" + list[0].value;
+//    window.location.href = str;
+//  } else {
+//    for (i = 0; i <= list.length; i++) {
+//      try {
+//        if (list[i].checked) {
+//          if (i === 0) {
+//            str += "chkCreate=" + list[0].value;
+//          } else {
+//            str += "&chkCreate=" + list[i].value;
+//          }
+//        }
+//      } catch {}
+//    }
+//    window.location.href = str;
+//  }
+//}
 (() => {
   dropdownProfile();
   submitImportOnchange("import-form", "import-file");
@@ -157,5 +157,5 @@ function createGroup() {
   showErrorModal();
   updateProfile();
   editMode();
-  createGroup();
+//  createGroup();
 })();

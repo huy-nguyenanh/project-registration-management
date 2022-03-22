@@ -63,7 +63,7 @@ public class CreateGroupServlet extends HttpServlet {
             StudentInfoDAO dao = new StudentInfoDAO();
             String[] studentList = request.getParameterValues("chkCreate");
             String searchValue = request.getParameter("lastSearchValue");
-            ArrayList<String> stuID = new ArrayList<>(Arrays.asList(studentList));;
+            ArrayList<String> stuID = new ArrayList<>(Arrays.asList(studentList));
 
             boolean isOk = true;
             String role = (String) session.getAttribute("ROLE");

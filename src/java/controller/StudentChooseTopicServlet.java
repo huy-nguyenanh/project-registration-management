@@ -18,12 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import manager_dao.impl.GroupDAO;
 import entity.core.GroupDTO;
 import entity.core.LecturerDTO;
+import entity.core.StudentDTO;
 import manager_dao.impl.LecturerInfoDAO;
 import manager_dao.impl.TopicInfoDAO;
 import entity.core.TopicDTO;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import manager_dao.impl.StudentInfoDAO;
 import utillsHelper.ApplicationConstant;
 
 /**
@@ -57,10 +59,12 @@ public class StudentChooseTopicServlet extends HttpServlet {
             TopicInfoDAO tdao = new TopicInfoDAO();
             LecturerInfoDAO ldao = new LecturerInfoDAO();
             String topicId = request.getParameter("txtTopicId");
+            String stuId = request.getParameter("textGroupId");
 //            String groupId = request.getParameter("textGroupId");
             HttpSession session = request.getSession();
-            String groupId = (String) session.getAttribute("STUDENT_GROUP_ID");
-
+            StudentInfoDAO stu_dao = new StudentInfoDAO();
+            StudentDTO student = stu_dao.getStudentbyID(stuId);
+            String groupId = student.getGroupID();
             boolean isOk = true;
 //            if (topicList.length > 1) {
 //                isOk = false;

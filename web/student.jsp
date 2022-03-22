@@ -514,7 +514,7 @@
 
                                     <c:set var="searchValue" value="${param.txtSearchStudent}"/>
                                     <form action="ShowListMemberInGroupServlet">
-                                        <input type="hidden" name="txtGroupId" value="${sessionScope.STUDENT_GROUP_ID}" />
+                                        <input type="hidden" name="txtId" value="${sessionScope.STUDENT_ID}" />
                                         <button class="myBtn" type="submit" value="">Group's member list </button>
                                     </form>
                                 </div>
@@ -798,33 +798,49 @@
                     </div>
                 </main>
             </c:if>
-            
+
             <script src="./assets/js/main.js"></script>
             <script>
-                function createGroup() {
-                var list = document.querySelectorAll("#chkCreate");
-                var str = "createGroupAction?";
-                if (list.length === 1)
-                {
-                str += "chkCreate" + list[0].value;
-                }
-                else
-                {
-                for (i = 0; i <= list.length; i++) {
-                try {
-                if (list[i].checked) {
-                if (i === 0) {
-                str += "chkCreate=" + list[0].value;
-                } else {
-                str += "&chkCreate=" + list[i].value;
-                }
-                }
-                } catch {}
-                }
-                }
-
-                window.location.href = str;
-                }
+                            function createGroup() {
+                            var list = document.querySelectorAll("#chkCreate");
+                            var str = "createGroupAction?";
+                            if (list.length === 1)
+                            {
+                            str += "chkCreate" + list[0].value;
+                            }
+                            else
+                            {
+                            for (i = 0; i <= list.length; i++) {
+                            try {
+                            if (list[i].checked) {
+                            if (i === 0) {
+                            str += "chkCreate=" + list[0].value;
+                            } else {
+                            str += "&chkCreate=" + list[i].value;
+                            }
+                            }
+                            } catch {}
+                            }
+                            }
+            
+                            window.location.href = str;
+                            }
+//                                                                function createGroup() {
+//                                                                const list = document.querySelectorAll("#chkCreate");
+//                                                                const str = "createGroupAction?";
+//                                                                if (!Array.isArray(list) || list.length === 0) return;
+//                                                                if (list.length === 1) {
+//                                                                str += "chkCreate" + list[0].value;
+//                                                                } else {
+//                                                                for (i = 0; i <= list.length; i++) {
+//                                                                try {
+//                                                                @@ - 143, 8 + 147, 8 @@ function createGroup() {
+//                                                                }
+//                                                                } catch {}
+//                                                                }
+//                                                                }
+//                                                                window.location.href = str;
+//                                                                }
             </script>
         </div>
     </body>

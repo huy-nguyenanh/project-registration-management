@@ -503,7 +503,7 @@
                                                             <td>
                                                                 ${topic.groupID}
                                                                 <input type="hidden" name="txtGroupId" value="${topic.groupID}" />
-                                                                <input type="hidden" name="textGroupId" id="textGroupId" value="${sessionScope.STUDENT_GROUP_ID}">
+                                                                <input type="hidden" name="textGroupId" id="textGroupId" value="${sessionScope.STUDENT_ID}">
                                                             </td>
                                                             <td>
                                                                 <button class="myBtn" type="submit">Choose Topic</button> 
@@ -568,7 +568,7 @@
                                                             </td>
                                                             <td>
                                                                 <button class="myBtn" type="button" type="submit">Choose Topic</button> 
-                                                                <input type="hidden" name="textGroupId" id="textGroupId" value="${sessionScope.STUDENT_GROUP_ID}">
+                                                                <input type="hidden" name="textGroupId" id="textGroupId" value="${sessionScope.STUDENT_ID}">
                                                             </td>
                                                         </tr>
                                                     </form>

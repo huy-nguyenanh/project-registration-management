@@ -44,29 +44,32 @@ public class ShowListMemberInGroupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
+        String stuId = request.getParameter("txtId");
 
-        String searchStudentByGroupId = request.getParameter("txtGroupId");
         String url = site_Map.getProperty(ApplicationConstant.AdminSearchStudentServlet.RETURN_STUDENT_PAGE);
         try {
+            StudentInfoDAO stu_dao = new StudentInfoDAO();
+            StudentDTO student = stu_dao.getStudentbyID(stuId);
+            String searchStudentByGroupId = student.getGroupID();
             boolean foundErr = false;
             String Errmsg = "";
             if (!searchStudentByGroupId.trim().isEmpty()) {
 //                    StudentInfoDAO dao = new StudentInfoDAO();
 //                    dao.searchStudentByGorupID(searchStudentByGroupId);
 //                    List<StudentDTO> result = dao.getListStudents();
-                        GroupDAO grDao = new GroupDAO();
-                        ArrayList<GroupDTO> list_member = grDao.getStudentsInGroup(searchStudentByGroupId);
-                        
-                    request.setAttribute("LIST_MEMBER", list_member);
-                } // end search Values has values
+                GroupDAO grDao = new GroupDAO();
+                ArrayList<GroupDTO> list_member = grDao.getStudentsInGroup(searchStudentByGroupId);
+
+                request.setAttribute("LIST_MEMBER", list_member);
+            } // end search Values has values
             else {
                 foundErr = true;
                 Errmsg = "Student not in group";
             }
-            if(foundErr){
+            if (foundErr) {
                 request.setAttribute("ERROR_LIST_MEMBER", Errmsg);
             }
         } catch (SQLException ex) {
@@ -78,7 +81,7 @@ public class ShowListMemberInGroupServlet extends HttpServlet {
             rd.forward(request, response);
 
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
