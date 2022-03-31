@@ -480,11 +480,11 @@ public class StudentInfoDAO implements Serializable, IStudentInfoDAO {
             }
         }
     }
-    
-    public boolean updateNotify(String studentID, String notify) throws NamingException, SQLException{
+
+    public boolean updateNotify(String studentID, String notify) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
-        
+
         try {
             con = DBHelpers.makeConnection();
             if (con != null) {
@@ -494,9 +494,9 @@ public class StudentInfoDAO implements Serializable, IStudentInfoDAO {
                 stm = con.prepareStatement(sql);
                 stm.setString(0, notify);
                 stm.setString(1, studentID);
-                
+
                 int affectRow = stm.executeUpdate();
-                if(affectRow > 0){
+                if (affectRow > 0) {
                     return true;
                 }
             }
@@ -510,5 +510,105 @@ public class StudentInfoDAO implements Serializable, IStudentInfoDAO {
             }
         }
         return false;
+    }
+
+    public List<StudentDTO> filterStudentInGroup() throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                List<StudentDTO> filter_student_list = null;
+                String sql = "Select StudentID, Fullname, Email, Date_Of_Birth, MajorID, Status, GroupID, AccountID, Phone_Number "
+                        + "From Students "
+                        + "Where Status = 'true' ";
+                stm = con.prepareStatement(sql);
+                
+                rs = stm.executeQuery();
+                //5. Process Result
+                while (rs.next()) {
+                    String studentId = rs.getString("StudentID");
+                    String fullname = rs.getString("Fullname");
+                    String majorId = rs.getString("MajorID");
+                    String email = rs.getString("Email");
+                    String accountId = rs.getString("AccountID");
+                    String phonenumber = rs.getString("Phone_Number");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    String DOB = dateFormat.format(rs.getDate("Date_Of_Birth"));
+//                    Date dateOfBirth = rs.getDate("Date_Of_Birth");
+                    boolean status = rs.getBoolean("Status");
+                    String groupID = rs.getString("GroupID");
+
+                    StudentDTO std = new StudentDTO(studentId, accountId, fullname,
+                            DOB, email, phonenumber, majorId, groupID, status);
+                    if (filter_student_list == null) {
+                        filter_student_list = new ArrayList<>();
+                    } // end if account List is not existed
+                    // Account List is Existed
+                    filter_student_list.add(std);
+                } // end while rs has pointed to EOF
+                return filter_student_list;
+            } // end connection is 
+
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
+    }
+    
+    public List<StudentDTO> filterStudentNotInGroup() throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                List<StudentDTO> filter_student_list = null;
+                String sql = "Select StudentID, Fullname, Email, Date_Of_Birth, MajorID, Status, GroupID, AccountID, Phone_Number "
+                        + "From Students "
+                        + "Where Status = 'false' ";
+                stm = con.prepareStatement(sql);
+                
+                rs = stm.executeQuery();
+                //5. Process Result
+                while (rs.next()) {
+                    String studentId = rs.getString("StudentID");
+                    String fullname = rs.getString("Fullname");
+                    String majorId = rs.getString("MajorID");
+                    String email = rs.getString("Email");
+                    String accountId = rs.getString("AccountID");
+                    String phonenumber = rs.getString("Phone_Number");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    String DOB = dateFormat.format(rs.getDate("Date_Of_Birth"));
+//                    Date dateOfBirth = rs.getDate("Date_Of_Birth");
+                    boolean status = rs.getBoolean("Status");
+                    String groupID = rs.getString("GroupID");
+
+                    StudentDTO std = new StudentDTO(studentId, accountId, fullname,
+                            DOB, email, phonenumber, majorId, groupID, status);
+                    if (filter_student_list == null) {
+                        filter_student_list = new ArrayList<>();
+                    } // end if account List is not existed
+                    // Account List is Existed
+                    filter_student_list.add(std);
+                } // end while rs has pointed to EOF
+                return filter_student_list;
+            } // end connection is 
+
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
     }
 }

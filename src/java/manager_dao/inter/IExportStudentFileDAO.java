@@ -18,6 +18,6 @@ public interface IExportStudentFileDAO {
     public void write_Student_Header(Sheet sheet, int rowIndex);
     public void writeData(GroupDTO group, Row row);
     public CellStyle createStyleForHeader(Sheet sheet);
-//    public void autosizeColumn(Sheet sheet, int lastColumn);
+    public void autosizeColumn(Sheet sheet, int lastColumn);
     public void createOutputFile(Workbook workbook, String excelFilePath) throws FileNotFoundException, IOException;
 }

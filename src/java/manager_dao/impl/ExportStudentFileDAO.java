@@ -49,7 +49,7 @@ public class ExportStudentFileDAO implements IExportStudentFileDAO{
 
         //auto size column
         int numberOfColumn = sheet.getRow(0).getPhysicalNumberOfCells();
-//        autosizeColumn(sheet, numberOfColumn);
+        autosizeColumn(sheet, numberOfColumn);
 
         //create file excel
         createOutputFile(workbook, excelFilePath);
@@ -139,12 +139,12 @@ public class ExportStudentFileDAO implements IExportStudentFileDAO{
     }
 
     //Auto resize column width
-//    @Override
-//    public void autosizeColumn(Sheet sheet, int lastColumn) {
-//        for (int columnIndex = 0; columnIndex < lastColumn; columnIndex++) {
-//            sheet.autoSizeColumn(columnIndex);
-//        }
-//    }
+    @Override
+    public void autosizeColumn(Sheet sheet, int lastColumn) {
+        for (int columnIndex = 0; columnIndex < lastColumn; columnIndex++) {
+            sheet.autoSizeColumn(columnIndex);
+        }
+    }
 
     //Create output file
     @Override

@@ -104,7 +104,7 @@ public class UploadFileDAO implements Serializable, IUploadFileDAO {
 
                 String groupID = "";
                 student.setGroupID(groupID);
-                boolean status = true;
+                boolean status = false;
                 student.setStatus(status);
                 
                 if (this.student_list_in_dao == null) {

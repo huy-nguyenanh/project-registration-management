@@ -350,4 +350,104 @@ public class LecturerInfoDAO implements Serializable {
         }
         return false;
     }
+    
+    public List<LecturerDTO> filterLectureInGroup ()
+            throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelpers.makeConnection();
+
+            if (conn != null) {
+                List<LecturerDTO> filter_lecture_in_group = null;
+                String sql = "Select LecturerID, AccountID, Fullname, Email, Phone_Number, TopicID, GroupID "
+                        + " From Lectures "
+                        + " Where GroupID != '' ";
+                stm = conn.prepareStatement(sql);
+
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String lecturerID = rs.getString("LecturerID");
+                    String accountID = rs.getString("AccountID");
+                    String fullname = rs.getString("Fullname");
+                    String email = rs.getString("Email");
+                    String phonenumber = rs.getString("Phone_Number");
+                    String topicID = rs.getString("TopicID");
+                    String groupId = rs.getString("GroupID");
+
+                    LecturerDTO lec = new LecturerDTO(lecturerID, accountID,
+                            fullname, email, phonenumber, topicID, groupId);
+                    if (filter_lecture_in_group == null) {
+                        filter_lecture_in_group = new ArrayList<>();
+                    }
+                    filter_lecture_in_group.add(lec);
+                }
+                return filter_lecture_in_group;
+            }
+        } catch (Exception e) {
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
+    
+    public List<LecturerDTO> filterLectureNotInGroup ()
+            throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelpers.makeConnection();
+
+            if (conn != null) {
+                List<LecturerDTO> filter_lecture_in_group = null;
+                String sql = "Select LecturerID, AccountID, Fullname, Email, Phone_Number, TopicID, GroupID "
+                        + " From Lectures "
+                        + " Where GroupID == '' ";
+                stm = conn.prepareStatement(sql);
+
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String lecturerID = rs.getString("LecturerID");
+                    String accountID = rs.getString("AccountID");
+                    String fullname = rs.getString("Fullname");
+                    String email = rs.getString("Email");
+                    String phonenumber = rs.getString("Phone_Number");
+                    String topicID = rs.getString("TopicID");
+                    String groupId = rs.getString("GroupID");
+
+                    LecturerDTO lec = new LecturerDTO(lecturerID, accountID,
+                            fullname, email, phonenumber, topicID, groupId);
+                    if (filter_lecture_in_group == null) {
+                        filter_lecture_in_group = new ArrayList<>();
+                    }
+                    filter_lecture_in_group.add(lec);
+                }
+                return filter_lecture_in_group;
+            }
+        } catch (Exception e) {
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
 }

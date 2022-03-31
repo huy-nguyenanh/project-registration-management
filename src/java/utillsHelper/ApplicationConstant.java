@@ -122,6 +122,10 @@ public class ApplicationConstant {
 
         public static final String RETURN_PAGE = "notifyPage";
     }
+    public class FilterStudentServlet {
+
+        public static final String RETURN_PAGE = "studentPage";
+    }
     
     
 }

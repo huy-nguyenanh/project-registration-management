@@ -499,7 +499,7 @@ public class GroupDAO implements Serializable {
             }
         }
     }
-    
+
     public List<GroupDTO> loadGroupInfo() throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -519,13 +519,111 @@ public class GroupDAO implements Serializable {
                     String topicId = rs.getString("TopicID");
 
                     GroupDTO group = new GroupDTO(groupID, memberId, name, topicId, role);
-                    
+
                     if (this.groupList == null) {
                         this.groupList = new ArrayList<>();
                     }
                     this.groupList.add(group);
                 }
                 return this.groupList;
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
+    }
+
+    public List<GroupDTO> loadStudentInfoInGroupToExport() throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                List<GroupDTO> export_list = null;
+                String sql = "Select GroupID, MemberId, Fullname, Role, TopicID "
+                        + "From Groups "
+                        + "Where Role like 'Student'";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String groupID = rs.getString("GroupID");
+                    String memberId = rs.getString("MemberId");
+                    String name = rs.getString("Fullname");
+                    String role = rs.getString("Role");
+                    String topicId = rs.getString("TopicID");
+
+                    GroupDTO group = new GroupDTO(groupID, memberId, name, topicId, role);
+
+//                    if (this.groupList == null) {
+//                        this.groupList = new ArrayList<>();
+//                    }
+//                    this.groupList.add(group);
+                    if (export_list == null) {
+                        export_list = new ArrayList<>();
+                    }
+                    export_list.add(group);
+                }
+//                return this.groupList;
+                return export_list;
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
+    }
+
+    public List<GroupDTO> loadLectureInfoInGroupToExport() throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                List<GroupDTO> export_list = null;
+                String sql = "Select GroupID, MemberId, Fullname, Role, TopicID "
+                        + "From Groups "
+                        + "Where Role like 'Lecture'";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String groupID = rs.getString("GroupID");
+                    String memberId = rs.getString("MemberId");
+                    String name = rs.getString("Fullname");
+                    String role = rs.getString("Role");
+                    String topicId = rs.getString("TopicID");
+
+                    GroupDTO group = new GroupDTO(groupID, memberId, name, topicId, role);
+
+//                    if (this.groupList == null) {
+//                        this.groupList = new ArrayList<>();
+//                    }
+//                    this.groupList.add(group);
+                    if (export_list == null) {
+                        export_list = new ArrayList<>();
+                    }
+                    export_list.add(group);
+                }
+//                return this.groupList;
+                return export_list;
             }
 
         } finally {
