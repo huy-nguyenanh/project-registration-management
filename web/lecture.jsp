@@ -157,11 +157,13 @@
                                 <h3>List</h3>
                                 <form action="filterLectureAction">
                                     <select name="status">
+                                        <option value="all">All</option>
                                         <option value="In_group">In group</option>
                                         <option value="free">Free</option>
                                     </select>
                                     <button class="myBtn" type="submit">Filter</button>
                                 </form>
+                                <c:set var="filter_lecture" value="${requestScope.FILTER_LECTURE}"/>
                                 <c:set
                                     var="error_update"
                                     value="${requestScope.ERROR_UPDATE}"
@@ -176,7 +178,83 @@
                                     </div>
                                 </c:if>
                                 <c:if test="${empty searchLectureValue}">
-                                    <div class="table-responsive">
+                                    <c:if test="${not empty filter_lecture}">
+                                        <div class="table-responsive">
+                                        <table id="table-id">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Lecture ID</th>
+                                                    <th>Full Name</th>
+                                                    <th>Mail</th>
+                                                    <th>Phone</th>
+                                                    <th>Topic ID</th>
+                                                    <th>Group ID</th>
+                                                </tr>
+                                            </thead>
+                                            <c:set
+                                                var="lecture_list"
+                                                value="${lecDAO.loadLecturerInfo()}"
+                                                />
+                                            <c:if test="${not empty lecture_list}">
+                                                <tbody>
+                                                    <c:forEach
+                                                        var="lecture"
+                                                        items="${filter_lecture}"
+                                                        varStatus="counter"
+                                                        >
+                                                        <tr>
+                                                            <td>${counter.count}</td>
+                                                            <td>
+                                                                ${lecture.lectureID}
+                                                                <input
+                                                                    type="hidden"
+                                                                    name="txtID"
+                                                                    value="${lecture.lectureID}"
+                                                                    />
+                                                            </td>
+                                                            <td>
+                                                                ${lecture.fullname}
+                                                                <input
+                                                                    type="hidden"
+                                                                    name="txtFullname"
+                                                                    value="${lecture.fullname}"
+                                                                    />
+                                                            </td>
+                                                            <td>
+                                                                ${lecture.email}
+                                                                <input
+                                                                    type="hidden"
+                                                                    name="txtEmail"
+                                                                    value="${lecture.email}"
+                                                                    />
+                                                            </td>
+                                                            <td>
+                                                                ${lecture.phoneNumber}
+                                                                <input
+                                                                    type="hidden"
+                                                                    name="txtDOB"
+                                                                    value="${lecture.phoneNumber}"
+                                                                    />
+                                                            </td>
+                                                            <td>
+                                                                ${lecture.topicID}
+                                                                <input
+                                                                    type="hidden"
+                                                                    name="txtTopicId"
+                                                                    value="${lecture.topicID}"
+                                                                    />
+                                                            </td>
+                                                            <td>${lecture.groupID}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </c:if>
+                                        </table>
+                                    </div>
+                                    </c:if>
+                                    <c:if test="${empty filter_lecture}">
+                                        <div class="table-responsive">
                                         <table id="table-id">
                                             <thead>
                                                 <tr>
@@ -249,6 +327,7 @@
                                             </c:if>
                                         </table>
                                     </div>
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${not empty searchLectureValue}">
                                     <div class="table-responsive">

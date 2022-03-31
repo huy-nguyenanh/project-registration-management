@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.core.LecturerDTO;
 import entity.core.StudentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import manager_dao.impl.LecturerInfoDAO;
 import manager_dao.impl.StudentInfoDAO;
 import utillsHelper.ApplicationConstant;
 
@@ -28,8 +30,8 @@ import utillsHelper.ApplicationConstant;
  *
  * @author 84399
  */
-@WebServlet(name = "FilterStudentServlet", urlPatterns = {"/FilterStudentServlet"})
-public class FilterStudentServlet extends HttpServlet {
+@WebServlet(name = "FilterLectureServlet", urlPatterns = {"/FilterLectureServlet"})
+public class FilterLectureServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,22 +45,21 @@ public class FilterStudentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         ServletContext context = this.getServletContext();
         Properties site_Map = (Properties) context.getAttribute("SITE_MAP");
         String status = request.getParameter("status");
-        String url = site_Map.getProperty(ApplicationConstant.FilterStudentServlet.RETURN_PAGE);
+        String url = site_Map.getProperty(ApplicationConstant.FilterLectureServlet.RETURN_PAGE);
 
         try {
-            StudentInfoDAO stuDao = new StudentInfoDAO();
+            LecturerInfoDAO lecDAO = new LecturerInfoDAO();
             if (status.equals("In_group")) {
-                List<StudentDTO> student_filter_list = stuDao.filterStudentInGroup();
-                request.setAttribute("FILTER_STUDENT", student_filter_list);
+                List<LecturerDTO> lecture_filter_list = lecDAO.filterLectureInGroup();
+                request.setAttribute("FILTER_LECTURE", lecture_filter_list);
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (status.equals("free")) {
-                List<StudentDTO> student_filter_list = stuDao.filterStudentNotInGroup();
-                request.setAttribute("FILTER_STUDENT", student_filter_list);
+                List<LecturerDTO> lecture_filter_list = lecDAO.filterLectureNotInGroup();
+                request.setAttribute("FILTER_LECTURE", lecture_filter_list);
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if ("all".equals(status)) {
@@ -72,7 +73,7 @@ public class FilterStudentServlet extends HttpServlet {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

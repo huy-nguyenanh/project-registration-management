@@ -153,9 +153,12 @@ function validatePassword() {
 
 function handleFilerChange() {
   const form = document.getElementById("filterForm");
-  const select = form.querySelector(".select");
-  if (select)
-    select.addEventListener("change", () => {
+  const select1 = form.querySelector(".select1");
+  console.log(select1);
+  console.log(form);
+
+  if (select1)
+    select1.addEventListener("change", () => {
       form.submit();
     });
 }

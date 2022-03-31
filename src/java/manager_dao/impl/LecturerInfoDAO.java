@@ -413,7 +413,7 @@ public class LecturerInfoDAO implements Serializable {
                 List<LecturerDTO> filter_lecture_in_group = null;
                 String sql = "Select LecturerID, AccountID, Fullname, Email, Phone_Number, TopicID, GroupID "
                         + " From Lectures "
-                        + " Where GroupID == '' ";
+                        + " Where GroupID = '' ";
                 stm = conn.prepareStatement(sql);
 
                 rs = stm.executeQuery();
