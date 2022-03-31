@@ -58,7 +58,7 @@ function showErrorModal() {
   const a2 = document.getElementsByClassName("close")[0];
   const a3 = document.querySelector("span.error");
 
-//  if (!a0) return;
+  //  if (!a0) return;
 
   if (a2) {
     a2.onclick = function () {
@@ -150,6 +150,15 @@ function validatePassword() {
 //    window.location.href = str;
 //  }
 //}
+
+function handleFilerChange() {
+  const form = document.getElementById("filterForm");
+  const select = form.querySelector(".select");
+  if (select)
+    select.addEventListener("change", () => {
+      form.submit();
+    });
+}
 (() => {
   dropdownProfile();
   submitImportOnchange("import-form", "import-file");
@@ -157,5 +166,6 @@ function validatePassword() {
   showErrorModal();
   updateProfile();
   editMode();
-//  createGroup();
+  handleFilerChange();
+  //  createGroup();
 })();
