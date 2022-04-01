@@ -135,6 +135,22 @@ td {
   visibility: hidden;
 }
 
+.select1 {
+  padding: 5px;
+  padding-right: 60px;
+  margin: 0;
+  margin-bottom: 5px;
+  outline: 0;
+  border: 0;
+  border-bottom: 1px solid var(--background-nav);
+  background-color: #ffffff;
+}
+
+form#filterForm {
+  text-align: end;
+  padding: 0 28px;
+}
+
 @media only screen and (max-width: 1200px) {
   .sideBar {
     width: 60px;
@@ -212,6 +228,10 @@ td {
   .hide-on-moblie {
     visibility: hidden;
   }
+
+  form#filterForm {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -237,6 +257,10 @@ td {
 
   .hide-on-moblie {
     visibility: hidden;
+  }
+
+  form#filterForm {
+    display: none;
   }
 }
 
@@ -356,20 +380,4 @@ table input:focus {
 
 table input:focus::placeholder {
   visibility: hidden;
-}
-
-.select1 {
-  padding: 5px;
-  padding-right: 60px;
-  margin: 0;
-  margin-bottom: 5px;
-  outline: 0;
-  border: 0;
-  border-bottom: 1px solid var(--background-nav);
-  background-color: #ffffff;
-}
-
-form#filterForm {
-  text-align: end;
-  padding: 0 28px;
 }

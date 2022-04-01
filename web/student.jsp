@@ -593,14 +593,15 @@
                                     </form>
                                 </div>
                                 <h3>List</h3>
-                                <form action="filterStudentAction">
-                                    <select name="status">
-                                        <option value="all">All</option>
-                                        <option value="In_group">In group</option>
-                                        <option value="free">Free</option>
+                                <form action="filterStudentAction" id="filterForm">
+                                    <select class="select1" name="status">
+                                      <option selected disabled>Status</option>
+                                      <option value="all">All</option>
+                                      <option value="In_group">In group</option>
+                                      <option value="free">Free</option>
                                     </select>
                                     <button class="myBtn" type="submit">Filter</button>
-                                </form>
+                                  </form>
                                 <c:set var="filter_student" value="${requestScope.FILTER_STUDENT}"/>
                                 <c:set var="list_member" value="${requestScope.LIST_MEMBER}"/>
                                 <c:if test="${not empty list_member}">
