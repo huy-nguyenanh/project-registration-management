@@ -370,7 +370,7 @@ select.select1 {
   padding-right: 60px;
 }
 
-form#filterForm {
+form.filterForm {
   text-align: end;
   padding: 0 28px;
 }

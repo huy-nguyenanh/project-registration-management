@@ -161,14 +161,15 @@
                                 <span>/</span>
                                 <a id="edit-mode" href="">Edit mode</a>
                                 <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
-                                <form action="filterStudentAction" id="filterForm">
+                                <form action="filterStudentAction" class="filterForm">
                                     <select class="select1" name="status">
-                                        <option selected value="all">All</option>
-                                        <option value="In_group">In group</option>
-                                        <option value="free">Free</option>
+                                      <option selected disabled>Status</option>
+                                      <option value="all">All</option>
+                                      <option value="In_group">In group</option>
+                                      <option value="free">Free</option>
                                     </select>
                                     <button class="myBtn" type="submit">Filter</button>
-                                </form>
+                                  </form>
                                 <c:set var="filter_student" value="${requestScope.FILTER_STUDENT}"/>
 
                                 <%-- View mode --%>
