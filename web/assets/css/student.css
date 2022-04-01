@@ -358,19 +358,18 @@ table input:focus::placeholder {
   visibility: hidden;
 }
 
-select.select1 {
+.select1 {
   padding: 5px;
-  border-bottom: 1px solid #dddddd;
-  background-color: #ffffff;
+  padding-right: 60px;
   margin: 0;
   margin-bottom: 5px;
   outline: 0;
   border: 0;
   border-bottom: 1px solid var(--background-nav);
-  padding-right: 60px;
+  background-color: #ffffff;
 }
 
-form.filterForm {
+form#filterForm {
   text-align: end;
   padding: 0 28px;
 }

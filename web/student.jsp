@@ -161,7 +161,7 @@
                                 <span>/</span>
                                 <a id="edit-mode" href="">Edit mode</a>
                                 <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
-                                <form action="filterStudentAction" class="filterForm">
+                                <form action="filterStudentAction" id="filterForm">
                                     <select class="select1" name="status">
                                       <option selected disabled>Status</option>
                                       <option value="all">All</option>
