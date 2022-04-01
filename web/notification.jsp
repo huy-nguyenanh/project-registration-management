@@ -116,7 +116,7 @@
                     <form action="sendEmailAction">
                         <div class="content">
                             <label for="select-id">Choose Group ID</label>
-                            <select name="groupID_dropdownList" id="select-id">
+                            <select name="groupID_dropdownList" id="select-id" class="select1">
                                 <c:forEach var="groupId" items="${grID_list}">
                                     <option value="">${groupId}</option> 
                                     <c:set var="groupID_todo" value="${groupId}"/>

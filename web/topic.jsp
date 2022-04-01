@@ -658,7 +658,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <h3>List</h3>
+                                <h3>View mode</h3>
                                 <div class="table-responsive">
                                     <table id="table-id">
                                         <thead>

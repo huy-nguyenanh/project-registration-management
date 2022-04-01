@@ -44,7 +44,7 @@
                                 <span>Home</span>
                             </a>
                         </li>
-                        <li class="li-active">
+                        <li>
                             <a href="studentPage">
                                 <span class="fa-solid fa-graduation-cap"> </span>
                                 <span>Student</span>
