@@ -76,25 +76,25 @@ html {
   width: 100%;
   height: 100vh;
 
-  background-color: #f2f3f5;
-  background-image: linear-gradient(to right, #0093e9, #80d0c7);
+  /* background-image: linear-gradient(to right, #0093e9, #80d0c7); */
+  background: url(https://daihoc.fpt.edu.vn/wp-content/uploads/2022/02/HCM-scaled.jpeg)
+    no-repeat;
 }
 
 .admin__login {
   width: 100%;
   max-width: 60rem;
 
-  padding: 5rem 5rem;
-
-  background-color: white;
+  margin-top: -200px;
+  padding: 0 5rem;
 
   border-radius: 1.5rem;
 }
 
 .admin__login-title {
-  margin-bottom: 3.5rem;
-
-  font-size: 4rem;
+  margin-bottom: 6rem;
+  
+  font-size: 5rem;
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
@@ -156,7 +156,8 @@ html {
 
   margin-bottom: 1rem;
 
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: 500;
   color: black;
 
   cursor: pointer;
@@ -172,11 +173,17 @@ html {
 
   outline: none;
   border: 0;
-  border-radius: 1.5rem;
+  border-bottom: 4px solid #fff;
+  /* border-radius: 1.5rem; */
 
-  background-color: #f2f3f5;
+  background: none;
+
   font-family: "Roboto Mono", sans-serif;
   font-size: 1.6rem;
+}
+
+.login-input:focus {
+  border-bottom: 2px solid #000;
 }
 
 .login-submit {
@@ -195,7 +202,7 @@ html {
   text-align: center;
 
   outline: none;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   border: 0;
 
   cursor: pointer;

@@ -66,13 +66,13 @@
                         Login
                     </button>
                 </form>
-                <div class="admin__login-orText">
+                <!-- <div class="admin__login-orText">
                     <span class="">Or</span>
                 </div>
                 <a href="#" class="admin__login-social">
                     <i class="fa fa-google login_social__icon"></i>
                     <span class="admin__login-social__text">Login with google </span>
-                </a>
+                </a> -->
             </div>
         </div>
 
