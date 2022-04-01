@@ -163,7 +163,7 @@
                                 <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
                                 <form action="filterStudentAction" id="filterForm">
                                     <select class="select1" name="status">
-                                        <option value="all">All</option>
+                                        <option selected value="all">All</option>
                                         <option value="In_group">In group</option>
                                         <option value="free">Free</option>
                                     </select>

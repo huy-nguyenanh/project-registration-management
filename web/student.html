@@ -99,7 +99,6 @@
                 </div>
 
                 <div id="error-modal" class="">
-                  
                   <div class="modal-content">
                     <span class="close">&times;</span>
                     <span class="error">Student must have 3-5 students</span>
@@ -120,7 +119,15 @@
               <span class="hide-on-moblie">/</span>
               <a id="edit-mode" class="hide-on-moblie" href="">Edit mode</a>
               <!-- <button class="" id="editmode-btn">Edit mode</button> -->
-
+              <form action="filterStudentAction" id="filterForm">
+                <select class="select1" name="status">
+                  <option selected disabled>Status</option>
+                  <option value="all">All</option>
+                  <option value="In_group">In group</option>
+                  <option value="free">Free</option>
+                </select>
+                <button class="myBtn" type="submit">Filter</button>
+              </form>
               <!-- table -->
               <div class="table-responsive">
                 <table id="table-id">
