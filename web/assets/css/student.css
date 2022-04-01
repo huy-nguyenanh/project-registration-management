@@ -147,6 +147,7 @@ td {
 }
 
 form#filterForm {
+  float: right;
   text-align: end;
   padding: 0 28px;
 }

@@ -163,12 +163,12 @@
                                 <c:set var="student_list" value="${stuDAO.loadStudentInfo()}"/>
                                 <form action="filterStudentAction" id="filterForm">
                                     <select class="select1" name="status">
-                                      <option selected disabled>Status</option>
+                                      <option selected disabled>Filter</option>
                                       <option value="all">All</option>
                                       <option value="In_group">In group</option>
                                       <option value="free">Free</option>
                                     </select>
-                                    <button class="myBtn" type="submit">Filter</button>
+                                   
                                   </form>
                                 <c:set var="filter_student" value="${requestScope.FILTER_STUDENT}"/>
 
@@ -570,6 +570,12 @@
                             <div class="table-grid">
                                 <div class="list-action">
                                     <div class="list-action-right">
+                                        <c:set var="searchValue" value="${param.txtSearchStudent}"/>
+                                        <form action="ShowListMemberInGroupServlet">
+                                            <input type="hidden" name="txtId" value="${sessionScope.STUDENT_ID}" />
+                                            <button class="myBtn" type="submit" value="">Group's member list </button>
+                                        </form>
+
                                         <form id="form-search-id" class="form-search" action="searchStudentAction">
                                             <input
                                                 type="text"
@@ -586,21 +592,16 @@
                                         </form>
                                     </div>
 
-                                    <c:set var="searchValue" value="${param.txtSearchStudent}"/>
-                                    <form action="ShowListMemberInGroupServlet">
-                                        <input type="hidden" name="txtId" value="${sessionScope.STUDENT_ID}" />
-                                        <button class="myBtn" type="submit" value="">Group's member list </button>
-                                    </form>
+                                   
                                 </div>
-                                <h3>List</h3>
+                                <h3>View mode</h3>
                                 <form action="filterStudentAction" id="filterForm">
                                     <select class="select1" name="status">
-                                      <option selected disabled>Status</option>
+                                      <option selected disabled>Filter</option>
                                       <option value="all">All</option>
                                       <option value="In_group">In group</option>
                                       <option value="free">Free</option>
                                     </select>
-                                    <button class="myBtn" type="submit">Filter</button>
                                   </form>
                                 <c:set var="filter_student" value="${requestScope.FILTER_STUDENT}"/>
                                 <c:set var="list_member" value="${requestScope.LIST_MEMBER}"/>
@@ -889,7 +890,7 @@
                                     </div>
                                     <c:set var="searchValue" value="${param.txtSearchStudent}"/>
                                 </div>
-                                <h3>List</h3>
+                                <h3>View mode</h3>
                                 <div class="table-responsive">
                                     <table id="table-id">
                                         <thead>

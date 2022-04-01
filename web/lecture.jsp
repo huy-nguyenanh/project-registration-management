@@ -154,15 +154,14 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     />
                   </div>
                 </div>
-                <h3>List</h3>
+                <h3>View mode</h3>
                 <form action="filterLectureAction" id="filterForm">
                   <select class="select1" name="status">
-                    <option selected disabled>Status</option>
+                    <option selected disabled>Filter</option>
                     <option value="all">All</option>
                     <option value="In_group">In group</option>
                     <option value="free">Free</option>
                   </select>
-                  <button class="myBtn" type="submit">Filter</button>
                 </form>
                 <c:set
                   var="filter_lecture"
@@ -470,15 +469,14 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     />
                   </div>
                 </div>
-                <h3>List</h3>
+                <h3>View mode</h3>
                 <form action="filterLectureAction" id="filterForm">
                   <select class="select1" name="status">
-                    <option selected disabled>Status</option>
+                    <option selected disabled>Filter</option>
                     <option value="all">All</option>
                     <option value="In_group">In group</option>
                     <option value="free">Free</option>
                   </select>
-                  <button class="myBtn" type="submit">Filter</button>
                 </form>
                 <c:set
                   var="filter_lecture"
