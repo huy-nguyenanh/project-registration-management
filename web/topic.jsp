@@ -416,6 +416,7 @@
                         <section class="list">
                             <div class="table-grid">
                                 <div class="list-action">
+                                    <div class="list-action-left"></div>
                                     <div class="list-action-right">
                                         <form id="form-search-topic" class="form-search" action="searchTopicAction">
                                             <input
@@ -639,6 +640,7 @@
                         <section class="list">
                             <div class="table-grid">
                                 <div class="list-action">
+                                    <div class="list-action-left"></div>
                                     <div class="list-action-right">
                                         <form id="form-search-topic" class="form-search" action="">
                                             <input

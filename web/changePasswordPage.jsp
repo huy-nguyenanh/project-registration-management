@@ -112,7 +112,7 @@
                         </div>
                     </c:if>
                     <div id="profile-2" class="profile-content">
-                        <ul class="profile-list">
+                        <ul class="profile-list text-bold">
                             <li>ID</li>
                             <li>Old Password</li>
                             <li>New Password</li>

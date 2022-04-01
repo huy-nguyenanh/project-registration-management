@@ -569,13 +569,14 @@
                         <section class="list">
                             <div class="table-grid">
                                 <div class="list-action">
-                                    <div class="list-action-right">
+                                    <div class="list-action-left">
                                         <c:set var="searchValue" value="${param.txtSearchStudent}"/>
                                         <form action="ShowListMemberInGroupServlet">
                                             <input type="hidden" name="txtId" value="${sessionScope.STUDENT_ID}" />
                                             <button class="myBtn" type="submit" value="">Group's member list </button>
                                         </form>
-
+                                    </div>
+                                    <div class="list-action-right">
                                         <form id="form-search-id" class="form-search" action="searchStudentAction">
                                             <input
                                                 type="text"

@@ -101,7 +101,7 @@
                         <!-- <button id="update-profile-btn">Change Password</button> -->
                         <a href="changePasswordPage">Change Password</a>
                         <div id="profile-1" class="profile-content">
-                            <ul class="profile-list">
+                            <ul class="profile-list text-bold">
                                 <li>Name</li>
                                 <li>Phone</li>
                                 <li>Student ID</li>
@@ -130,7 +130,7 @@
                         <!-- <button id="update-profile-btn">Change Password</button> -->
                          <a href="changePasswordPage">Change Password</a> 
                         <div id="profile-1" class="profile-content">
-                            <ul class="profile-list">
+                            <ul class="profile-list text-bold">
                                 <li>Name</li>
                                 <li>Phone</li>
                                 <li>Lecture ID</li>

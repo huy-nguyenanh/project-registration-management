@@ -444,6 +444,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <section class="list">
               <div class="table-grid">
                 <div class="list-action">
+                  <div class="list-action-left"></div>
                   <div class="list-action-right">
                     <form
                       id="form-search-lecture"
