@@ -19,6 +19,7 @@
 
         <jsp:useBean id="stuDAO" class="manager_dao.impl.StudentInfoDAO" scope="request"/>
         <jsp:useBean id="lecDAO" class="manager_dao.impl.LecturerInfoDAO" scope="request"/>
+        <c:set var="role" value="${sessionScope.ROLE}"/>
     </head>
     <body>
         <div class="wrapper">
